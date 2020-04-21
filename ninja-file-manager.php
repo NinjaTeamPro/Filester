@@ -14,12 +14,12 @@
 
 namespace NinjaFileManager;
 
-if (file_exists(dirname(__FILE__) . '\includes\File_manager\lib\php\autoload.php')) {
-  require_once dirname(__FILE__) . '\includes\File_manager\lib\php\autoload.php';
+if (file_exists(dirname(__FILE__) . '/includes/File_manager/lib/php/autoload.php')) {
+  require_once dirname(__FILE__) . '/includes/File_manager/lib/php/autoload.php';
 }
 
-if (file_exists(dirname(__FILE__) . '\includes\File_manager\FMPHPSyntaxChecker.php')) {
-  require_once dirname(__FILE__) . '\includes\File_manager\FMPHPSyntaxChecker.php';
+if (file_exists(dirname(__FILE__) . '/includes/File_manager/FMPHPSyntaxChecker.php')) {
+  require_once dirname(__FILE__) . '/includes/File_manager/FMPHPSyntaxChecker.php';
 }
 
 defined('ABSPATH') || exit;
