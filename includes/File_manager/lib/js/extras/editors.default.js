@@ -1,6 +1,6 @@
 (function ($) {
 
-	fm_menu_icon_base_url = '../wp-content/plugins/big-ninja/includes/File_manager/lib/';
+	fm_menu_icon_base_url = '../wp-content/plugins/wp-file-manager/includes/File_manager/lib/';
 	(function (editors, elFinder) {
 		if (typeof define === 'function' && define.amd) {
 			define(['elfinder'], editors);

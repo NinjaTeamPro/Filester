@@ -1,0 +1,14 @@
+.njt-fm-select-theme {
+  position: relative;
+  height: 50px;
+  margin-top: 20px;
+}
+.njt-fm-select-theme .select-theme-content {
+  position: absolute;
+  right: 10px;
+  display: flex;
+}
+
+.njt-fm-select-theme .select-theme-title {
+  margin: 8px 10px;
+}
