@@ -100,13 +100,13 @@ class FileManager
     }
 
     public function security_check(){
-		if( ! wp_verify_nonce( $_POST['file_manager_security_token'] ,'file-manager-security-token') || !current_user_can( 'manage_options' ) ) wp_die();
-		check_ajax_referer('file-manager-security-token', 'file_manager_security_token');
+		if( ! wp_verify_nonce( $_POST['nonce'] ,'file-manager-security-token') || !current_user_can( 'manage_options' ) ) wp_die();
+		check_ajax_referer('file-manager-security-token', 'nonce');
     }
     
     public function selector_themes()
     {
-        if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin')) wp_die();
+        if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin') || !current_user_can( 'manage_options')) wp_die();
         check_ajax_referer('njt-file-manager-admin', 'nonce', true);
         $themesValue = sanitize_text_field ($_POST['themesValue']);
         $selector_themes = get_option('selector_themes');

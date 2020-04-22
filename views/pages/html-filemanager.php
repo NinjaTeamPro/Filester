@@ -43,7 +43,7 @@ jQuery(document).ready(function() {
     },
     customData: {
       action: 'connector',
-      file_manager_security_token: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'
+      nonce: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'
     },
     lang: '',
     requestType: 'post',
