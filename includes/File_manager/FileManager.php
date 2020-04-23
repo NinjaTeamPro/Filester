@@ -39,12 +39,24 @@ class FileManager
             '',
             9
         );
+        add_submenu_page ('custompage',
+          'Settings',
+          'Settings', 
+          'manage_options', 
+          'plugin-options-general-settings',
+          array($this, 'settingsPage') );
+       
     }
 
     public function ffm_settings_callback()
     {
         $viewPath = BN_PLUGIN_PATH . 'views/pages/html-filemanager.php';
         include_once $viewPath;
+    }
+
+    public function settingsPage()
+    {
+        echo ('test');
     }
 
     public function enqueueAdminScripts()

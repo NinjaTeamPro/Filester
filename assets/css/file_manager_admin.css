@@ -1,11 +1,15 @@
+.nit-file-manager {
+  padding-right: 20px;
+}
 .njt-fm-select-theme {
+  display: flex;
   position: relative;
   height: 50px;
   margin-top: 20px;
 }
 .njt-fm-select-theme .select-theme-content {
   position: absolute;
-  right: 10px;
+  right: 0px;
   display: flex;
 }
 
