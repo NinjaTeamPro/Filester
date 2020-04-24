@@ -127,6 +127,19 @@ class FileManager
                 ),
             ),
         );
+        // .htaccess
+        if(isset($this->options['file_manager_settings']['enable_htaccess']) && ($this->options['file_manager_settings']['enable_htaccess'] == '1')) {
+            $attributes =  array(
+                array( 
+                    'pattern' => '/.htaccess/',
+                    'read' => false,
+                    'write' => false,
+                    'hidden' => true,
+                    'locked' => false
+                )
+            );
+            $opts['roots'][0]['attributes'] = $attributes;
+        }
 
         $connector = new \elFinderConnector(new \elFinder($opts));
         $connector->run();

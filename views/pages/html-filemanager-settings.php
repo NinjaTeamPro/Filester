@@ -2,8 +2,9 @@
 defined('ABSPATH') || exit;
 if( isset( $_POST ) && !empty( $_POST ) ){
   if( ! wp_verify_nonce( $_POST['njt-fm-settings-security-token'] ,'njt-fm-settings-security-token') || !current_user_can( 'manage_options' ) ) wp_die();
-  echo (sanitize_text_field($_POST['root_folder_path']));
+ 
   $this->options['file_manager_settings']['root_folder_path']  = filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", $_POST['root_folder_path']) : '';
+  $this->options['file_manager_settings']['enable_htaccess'] =  isset($_POST['enable_htaccess']) ? sanitize_text_field($_POST['enable_htaccess']) : 0;	
 }
 
 ?>
@@ -18,6 +19,7 @@ if( isset( $_POST ) && !empty( $_POST ) ){
         value='<?php echo wp_create_nonce('njt-fm-settings-security-token'); ?>'>
 
       <table class="form-table">
+        <!-- URL and Path -->
         <tr>
           <th>URL and Path</th>
           <td>
@@ -33,6 +35,17 @@ if( isset( $_POST ) && !empty( $_POST ) ){
             </small>
           </td>
         </tr>
+        <!-- .htaccess -->
+        <tr>
+          <th>Display .htaccess?</th>
+          <td>
+            <input name="enable_htaccess" type="checkbox" id="enable_htaccess" value="1"
+              <?php echo isset($this->options['file_manager_settings']['enable_htaccess']) && ($this->options['file_manager_settings']['enable_htaccess'] == '1') ? 'checked="checked"' : '';?>>
+            <p class="description">Will Display .htaccess file (if exists) in file manager.</p>
+            <p>Default: <code>Not Enabled</code></p>
+          </td>
+        </tr>
+        <!-- button submit -->
         <tr>
           <td></td>
           <td>
