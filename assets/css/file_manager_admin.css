@@ -16,3 +16,22 @@
 .njt-fm-select-theme .select-theme-title {
   margin: 8px 10px;
 }
+/* CSS Setting */
+
+.njt-fm-settings {
+  background-color: #ffff;
+  padding: 20px 20px;
+  margin: 20px 20px 20px 0;
+}
+.njt-fm-settings-content .settings-title {
+  margin-bottom: 20px;
+}
+.njt-fm-settings-content .settings-title h1 {
+  margin: 0;
+}
+.njt-fm-settings-content .njt-fm-pd-0 {
+  padding: 0;
+}
+.njt-fm-settings-content td.njt-fm-pd-0 {
+  padding: 5px 10px;
+}

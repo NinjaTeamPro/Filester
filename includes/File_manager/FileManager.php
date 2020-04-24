@@ -10,7 +10,14 @@ defined('ABSPATH') || exit;
 class FileManager
 {
     protected static $instance = null;
-
+    
+    /**
+     *
+     * @var object $options The object of the options class
+     *
+     * */
+    public $options;
+    
     public static function getInstance()
     {
         if (null == self::$instance) {
@@ -22,6 +29,20 @@ class FileManager
 
     private function __construct()
     {
+        // Loading Options
+        // Options
+		$this->options = get_option('njt-fm-settings');
+        if(empty($this->options)) {
+            $this->options = array( // Setting up default values
+                'file_manager_settings' => array(
+                    'root_folder_path' =>  ABSPATH,
+                    'root_folder_url' => site_url()
+                ),
+            );
+        }
+        register_shutdown_function(array($this, 'save_options'));
+
+
         add_action('admin_menu', array($this, 'FileManager'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueAdminScripts'));
         add_action('wp_ajax_connector', array($this, 'connector'));
@@ -35,7 +56,7 @@ class FileManager
             'File Manager',
             'manage_options',
             'custompage',
-            array($this, 'ffm_settings_callback'),
+            array($this, 'ffmViewFileCallback'),
             '',
             9
         );
@@ -44,19 +65,20 @@ class FileManager
           'Settings', 
           'manage_options', 
           'plugin-options-general-settings',
-          array($this, 'settingsPage') );
+          array($this, 'ffmSettingsPage') );
        
     }
 
-    public function ffm_settings_callback()
+    public function ffmViewFileCallback()
     {
         $viewPath = BN_PLUGIN_PATH . 'views/pages/html-filemanager.php';
         include_once $viewPath;
     }
 
-    public function settingsPage()
+    public function ffmSettingsPage()
     {
-        echo ('test');
+        $viewPath = BN_PLUGIN_PATH . 'views/pages/html-filemanager-settings.php';
+        include_once $viewPath;
     }
 
     public function enqueueAdminScripts()
@@ -100,8 +122,8 @@ class FileManager
             'roots' => array(
                 array(
                     'driver' => 'LocalFileSystem',
-                    'path' => ABSPATH,
-                    'URL' => site_url(),
+                    'path' => isset($this->options['file_manager_settings']['root_folder_path']) && !empty($this->options['file_manager_settings']['root_folder_path']) ? $this->options['file_manager_settings']['root_folder_path'] : ABSPATH,
+                    'URL' => isset($this->options['file_manager_settings']['root_folder_url']) && !empty($this->options['file_manager_settings']['root_folder_url']) ? $this->options['file_manager_settings']['root_folder_url'] :site_url()
                 ),
             ),
         );
@@ -130,5 +152,14 @@ class FileManager
         wp_send_json_success($linkThemes);
         wp_die();
     }
+
+    /**
+	 *
+	 * @function save_options
+	 *
+	 * */
+	public function save_options(){
+		update_option('njt-fm-settings', $this->options);
+	}
 
 }
