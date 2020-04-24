@@ -4,15 +4,9 @@ if( isset( $_POST ) && !empty( $_POST ) ){
   if( ! wp_verify_nonce( $_POST['njt-fm-settings-security-token'] ,'njt-fm-settings-security-token') || !current_user_can( 'manage_options' ) ) wp_die();
   echo (sanitize_text_field($_POST['root_folder_path']));
   $this->options['file_manager_settings']['root_folder_path']  = filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", $_POST['root_folder_path']) : '';
-	$this->options['file_manager_settings']['root_folder_url']  = filter_var($_POST['root_folder_url'], FILTER_SANITIZE_STRING) ? $_POST['root_folder_url'] : '';
 }
 
 ?>
-
-
-
-
-
 <div class="njt-fm-settings">
   <div class="njt-fm-settings-content">
     <div class="settings-title">
@@ -28,25 +22,15 @@ if( isset( $_POST ) && !empty( $_POST ) ){
           <th>URL and Path</th>
           <td>
             <label for="root_folder_path"> Root Folder Path </label>
-            <input type='text' name='root_folder_path' id='root_folder_path'
+            <input type='text' name='root_folder_path' id='root_folder_path' style="width: 20%"
               value='<?php  if( isset( $this->options['file_manager_settings']['root_folder_path'] ) && !empty( $this->options['file_manager_settings']['root_folder_path'] ) ) echo esc_attr($this->options['file_manager_settings']['root_folder_path']); ?>' />
-
-
-            <label for="root_folder_url"> Root Folder URL </label>
-            <input type='text' name='root_folder_url' id='root_folder_url'
-              value='<?php  if( isset( $this->options['file_manager_settings']['root_folder_url'] ) && !empty( $this->options['file_manager_settings']['root_folder_url'] ) ) echo esc_attr($this->options['file_manager_settings']['root_folder_url']); ?>' />
-          </td>
-        </tr>
-        <tr>
-          <th class="njt-fm-pd-0"></th>
-          <td class="njt-fm-pd-0">
-            <small><?php _e("Default Path:", 'file-manager'); ?> <b><?php echo ABSPATH;?></b></small>
-          </td>
-        </tr>
-        <tr>
-          <th class="njt-fm-pd-0"></th>
-          <td class="njt-fm-pd-0">
-            <small><?php _e("Default URL:", 'file-manager'); ?> <b><?php echo site_url();?></b></small>
+            <div class="des-path">
+              <small>File Manager Pro Root Path, you can change according to your choice</small>
+            </div>
+            <small>
+              <?php _e("Default Path:", 'file-manager'); ?>
+              <b><?php echo (str_replace("\\", "/", ABSPATH));?></b>
+            </small>
           </td>
         </tr>
         <tr>

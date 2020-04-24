@@ -32,6 +32,7 @@
 .njt-fm-settings-content .njt-fm-pd-0 {
   padding: 0;
 }
-.njt-fm-settings-content td.njt-fm-pd-0 {
-  padding: 5px 10px;
+.njt-fm-settings-content .des-path {
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
