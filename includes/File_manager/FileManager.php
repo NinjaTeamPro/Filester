@@ -114,6 +114,8 @@ class FileManager
 
     public function connector()
     {
+        $uploadMaxSize = isset($this->options['file_manager_settings']['upload_max_size']) && !empty($this->options['file_manager_settings']['upload_max_size']) ? $this->options['file_manager_settings']['upload_max_size'] : 0;
+
         $opts = array(
             'bind' => array(
                 'put.pre' => array(new \FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
@@ -123,7 +125,8 @@ class FileManager
                 array(
                     'driver' => 'LocalFileSystem',
                     'path' => isset($this->options['file_manager_settings']['root_folder_path']) && !empty($this->options['file_manager_settings']['root_folder_path']) ? $this->options['file_manager_settings']['root_folder_path'] : ABSPATH,
-                    'URL' => isset($this->options['file_manager_settings']['root_folder_url']) && !empty($this->options['file_manager_settings']['root_folder_url']) ? $this->options['file_manager_settings']['root_folder_url'] :site_url()
+                    'URL' => isset($this->options['file_manager_settings']['root_folder_url']) && !empty($this->options['file_manager_settings']['root_folder_url']) ? $this->options['file_manager_settings']['root_folder_url'] :site_url(),
+                    'uploadMaxSize' =>  $uploadMaxSize .'M'
                 ),
             ),
         );
