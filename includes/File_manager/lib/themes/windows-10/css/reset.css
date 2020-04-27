@@ -12,8 +12,8 @@
 .elfinder .elfinder-toolbar input,
 
 /* navbar */
-/*.elfinder .elfinder-navbar,*/
-/*.elfinder .elfinder-navbar *,*/
+.elfinder .elfinder-navbar,
+.elfinder .elfinder-navbar *,
 
 /* current working directory */
 .elfinder .elfinder-cwd,
@@ -34,7 +34,7 @@
 .elfinder .ui-selected,
 
 /* ui-widgets (normally for dialogs) */
-/*.elfinder .ui-widget,*/
+.elfinder .ui-widget,
 .elfinder .ui-widget-header,
 .elfinder .ui-widget-content,
 
@@ -56,9 +56,4 @@
 .elfinder-contextmenu .ui-state-hover {
   background: none;
   border: none;
-}
-
-.std42-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close:hover .ui-icon,
-.elfinder-mobile .std42-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close .ui-icon {
-    background: none;
 }
