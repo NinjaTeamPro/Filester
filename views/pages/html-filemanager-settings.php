@@ -5,6 +5,7 @@ if( isset( $_POST ) && !empty( $_POST ) ){
  
   $this->options['file_manager_settings']['root_folder_path']  = filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", $_POST['root_folder_path']) : '';
   $this->options['file_manager_settings']['enable_htaccess'] =  isset($_POST['enable_htaccess']) ? sanitize_text_field($_POST['enable_htaccess']) : 0;
+  $this->options['file_manager_settings']['enable_trash'] =  isset($_POST['enable_trash']) ? sanitize_text_field($_POST['enable_trash']) : 0;
   $this->options['file_manager_settings']['upload_max_size'] =  filter_var($_POST['upload_max_size'], FILTER_SANITIZE_STRING)  ? sanitize_text_field($_POST['upload_max_size']) : 0;	
 }
 
@@ -58,6 +59,16 @@ if( isset( $_POST ) && !empty( $_POST ) ){
             <input name="enable_htaccess" type="checkbox" id="enable_htaccess" value="1"
               <?php echo isset($this->options['file_manager_settings']['enable_htaccess']) && ($this->options['file_manager_settings']['enable_htaccess'] == '1') ? 'checked="checked"' : '';?>>
             <p class="description">Will Display .htaccess file (if exists) in file manager.</p>
+            <p>Default: <code>Not Enabled</code></p>
+          </td>
+        </tr>
+        <!-- Enable Trash? -->
+        <tr>
+          <th>Enable Trash?</th>
+          <td>
+            <input name="enable_trash" type="checkbox" id="enable_trash" value="1"
+              <?php echo isset($this->options['file_manager_settings']['enable_trash']) && ($this->options['file_manager_settings']['enable_trash'] == '1') ? 'checked="checked"' : '';?>>
+            <p class="description">After enable trash, your files will go to trash folder.</p>
             <p>Default: <code>Not Enabled</code></p>
           </td>
         </tr>

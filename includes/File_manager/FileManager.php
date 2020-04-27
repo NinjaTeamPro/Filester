@@ -126,7 +126,13 @@ class FileManager
                     'driver' => 'LocalFileSystem',
                     'path' => isset($this->options['file_manager_settings']['root_folder_path']) && !empty($this->options['file_manager_settings']['root_folder_path']) ? $this->options['file_manager_settings']['root_folder_path'] : ABSPATH,
                     'URL' => isset($this->options['file_manager_settings']['root_folder_url']) && !empty($this->options['file_manager_settings']['root_folder_url']) ? $this->options['file_manager_settings']['root_folder_url'] :site_url(),
-                    'uploadMaxSize' =>  $uploadMaxSize .'M'
+                    'trashHash'     => '', // default is empty, when not enable trash
+                    'uploadMaxSize' =>  $uploadMaxSize .'M',
+                    'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
+                    'uploadDeny'    => array(''), 
+                    'uploadAllow'   => array('all'),
+                    'uploadOrder'   => array('deny', 'allow'),
+                    'accessControl' => 'access'
                 ),
             ),
         );
@@ -142,6 +148,39 @@ class FileManager
                 )
             );
             $opts['roots'][0]['attributes'] = $attributes;
+        }
+
+        //Enable Trash
+        if(isset($this->options['file_manager_settings']['enable_trash']) && ($this->options['file_manager_settings']['enable_trash'] == '1')) {
+            $trash = array(
+                'id'            => '1',
+                'driver'        => 'Trash',
+                'path'          => BN_PLUGIN_PATH.'includes/File_manager/lib/files/.trash/',
+                'tmbURL'        => site_url() . '/includes/File_manager/lib/files/.trash/.tmb',
+                'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
+                'uploadDeny'    => array(''), 
+                'uploadAllow'   => array('all'),
+                'uploadOrder'   => array('deny', 'allow'),
+                'accessControl' => 'access',
+                'attributes' => array(
+                    array(
+                              'pattern' => '/.tmb/',
+                              'read' => false,
+                              'write' => false,
+                              'hidden' => true,
+                              'locked' => false
+                             ),
+                    array(
+                        'pattern' => '/.gitkeep/',
+                        'read' => false,
+                        'write' => false,
+                        'hidden' => true,
+                        'locked' => false
+                  )
+                 )
+            );
+            $opts['roots'][0]['trashHash'] = 't1_Lw';
+            $opts['roots'][1] = $trash;
         }
 
         $connector = new \elFinderConnector(new \elFinder($opts));
