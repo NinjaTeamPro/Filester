@@ -1,12 +1,15 @@
 <?php
 defined('ABSPATH') || exit;
+$viewPathLanguage = BN_PLUGIN_PATH . 'views/pages/html-filemanager-language.php';
+
 if( isset( $_POST ) && !empty( $_POST ) ){
   if( ! wp_verify_nonce( $_POST['njt-fm-settings-security-token'] ,'njt-fm-settings-security-token') || !current_user_can( 'manage_options' ) ) wp_die();
  
   $this->options['file_manager_settings']['root_folder_path']  = filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", $_POST['root_folder_path']) : '';
   $this->options['file_manager_settings']['enable_htaccess'] =  isset($_POST['enable_htaccess']) ? sanitize_text_field($_POST['enable_htaccess']) : 0;
   $this->options['file_manager_settings']['enable_trash'] =  isset($_POST['enable_trash']) ? sanitize_text_field($_POST['enable_trash']) : 0;
-  $this->options['file_manager_settings']['upload_max_size'] =  filter_var($_POST['upload_max_size'], FILTER_SANITIZE_STRING)  ? sanitize_text_field($_POST['upload_max_size']) : 0;	
+  $this->options['file_manager_settings']['upload_max_size'] =  filter_var($_POST['upload_max_size'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['upload_max_size']) : 0;
+  $this->options['file_manager_settings']['fm_locale'] = filter_var($_POST['fm_locale'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['fm_locale']) : 'en';
 }
 
 ?>
@@ -50,6 +53,13 @@ if( isset( $_POST ) && !empty( $_POST ) ){
                 <b>0 means unlimited upload.</b>
               </small>
             </div>
+          </td>
+        </tr>
+        <!-- Select language -->
+        <tr>
+          <th>Select language</th>
+          <td>
+            <?php include_once $viewPathLanguage; ?>
           </td>
         </tr>
         <!-- .htaccess -->

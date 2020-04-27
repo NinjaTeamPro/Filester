@@ -1,5 +1,6 @@
 <?php
 defined('ABSPATH') || exit;
+$lang = $this->options['file_manager_settings']['fm_locale']; 
 ?>
 <div class="nit-file-manager">
   <div class="njt-fm-select-theme">
@@ -51,7 +52,7 @@ jQuery(document).ready(function() {
       action: 'connector',
       nonce: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'
     },
-    lang: '',
+    lang: '<?php echo ($lang)?>',
     requestType: 'post',
     width: 'auto',
     height: '600',

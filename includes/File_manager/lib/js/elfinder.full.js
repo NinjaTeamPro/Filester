@@ -28144,7 +28144,6 @@
 			clTabActive = fm.res('class', 'tabsactive'),
 			build = function () {
 				var cats = self.options.categories || {
-					'language': ['language'],
 					'theme': ['theme'],
 					'toolbar': ['toolbarPref'],
 					'workspace': ['iconSize', 'columnPref', 'selectAction', 'makefileTypes', 'useStoredEditor', 'editorMaximized', 'useFullscreen', 'showHidden'],
@@ -28153,7 +28152,7 @@
 					'reset': ['clearBrowserData'],
 					'all': true
 				},
-					forms = self.options.prefs || ['language', 'theme', 'toolbarPref', 'iconSize', 'columnPref', 'selectAction', 'makefileTypes', 'useStoredEditor', 'editorMaximized', 'useFullscreen', 'showHidden', 'infoItems', 'hashChecker', 'autoFocusDialog', 'clearBrowserData'];
+					forms = self.options.prefs || ['theme', 'toolbarPref', 'iconSize', 'columnPref', 'selectAction', 'makefileTypes', 'useStoredEditor', 'editorMaximized', 'useFullscreen', 'showHidden', 'infoItems', 'hashChecker', 'autoFocusDialog', 'clearBrowserData'];
 
 				if (!fm.cookieEnabled) {
 					delete cats.language;

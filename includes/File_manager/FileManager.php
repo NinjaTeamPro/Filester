@@ -93,13 +93,19 @@ class FileManager
         wp_enqueue_style('elfinder.full.css', plugins_url('/lib/css/elfinder.full.css', __FILE__));
         wp_enqueue_style('elfinder.min.css', plugins_url('/lib/css/elfinder.min.css', __FILE__));
         wp_enqueue_style('themes-selector', plugins_url('/lib/themes/' . $selectedTheme . '/css/theme.css', __FILE__));
-        wp_enqueue_style('themesda', plugins_url('/lib/css/theme.css', __FILE__));
+        wp_enqueue_style('themes', plugins_url('/lib/css/theme.css', __FILE__));
        
         //elfinder core
         wp_enqueue_script('jquery_min', plugins_url('/lib/jquery/jquery-ui.min.js', __FILE__));
         wp_enqueue_script('elFinderd', plugins_url('/lib/js/elfinder.full.js', __FILE__));
         wp_enqueue_script('elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
-
+        //js load fm_locale
+        if(isset($this->options['file_manager_settings']['fm_locale'])) {
+            $locale = $this->options['file_manager_settings']['fm_locale'];
+            if($locale != 'en') {
+                wp_enqueue_script( 'fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
+            }
+        }
         //elfinder js, css custom
         wp_register_style('file_manager_admin_css',BN_PLUGIN_URL . 'assets/css/file_manager_admin.css');
         wp_enqueue_style('file_manager_admin_css');
