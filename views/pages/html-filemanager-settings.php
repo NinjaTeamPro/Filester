@@ -1,15 +1,17 @@
 <?php
 defined('ABSPATH') || exit;
 $viewPathLanguage = BN_PLUGIN_PATH . 'views/pages/html-filemanager-language.php';
+global $wp_roles;
 
 if( isset( $_POST ) && !empty( $_POST ) ){
-  if( ! wp_verify_nonce( $_POST['njt-fm-settings-security-token'] ,'njt-fm-settings-security-token') || !current_user_can( 'manage_options' ) ) wp_die();
+  if( ! wp_verify_nonce( $_POST['njt-fm-settings-security-token'] ,'njt-fm-settings-security-token')) wp_die();
  
   $this->options['file_manager_settings']['root_folder_path']  = filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", $_POST['root_folder_path']) : '';
   $this->options['file_manager_settings']['enable_htaccess'] =  isset($_POST['enable_htaccess']) ? sanitize_text_field($_POST['enable_htaccess']) : 0;
   $this->options['file_manager_settings']['enable_trash'] =  isset($_POST['enable_trash']) ? sanitize_text_field($_POST['enable_trash']) : 0;
   $this->options['file_manager_settings']['upload_max_size'] =  filter_var($_POST['upload_max_size'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['upload_max_size']) : 0;
   $this->options['file_manager_settings']['fm_locale'] = filter_var($_POST['fm_locale'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['fm_locale']) : 'en';
+  $this->options['file_manager_settings']['list_user_alow_access'] = filter_var($_POST['list_user_alow_access'], FILTER_SANITIZE_STRING) ? explode(',',$_POST['list_user_alow_access']) : array();
 }
 
 ?>
@@ -24,6 +26,27 @@ if( isset( $_POST ) && !empty( $_POST ) ){
         value='<?php echo wp_create_nonce('njt-fm-settings-security-token'); ?>'>
 
       <table class="form-table">
+        <tr>
+          <th>Select User Roles to access</th>
+          <td>
+            <div class="njt-fm-list-user">
+              <?php foreach ( $wp_roles->roles as $key=>$value ): ?>
+              <?php if ($key != 'administrator') {?>
+              <span style="padding-right: 20px">
+                <input type="checkbox" class="fm-list-user-item" id="<?php echo $key; ?>" name="<?php echo $key; ?>"
+                  value="<?php echo $key; ?>">
+                <label for="vehicle1"><?php echo $value['name']; ?></label>
+              </span>
+              <?php }?>
+              <?php endforeach; ?>
+              <!-- Value to submit data -->
+              <input type="hidden" name="list_user_alow_access" id="list_user_alow_access">
+              <!-- Data saved after submit -->
+              <input type="hidden" name="list_user_has_approved" id="list_user_has_approved"
+                value="<?php echo implode(",",$this->options['file_manager_settings']['list_user_alow_access']);?>">
+            </div>
+          </td>
+        </tr>
         <!-- URL and Path -->
         <tr>
           <th>URL and Path</th>
@@ -87,7 +110,8 @@ if( isset( $_POST ) && !empty( $_POST ) ){
           <td></td>
           <td>
             <p class="submit">
-              <input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes">
+              <input type="submit" name="submit" id="submit" class="button button-primary njt-settings-form-submit"
+                value="Save Changes">
             </p>
           </td>
         </tr>

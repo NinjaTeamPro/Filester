@@ -51,10 +51,21 @@ class FileManager
 
     public function FileManager()
     {
+        $user = wp_get_current_user();
+        if( $user && $user->roles && $user->roles[0]) {
+            $editor = get_role($user->roles[0]);
+            $allowed_roles = $this->options['file_manager_settings']['list_user_alow_access'];
+            if( array_intersect($allowed_roles, $user->roles ) ) {
+                $fmCapability = $user->roles[0];
+            }else {
+                $fmCapability = 'manage_options';
+            }
+        }
+
         add_menu_page(
             __('Custom Menu Title', 'textdomain'),
             'File Manager',
-            'manage_options',
+            $fmCapability,
             'custompage',
             array($this, 'ffmViewFileCallback'),
             '',
@@ -63,7 +74,7 @@ class FileManager
         add_submenu_page ('custompage',
           'Settings',
           'Settings', 
-          'manage_options', 
+          $fmCapability, 
           'plugin-options-general-settings',
           array($this, 'ffmSettingsPage') );
        
@@ -195,13 +206,13 @@ class FileManager
     }
 
     public function security_check(){
-		if( ! wp_verify_nonce( $_POST['nonce'] ,'file-manager-security-token') || !current_user_can( 'manage_options' ) ) wp_die();
+		if( ! wp_verify_nonce( $_POST['nonce'] ,'file-manager-security-token')) wp_die();
 		check_ajax_referer('file-manager-security-token', 'nonce');
     }
     
     public function selector_themes()
     {
-        if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin') || !current_user_can( 'manage_options')) wp_die();
+        if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin')) wp_die();
         check_ajax_referer('njt-file-manager-admin', 'nonce', true);
         $themesValue = sanitize_text_field ($_POST['themesValue']);
         $selector_themes = get_option('selector_themes');
