@@ -1,5 +1,5 @@
 jQuery(document).ready(function () {
-  if (jQuery("div").hasClass("njt-fm-settings-content")) {
+  if (jQuery("div").hasClass("nit-file-manager")) {
     //set select value
     if (jQuery('input[name = "selected-theme"]')) {
       const selectedTheme = jQuery('input[name = "selected-theme"]').val()

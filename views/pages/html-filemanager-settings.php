@@ -15,7 +15,7 @@ if( isset( $_POST ) && !empty( $_POST ) ){
 }
 
 ?>
-<div class="njt-fm-settings">
+<div class="njt-fm-settings nit-file-manager">
   <div class="njt-fm-settings-content">
     <div class="settings-title">
       <h1> Settings </h1>
