@@ -17,6 +17,7 @@ class FileManager
      *
      * */
     public $options;
+    public $fmCapability;
     
     public static function getInstance()
     {
@@ -42,39 +43,47 @@ class FileManager
         }
         register_shutdown_function(array($this, 'save_options'));
 
-
+        add_action('init', array($this, 'isAlowUserAccess'));
         add_action('admin_menu', array($this, 'FileManager'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueAdminScripts'));
-        add_action('wp_ajax_connector', array($this, 'connector'));
-        add_action('wp_ajax_selector_themes', array($this, 'selector_themes'));
+        if ($this->isAlowUserAccess()) {
+            add_action('wp_ajax_connector', array($this, 'connector'));
+            add_action('wp_ajax_selector_themes', array($this, 'selector_themes'));
+        }
+    }
+
+    public function isAlowUserAccess()
+    {
+        $user = wp_get_current_user();
+        if($user && $user->roles && $user->roles[0]) {
+            $allowed_roles = $this->options['file_manager_settings']['list_user_alow_access'];
+            if( in_array($user->roles[0],$allowed_roles) ) {
+                $this->fmCapability = $user->roles[0];
+                return true;
+            }
+        }
+        $this->fmCapability = 'manage_options';
+        return false;
     }
 
     public function FileManager()
     {
-        $user = wp_get_current_user();
-        if( $user && $user->roles && $user->roles[0]) {
-            $editor = get_role($user->roles[0]);
-            $allowed_roles = $this->options['file_manager_settings']['list_user_alow_access'];
-            if( array_intersect($allowed_roles, $user->roles ) ) {
-                $fmCapability = $user->roles[0];
-            }else {
-                $fmCapability = 'manage_options';
-            }
-        }
 
         add_menu_page(
             __('Custom Menu Title', 'textdomain'),
             'File Manager',
-            $fmCapability,
+            $this->fmCapability,
             'custompage',
             array($this, 'ffmViewFileCallback'),
             '',
             9
         );
-        add_submenu_page ('custompage',
+        
+        add_submenu_page (
+          'custompage',
           'Settings',
           'Settings', 
-          $fmCapability, 
+          'manage_options', 
           'plugin-options-general-settings',
           array($this, 'ffmSettingsPage') );
        
@@ -155,7 +164,7 @@ class FileManager
         );
         // .htaccess
         if(isset($this->options['file_manager_settings']['enable_htaccess']) && ($this->options['file_manager_settings']['enable_htaccess'] == '1')) {
-            $attributes =  array(
+            $attributes = array(
                 array( 
                     'pattern' => '/.htaccess/',
                     'read' => false,
@@ -181,20 +190,20 @@ class FileManager
                 'accessControl' => 'access',
                 'attributes' => array(
                     array(
-                              'pattern' => '/.tmb/',
-                              'read' => false,
-                              'write' => false,
-                              'hidden' => true,
-                              'locked' => false
-                             ),
+                        'pattern' => '/.tmb/',
+                        'read' => false,
+                        'write' => false,
+                        'hidden' => true,
+                        'locked' => false
+                    ),
                     array(
                         'pattern' => '/.gitkeep/',
                         'read' => false,
                         'write' => false,
                         'hidden' => true,
                         'locked' => false
-                  )
-                 )
+                    )
+                )
             );
             $opts['roots'][0]['trashHash'] = 't1_Lw';
             $opts['roots'][1] = $trash;
