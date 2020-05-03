@@ -1,5 +1,5 @@
 jQuery(document).ready(function () {
-  if (jQuery("div").hasClass("nit-file-manager")) {
+  if (jQuery("div").hasClass("njt-file-manager")) {
     //set select value
     if (jQuery('input[name = "selected-theme"]')) {
       const selectedTheme = jQuery('input[name = "selected-theme"]').val()
@@ -42,5 +42,15 @@ jQuery(document).ready(function () {
       }
     }
     // End- Setting for `Select User Roles to access`
+
+    //Setting tab
+    jQuery("#njt-plugin-tabs a").click(function (event) {
+      jQuery("#njt-plugin-tabs a").removeClass("nav-tab-active");
+      jQuery(".njt-plugin-setting").hide();
+      jQuery(this).addClass("nav-tab-active");
+      // Show current pane
+      jQuery(".njt-plugin-setting:eq(" + jQuery(this).index() + ")").show();
+    });
+
   }
 });

@@ -1,8 +1,8 @@
 <?php
 defined('ABSPATH') || exit;
-$lang = $this->options['file_manager_settings']['fm_locale']; 
+$lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->options['file_manager_settings']['fm_locale'] : ''; 
 ?>
-<div class="nit-file-manager">
+<div class="njt-file-manager">
   <div class="njt-fm-select-theme">
     <div>
       <h1> File Manager Pro </h1>

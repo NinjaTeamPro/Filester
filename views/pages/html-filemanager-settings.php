@@ -1,11 +1,11 @@
 <?php
 defined('ABSPATH') || exit;
 $viewPathLanguage = BN_PLUGIN_PATH . 'views/pages/html-filemanager-language.php';
+$viewUserRoleRestrictions = BN_PLUGIN_PATH . 'views/pages/html-filemanager-user-role-restrictions.php';
 global $wp_roles;
-
-if( isset( $_POST ) && !empty( $_POST ) ){
+if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-submit'])){
   if( ! wp_verify_nonce( $_POST['njt-fm-settings-security-token'] ,'njt-fm-settings-security-token')) wp_die();
- 
+
   $this->options['file_manager_settings']['root_folder_path']  = filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", $_POST['root_folder_path']) : '';
   $this->options['file_manager_settings']['enable_htaccess'] =  isset($_POST['enable_htaccess']) ? sanitize_text_field($_POST['enable_htaccess']) : 0;
   $this->options['file_manager_settings']['enable_trash'] =  isset($_POST['enable_trash']) ? sanitize_text_field($_POST['enable_trash']) : 0;
@@ -15,12 +15,13 @@ if( isset( $_POST ) && !empty( $_POST ) ){
 }
 
 ?>
-<div class="njt-fm-settings nit-file-manager">
+<div class="njt-fm-settings njt-file-manager">
+  <h1 id="njt-plugin-tabs" class="nav-tab-wrapper hide-if-no-js">
+    <a href="javascript:void(0)" class="nav-tab nav-tab-active">Settings</a>
+    <a href="javascript:void(0)" class="nav-tab">User Role Restrictions</a>
+  </h1>
   <div class="njt-fm-settings-content">
-    <div class="settings-title">
-      <h1> Settings </h1>
-    </div>
-    <form action="" class="settings-form" method="POST">
+    <form action="" class="njt-plugin-setting settings-form" method="POST">
       <!-- creat token -->
       <input type='hidden' name='njt-fm-settings-security-token'
         value='<?php echo wp_create_nonce('njt-fm-settings-security-token'); ?>'>
@@ -34,8 +35,8 @@ if( isset( $_POST ) && !empty( $_POST ) ){
               <?php if ($key != 'administrator') {?>
               <span style="padding-right: 20px">
                 <input type="checkbox" class="fm-list-user-item" id="<?php echo $key; ?>" name="<?php echo $key; ?>"
-                  value="<?php echo $key; ?>">
-                <label for="vehicle1"><?php echo $value['name']; ?></label>
+                  data-name="<?php echo $value['name'];?>" value="<?php echo $key; ?>">
+                <label for="<?php echo $key; ?>"><?php echo $value['name']; ?></label>
               </span>
               <?php }?>
               <?php endforeach; ?>
@@ -43,7 +44,7 @@ if( isset( $_POST ) && !empty( $_POST ) ){
               <input type="hidden" name="list_user_alow_access" id="list_user_alow_access">
               <!-- Data saved after submit -->
               <input type="hidden" name="list_user_has_approved" id="list_user_has_approved"
-                value="<?php echo implode(",",$this->options['file_manager_settings']['list_user_alow_access']);?>">
+                value="<?php echo implode(",", !empty($this->options['file_manager_settings']['list_user_alow_access']) ? $this->options['file_manager_settings']['list_user_alow_access'] : array());?>">
             </div>
           </td>
         </tr>
@@ -51,8 +52,8 @@ if( isset( $_POST ) && !empty( $_POST ) ){
         <tr>
           <th>URL and Path</th>
           <td>
-            <label for="root_folder_path"> Root Folder Path </label>
-            <input type='text' name='root_folder_path' id='root_folder_path' style="width: 20%"
+            <input type='text' name='root_folder_path' id='root_folder_path' style="width: 40%"
+              placeholder="ex: C:/wamp64/www/wp_wc/wp-admin/"
               value='<?php  if( isset( $this->options['file_manager_settings']['root_folder_path'] ) && !empty( $this->options['file_manager_settings']['root_folder_path'] ) ) echo esc_attr($this->options['file_manager_settings']['root_folder_path']); ?>' />
             <div class="des-path">
               <small>File Manager Pro Root Path, you can change according to your choice</small>
@@ -89,8 +90,14 @@ if( isset( $_POST ) && !empty( $_POST ) ){
         <tr>
           <th>Display .htaccess?</th>
           <td>
-            <input name="enable_htaccess" type="checkbox" id="enable_htaccess" value="1"
-              <?php echo isset($this->options['file_manager_settings']['enable_htaccess']) && ($this->options['file_manager_settings']['enable_htaccess'] == '1') ? 'checked="checked"' : '';?>>
+            <label class="shortcode-switch" for="enable_htaccess">
+              <input name="enable_htaccess" type="checkbox" id="enable_htaccess" value="1"
+                <?php echo isset($this->options['file_manager_settings']['enable_htaccess']) && ($this->options['file_manager_settings']['enable_htaccess'] == '1') ? 'checked="checked"' : '';?>>
+
+              <div class="slider round"></div>
+            </label>
+
+
             <p class="description">Will Display .htaccess file (if exists) in file manager.</p>
             <p>Default: <code>Not Enabled</code></p>
           </td>
@@ -99,8 +106,12 @@ if( isset( $_POST ) && !empty( $_POST ) ){
         <tr>
           <th>Enable Trash?</th>
           <td>
-            <input name="enable_trash" type="checkbox" id="enable_trash" value="1"
-              <?php echo isset($this->options['file_manager_settings']['enable_trash']) && ($this->options['file_manager_settings']['enable_trash'] == '1') ? 'checked="checked"' : '';?>>
+            <label class="shortcode-switch" for="enable_trash">
+              <input name="enable_trash" type="checkbox" id="enable_trash" value="1"
+                <?php echo isset($this->options['file_manager_settings']['enable_trash']) && ($this->options['file_manager_settings']['enable_trash'] == '1') ? 'checked="checked"' : '';?>>
+              <div class="slider round"></div>
+            </label>
+
             <p class="description">After enable trash, your files will go to trash folder.</p>
             <p>Default: <code>Not Enabled</code></p>
           </td>
@@ -110,12 +121,14 @@ if( isset( $_POST ) && !empty( $_POST ) ){
           <td></td>
           <td>
             <p class="submit">
-              <input type="submit" name="submit" id="submit" class="button button-primary njt-settings-form-submit"
-                value="Save Changes">
+              <input type="submit" name="njt-settings-form-submit" id="submit"
+                class="button button-primary njt-settings-form-submit" value="Save changes">
             </p>
           </td>
         </tr>
       </table>
     </form>
+    <!-- include html User Role Restrictions -->
+    <?php include_once $viewUserRoleRestrictions; ?>
   </div>
 </div>

@@ -1,5 +1,9 @@
-.nit-file-manager {
+.njt-file-manager {
   padding-right: 20px;
+}
+.njt-file-manager .nav-tab-active {
+  background-color: #ffff !important;
+  border-bottom: 1px solid #ffff;
 }
 .njt-fm-select-theme {
   display: flex;
@@ -18,10 +22,14 @@
 }
 /* CSS Setting */
 
-.njt-fm-settings {
+.njt-fm-settings-content {
   background-color: #ffff;
   padding: 20px 20px;
-  margin: 20px 20px 20px 0;
+  margin: 0px 0px 20px 0;
+  padding-right: 0;
+}
+.njt-fm-settings-content .form-user-role-restrictions .form-table th {
+  width: 320px !important;
 }
 .njt-fm-settings-content .settings-title {
   margin-bottom: 20px;
@@ -35,4 +43,46 @@
 .njt-fm-settings-content .des-path {
   padding-top: 10px;
   padding-bottom: 5px;
+}
+/* shortcode-switch */
+.shortcode-switch {
+  display: inline-block;
+  height: 20px;
+  position: relative;
+  width: 40px;
+}
+.shortcode-switch input {
+  display: none;
+}
+.shortcode-switch .slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
+}
+.shortcode-switch .slider:before {
+  background-color: #fff;
+  bottom: 2px;
+  content: "";
+  height: 16px;
+  left: 2px;
+  position: absolute;
+  transition: 0.4s;
+  width: 16px;
+}
+.shortcode-switch input:checked + .slider {
+  background-color: #66bb6a;
+}
+.shortcode-switch input:checked + .slider:before {
+  transform: translateX(20px);
+}
+.shortcode-switch .slider.round {
+  border-radius: 34px;
+}
+.shortcode-switch .slider.round:before {
+  border-radius: 50%;
 }

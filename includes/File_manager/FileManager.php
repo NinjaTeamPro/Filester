@@ -49,21 +49,21 @@ class FileManager
         if ($this->isAlowUserAccess()) {
             add_action('wp_ajax_connector', array($this, 'connector'));
             add_action('wp_ajax_selector_themes', array($this, 'selector_themes'));
-        }
+       }
     }
 
     public function isAlowUserAccess()
     {
         $user = wp_get_current_user();
         if($user && $user->roles && $user->roles[0]) {
-            $allowed_roles = $this->options['file_manager_settings']['list_user_alow_access'];
+            $allowed_roles = !empty($this->options['file_manager_settings']['list_user_alow_access']) ? $this->options['file_manager_settings']['list_user_alow_access'] : array();
             if( in_array($user->roles[0],$allowed_roles) ) {
                 $this->fmCapability = $user->roles[0];
                 return true;
             }
         }
         $this->fmCapability = 'manage_options';
-        return false;
+        return true;
     }
 
     public function FileManager()
