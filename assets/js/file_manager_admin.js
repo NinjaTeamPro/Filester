@@ -34,7 +34,7 @@ jQuery(document).ready(function () {
       arraylistUserAccess.push('administrator')
       jQuery("#list_user_alow_access").val(arraylistUserAccess)
     })
-    // Get valua to prop checked for input checkbox
+    // Get value to prop checked for input checkbox
     const arrayUserHasApproved = jQuery('#list_user_has_approved').val() ? jQuery('#list_user_has_approved').val().split(",") : []
     for (itemUserHasApproved of arrayUserHasApproved) {
       if (itemUserHasApproved != 'administrator') {
@@ -42,6 +42,8 @@ jQuery(document).ready(function () {
       }
     }
     // End- Setting for `Select User Roles to access`
+
+    // Start- Setting for `Select User Roles Restrictions to access`
 
     //Setting tab
     jQuery("#njt-plugin-tabs a").click(function (event) {
@@ -51,6 +53,42 @@ jQuery(document).ready(function () {
       // Show current pane
       jQuery(".njt-plugin-setting:eq(" + jQuery(this).index() + ")").show();
     });
+
+    jQuery('#njt-form-user-role-restrictionst').on('click', function () {
+      const arrayUserRestrictionsAccess = [];
+      jQuery('.fm-list-user-restrictions-item').each(function () {
+        if (jQuery(this).is(":checked")) {
+          arrayUserRestrictionsAccess.push(jQuery(this).val());
+        }
+      });
+      jQuery("#list_user_restrictions_alow_access").val(arrayUserRestrictionsAccess)
+    })
+    // Get value to prop checked for input checkbox
+    const arrayRestrictionsHasApproved = jQuery('#list_restrictions_has_approved').val() ? jQuery('#list_restrictions_has_approved').val().split(",") : []
+    for (itemRestrictionsHasApproved of arrayRestrictionsHasApproved) {
+      jQuery('input[name = ' + itemRestrictionsHasApproved + ']').prop('checked', true);
+    }
+    //Ajax change value
+    jQuery('select.njt-fm-list-user-restrictions').on('change', function () {
+      const valueUserRole = jQuery(this).val()
+      const dataUserRole = {
+        'action': 'selector_user_role',
+        'valueUserRole': valueUserRole,
+        'nonce': wpData.nonce,
+      }
+      jQuery.post(
+        wpData.admin_ajax,
+        dataUserRole,
+        function (response) {
+          console.log(response.data)
+          const resRestrictionsHasApproved = response.data ? response.data.split(",") : []
+          jQuery('input.fm-list-user-restrictions-item').prop('checked', false);
+          for (itemRestrictionsHasApproved of resRestrictionsHasApproved) {
+            jQuery('input[name = ' + itemRestrictionsHasApproved + ']').prop('checked', true);
+          }
+        });
+    });
+    // End- Setting for `Select User Roles Restrictions to access`
 
   }
 });

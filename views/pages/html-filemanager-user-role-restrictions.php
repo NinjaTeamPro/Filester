@@ -2,13 +2,20 @@
 defined('ABSPATH') || exit;
 $viewListOperations = BN_PLUGIN_PATH . 'views/pages/html-filemanager-list-operations.php';
 $listUserApproved = !empty($this->options['file_manager_settings']['list_user_alow_access']) ? $this->options['file_manager_settings']['list_user_alow_access'] : array();
+
 if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-form-user-role-restrictionst'])){
  if( ! wp_verify_nonce( $_POST['njt-fm-user-restrictions-security-token'] ,'njt-fm-user-restrictions-security-token')) wp_die();
+  if (empty($this->options['file_manager_settings']['list_user_role_restrictions'])) {
+    $this->options['file_manager_settings']['list_user_role_restrictions'] = array();
+  }
 
-  $listRestrictions =  $this->options['file_manager_settings']['list_user_role_restrictions'] ? $this->options['file_manager_settings']['list_user_role_restrictions'] : $this->options['file_manager_settings']['list_user_role_restrictions'] = array();
-   var_dump($listRestrictions);
+  $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['list_user_restrictions_alow_access'] = 
+    filter_var($_POST['list_user_restrictions_alow_access'], FILTER_SANITIZE_STRING) ?
+    explode(',',$_POST['list_user_restrictions_alow_access']) : array();
 }
 
+$arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
+$firstKeyRestrictions =  array_keys($arrRestrictions)[0];
 ?>
 
 <form action="" class="njt-plugin-setting form-user-role-restrictions" method="POST">
@@ -40,8 +47,13 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-form-user-role-res
     <tr>
       <th>Disable Operations</th>
       <td>
-        <div>
+        <div style="line-height: 2">
           <?php include_once $viewListOperations; ?>
+          <!-- Value to submit data -->
+          <input type="hidden" name="list_user_restrictions_alow_access" id="list_user_restrictions_alow_access">
+          <!-- Data saved after submit -->
+          <input type="hidden" name="list_restrictions_has_approved" id="list_restrictions_has_approved"
+            value="<?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['list_user_restrictions_alow_access']) ? $arrRestrictions[$firstKeyRestrictions]['list_user_restrictions_alow_access'] : array());?>">
         </div>
       </td>
     </tr>

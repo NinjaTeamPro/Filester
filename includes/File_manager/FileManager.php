@@ -49,6 +49,7 @@ class FileManager
         if ($this->isAlowUserAccess()) {
             add_action('wp_ajax_connector', array($this, 'connector'));
             add_action('wp_ajax_selector_themes', array($this, 'selector_themes'));
+            add_action('wp_ajax_selector_user_role', array($this, 'selectorUserRole'));
        }
     }
 
@@ -158,7 +159,8 @@ class FileManager
                     'uploadDeny'    => array(''), 
                     'uploadAllow'   => array('all'),
                     'uploadOrder'   => array('deny', 'allow'),
-                    'accessControl' => 'access'
+                    'accessControl' => 'access',
+                    'disabled' => array(''),
                 ),
             ),
         );
@@ -209,13 +211,20 @@ class FileManager
             $opts['roots'][1] = $trash;
         }
 
+        //Disable Operations
+        $user = wp_get_current_user();
+        $userRoles =  $user && $user->roles && $user->roles[0] ? $user->roles[0] : '';
+        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['list_user_restrictions_alow_access'])){
+            $opts['roots'][0]['disabled'] = $this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['list_user_restrictions_alow_access'];
+        }
+
         $connector = new \elFinderConnector(new \elFinder($opts));
         $connector->run();
         wp_die();
     }
 
     public function security_check(){
-		if( ! wp_verify_nonce( $_POST['nonce'] ,'file-manager-security-token')) wp_die();
+		if( ! wp_verify_nonce( $_POST['nonce'] ,'file-manager-security-token') ) wp_die();
 		check_ajax_referer('file-manager-security-token', 'nonce');
     }
     
@@ -234,13 +243,20 @@ class FileManager
         wp_die();
     }
 
-    /**
-	 *
-	 * @function save_options
-	 *
-	 * */
-	public function save_options(){
+    public function save_options()
+    {
 		update_option('njt-fm-settings', $this->options);
-	}
+    }
+    
+    public function selectorUserRole()
+    {
+        if(!wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin')) wp_die();
+        check_ajax_referer('njt-file-manager-admin', 'nonce', true);
+        $valueUserRole = $_POST['valueUserRole'] ? sanitize_text_field ($_POST['valueUserRole']) : '';
+        $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
+        $dataUserRole = implode(",", !empty($arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access']) ? $arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access'] : array());
+        wp_send_json_success($dataUserRole);
+        wp_die();
+    }
 
 }
