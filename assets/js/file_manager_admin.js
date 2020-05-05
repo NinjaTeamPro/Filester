@@ -1,6 +1,44 @@
-jQuery(document).ready(function () {
-  if (jQuery("div").hasClass("njt-file-manager")) {
-    //set select value
+var njtFileManager = {
+  sunriseCreateCookie(name, value, days) {
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      var expires = "; expires=" + date.toGMTString();
+    } else var expires = "";
+    document.cookie = name + "=" + value + expires + "; path=/";
+  },
+
+  sunriseReadCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  },
+
+  //Setting tab
+  activeTabSetting() {
+    var pagenow = "ninjafilemanager";
+    jQuery("#njt-plugin-tabs a").click(function (event) {
+      jQuery("#njt-plugin-tabs a").removeClass("nav-tab-active");
+      jQuery(".njt-plugin-setting").hide();
+      jQuery(this).addClass("nav-tab-active");
+      // Show current pane
+      jQuery(".njt-plugin-setting:eq(" + jQuery(this).index() + ")").show();
+      njtFileManager.sunriseCreateCookie(pagenow + "_last_tab", jQuery(this).index(), 365);
+    });
+
+    //Auto-open tab by cookies
+    if (njtFileManager.sunriseReadCookie(pagenow + "_last_tab") != null)
+      jQuery("#njt-plugin-tabs a:eq(" + njtFileManager.sunriseReadCookie(pagenow + "_last_tab") + ")").trigger("click");
+    // Open first tab by default
+    else jQuery("#njt-plugin-tabs a:eq(0)").trigger("click");
+  },
+
+  themeSelector() {
     if (jQuery('input[name = "selected-theme"]')) {
       const selectedTheme = jQuery('input[name = "selected-theme"]').val()
       console.log(selectedTheme)
@@ -22,8 +60,9 @@ jQuery(document).ready(function () {
           jQuery('link#themes-selector-css').attr('href', response.data)
         });
     });
+  },
 
-    // Start- Setting for `Select User Roles to access`
+  actionSettingFormSubmit() {
     jQuery('.njt-settings-form-submit').on('click', function () {
       const arraylistUserAccess = [];
       jQuery('.fm-list-user-item').each(function () {
@@ -34,26 +73,18 @@ jQuery(document).ready(function () {
       arraylistUserAccess.push('administrator')
       jQuery("#list_user_alow_access").val(arraylistUserAccess)
     })
-    // Get value to prop checked for input checkbox
+  },
+
+  userHasApproved() {
     const arrayUserHasApproved = jQuery('#list_user_has_approved').val() ? jQuery('#list_user_has_approved').val().split(",") : []
     for (itemUserHasApproved of arrayUserHasApproved) {
       if (itemUserHasApproved != 'administrator') {
         jQuery('input[name = ' + itemUserHasApproved + ']').prop('checked', true);
       }
     }
-    // End- Setting for `Select User Roles to access`
+  },
 
-    // Start- Setting for `Select User Roles Restrictions to access`
-
-    //Setting tab
-    jQuery("#njt-plugin-tabs a").click(function (event) {
-      jQuery("#njt-plugin-tabs a").removeClass("nav-tab-active");
-      jQuery(".njt-plugin-setting").hide();
-      jQuery(this).addClass("nav-tab-active");
-      // Show current pane
-      jQuery(".njt-plugin-setting:eq(" + jQuery(this).index() + ")").show();
-    });
-
+  actionSubmitRoleRestrictionst() {
     jQuery('#njt-form-user-role-restrictionst').on('click', function () {
       const arrayUserRestrictionsAccess = [];
       jQuery('.fm-list-user-restrictions-item').each(function () {
@@ -63,12 +94,16 @@ jQuery(document).ready(function () {
       });
       jQuery("#list_user_restrictions_alow_access").val(arrayUserRestrictionsAccess)
     })
-    // Get value to prop checked for input checkbox
+  },
+
+  restrictionsHasApproved() {
     const arrayRestrictionsHasApproved = jQuery('#list_restrictions_has_approved').val() ? jQuery('#list_restrictions_has_approved').val().split(",") : []
     for (itemRestrictionsHasApproved of arrayRestrictionsHasApproved) {
       jQuery('input[name = ' + itemRestrictionsHasApproved + ']').prop('checked', true);
     }
-    //Ajax change value
+  },
+
+  ajaxSelectorUserRole() {
     jQuery('select.njt-fm-list-user-restrictions').on('change', function () {
       const valueUserRole = jQuery(this).val()
       const dataUserRole = {
@@ -88,7 +123,25 @@ jQuery(document).ready(function () {
           }
         });
     });
-    // End- Setting for `Select User Roles Restrictions to access`
+  }
+}
 
+jQuery(document).ready(function () {
+  if (jQuery("div").hasClass("njt-file-manager")) {
+    //set select value
+    njtFileManager.themeSelector();
+    // Start- Setting for `Select User Roles to access`
+    njtFileManager.actionSettingFormSubmit();
+    // Get value to prop checked for input checkbox
+    njtFileManager.userHasApproved();
+    //Setting tab
+    njtFileManager.activeTabSetting();
+
+    njtFileManager.actionSubmitRoleRestrictionst();
+    // Get value to prop checked for input checkbox
+    njtFileManager.restrictionsHasApproved();
+    //Ajax change value
+    njtFileManager.ajaxSelectorUserRole();
+    // End- Setting for `Select User Roles Restrictions to access`
   }
 });

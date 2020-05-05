@@ -88,7 +88,7 @@ $firstKeyRestrictions =  array_keys($arrRestrictions)[0];
       <td>
         <p class="submit">
           <input type="submit" name="njt-form-user-role-restrictionst" id="njt-form-user-role-restrictionst"
-            class="button button-primary njt-settings-form-submit" value="Save Changes">
+            class="button button-primary" value="Save Changes">
         </p>
       </td>
     </tr>

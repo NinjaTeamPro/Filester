@@ -44,9 +44,9 @@ class FileManager
         register_shutdown_function(array($this, 'save_options'));
 
         add_action('init', array($this, 'isAlowUserAccess'));
-        add_action('admin_menu', array($this, 'FileManager'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueAdminScripts'));
         if ($this->isAlowUserAccess()) {
+            add_action('admin_menu', array($this, 'FileManager'));
             add_action('wp_ajax_connector', array($this, 'connector'));
             add_action('wp_ajax_selector_themes', array($this, 'selector_themes'));
             add_action('wp_ajax_selector_user_role', array($this, 'selectorUserRole'));
@@ -63,8 +63,8 @@ class FileManager
                 return true;
             }
         }
-        $this->fmCapability = 'manage_options';
-        return true;
+        $this->fmCapability = 'read';
+        return false;
     }
 
     public function FileManager()
@@ -141,12 +141,14 @@ class FileManager
 
     public function connector()
     {
+        if( ! wp_verify_nonce( $_POST['nonce'] ,'file-manager-security-token') ) wp_die();
+        check_ajax_referer('file-manager-security-token', 'nonce');
+        
         $uploadMaxSize = isset($this->options['file_manager_settings']['upload_max_size']) && !empty($this->options['file_manager_settings']['upload_max_size']) ? $this->options['file_manager_settings']['upload_max_size'] : 0;
 
         $opts = array(
             'bind' => array(
                 'put.pre' => array(new \FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
-                'archive.pre back.pre chmod.pre colwidth.pre copy.pre cut.pre duplicate.pre editor.pre put.pre extract.pre forward.pre fullscreen.pre getfile.pre help.pre home.pre info.pre mkdir.pre mkfile.pre netmount.pre netunmount.pre open.pre opendir.pre paste.pre places.pre quicklook.pre reload.pre rename.pre resize.pre restore.pre rm.pre search.pre sort.pre up.pre upload.pre view.pre zipdl.pre' => array(&$this, 'security_check'),
             ),
             'roots' => array(
                 array(
@@ -221,11 +223,6 @@ class FileManager
         $connector = new \elFinderConnector(new \elFinder($opts));
         $connector->run();
         wp_die();
-    }
-
-    public function security_check(){
-		if( ! wp_verify_nonce( $_POST['nonce'] ,'file-manager-security-token') ) wp_die();
-		check_ajax_referer('file-manager-security-token', 'nonce');
     }
     
     public function selector_themes()
