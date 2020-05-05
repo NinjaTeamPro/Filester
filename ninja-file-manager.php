@@ -55,7 +55,6 @@ spl_autoload_register(function ($class) {
 function init() {
   Plugin::getInstance();
   I18n::getInstance();
-  Page\Settings::getInstance();
   File_manager\FileManager::getInstance();
 }
 add_action('plugins_loaded', 'NinjaFileManager\\init');
