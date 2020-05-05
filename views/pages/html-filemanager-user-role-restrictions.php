@@ -9,9 +9,15 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-form-user-role-res
     $this->options['file_manager_settings']['list_user_role_restrictions'] = array();
   }
 
+  //Save data list User Restrictions alow access
   $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['list_user_restrictions_alow_access'] = 
     filter_var($_POST['list_user_restrictions_alow_access'], FILTER_SANITIZE_STRING) ?
     explode(',',$_POST['list_user_restrictions_alow_access']) : array();
+  //Save data Enter Folder or File Paths That You want to Hide
+  $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['hide_paths'] = 
+    filter_var($_POST['hide_paths'], FILTER_SANITIZE_STRING) ?
+    explode('|', preg_replace('/\s+/', '', $_POST['hide_paths'])) : array();
+    var_dump( $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['hide_paths']);
 }
 
 $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
@@ -61,7 +67,7 @@ $firstKeyRestrictions =  array_keys($arrRestrictions)[0];
       <th>Seperate or private folder access</th>
       <td>
         <div>
-          <textarea name="" id="" cols="80"></textarea>
+          <textarea name="" id="" cols="100"></textarea>
         </div>
       </td>
     </tr>
@@ -69,7 +75,11 @@ $firstKeyRestrictions =  array_keys($arrRestrictions)[0];
       <th>Enter Folder or File Paths That You want to Hide</th>
       <td>
         <div>
-          <textarea name="" id="" cols="80"></textarea>
+          <textarea name="hide_paths" id="hide_paths"
+            cols="100"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array());?></textarea>
+          <p class="description">
+            e.g: wp-content/themes | wp-content/upload. Note: Mutiple separated by Vertical Bar ( <strong>|</strong> )
+          </p>
         </div>
       </td>
     </tr>
@@ -77,7 +87,7 @@ $firstKeyRestrictions =  array_keys($arrRestrictions)[0];
       <th>Enter file extensions which you want to Lock</th>
       <td>
         <div>
-          <textarea name="" id="" cols="80"></textarea>
+          <textarea name="" id="" cols="100"></textarea>
         </div>
       </td>
     </tr>

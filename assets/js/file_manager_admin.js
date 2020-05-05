@@ -93,6 +93,17 @@ var njtFileManager = {
         }
       });
       jQuery("#list_user_restrictions_alow_access").val(arrayUserRestrictionsAccess)
+
+      if (jQuery("#hide_paths").val().trim().length > 0) {
+        const valueHidePaths = jQuery("#hide_paths").val().trim().split("|")
+        const newValueHidePaths = []
+        for (const itemHidePath of valueHidePaths) {
+          if (itemHidePath.trim().length > 0) {
+            newValueHidePaths.push(itemHidePath.trim())
+          }
+        }
+        jQuery("#hide_paths").val(newValueHidePaths.join("|"))
+      }
     })
   },
 
@@ -103,11 +114,11 @@ var njtFileManager = {
     }
   },
 
-  ajaxSelectorUserRole() {
+  ajaxRoleRestrictions() {
     jQuery('select.njt-fm-list-user-restrictions').on('change', function () {
       const valueUserRole = jQuery(this).val()
       const dataUserRole = {
-        'action': 'selector_user_role',
+        'action': 'get_role_restrictions',
         'valueUserRole': valueUserRole,
         'nonce': wpData.nonce,
       }
@@ -116,11 +127,14 @@ var njtFileManager = {
         dataUserRole,
         function (response) {
           console.log(response.data)
-          const resRestrictionsHasApproved = response.data ? response.data.split(",") : []
+          const resRestrictionsHasApproved = response.data.disable_operations ? response.data.disable_operations.split(",") : []
+          const resHidePaths = response.data.hide_paths ? response.data.hide_paths.replace(/[,]+/g, ' | ') : '';
           jQuery('input.fm-list-user-restrictions-item').prop('checked', false);
           for (itemRestrictionsHasApproved of resRestrictionsHasApproved) {
             jQuery('input[name = ' + itemRestrictionsHasApproved + ']').prop('checked', true);
           }
+          // Set value for textarea[name='hide_paths']
+          jQuery('textarea#hide_paths').text(resHidePaths)
         });
     });
   }
@@ -141,7 +155,7 @@ jQuery(document).ready(function () {
     // Get value to prop checked for input checkbox
     njtFileManager.restrictionsHasApproved();
     //Ajax change value
-    njtFileManager.ajaxSelectorUserRole();
+    njtFileManager.ajaxRoleRestrictions();
     // End- Setting for `Select User Roles Restrictions to access`
   }
 });

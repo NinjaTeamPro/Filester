@@ -49,7 +49,7 @@ class FileManager
             add_action('admin_menu', array($this, 'FileManager'));
             add_action('wp_ajax_connector', array($this, 'connector'));
             add_action('wp_ajax_selector_themes', array($this, 'selector_themes'));
-            add_action('wp_ajax_selector_user_role', array($this, 'selectorUserRole'));
+            add_action('wp_ajax_get_role_restrictions', array($this, 'getArrRoleRestrictions'));
        }
     }
 
@@ -163,21 +163,20 @@ class FileManager
                     'uploadOrder'   => array('deny', 'allow'),
                     'accessControl' => 'access',
                     'disabled' => array(''),
+                    'attributes' => array() // default is empty
                 ),
             ),
         );
         // .htaccess
         if(isset($this->options['file_manager_settings']['enable_htaccess']) && ($this->options['file_manager_settings']['enable_htaccess'] == '1')) {
             $attributes = array(
-                array( 
-                    'pattern' => '/.htaccess/',
-                    'read' => false,
-                    'write' => false,
-                    'hidden' => true,
-                    'locked' => false
-                )
+                'pattern' => '/.htaccess/',
+                'read' => false,
+                'write' => false,
+                'hidden' => false,
+                'locked' => false
             );
-            $opts['roots'][0]['attributes'] = $attributes;
+            array_push($opts['roots'][0]['attributes'], $attributes);
         }
 
         //Enable Trash
@@ -213,12 +212,29 @@ class FileManager
             $opts['roots'][1] = $trash;
         }
 
-        //Disable Operations
+        //Start --setting User Role Restrictions
         $user = wp_get_current_user();
         $userRoles =  $user && $user->roles && $user->roles[0] ? $user->roles[0] : '';
+        
+        //Disable Operations
         if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['list_user_restrictions_alow_access'])){
             $opts['roots'][0]['disabled'] = $this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['list_user_restrictions_alow_access'];
         }
+
+        //Folder or File Paths That You want to Hide
+        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['hide_paths'])){
+            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['hide_paths'] as $key => $value){
+                $arr =  array( 
+                     'pattern' => '~/'.$value.'~',
+                     'read' => false,
+                     'write' => false,
+                     'hidden' => true,
+                     'locked' => false
+                   );
+                   array_push($opts['roots'][0]['attributes'], $arr);
+               };
+        }
+        //End --setting User Role Restrictions
 
         $connector = new \elFinderConnector(new \elFinder($opts));
         $connector->run();
@@ -245,14 +261,17 @@ class FileManager
 		update_option('njt-fm-settings', $this->options);
     }
     
-    public function selectorUserRole()
+    public function getArrRoleRestrictions()
     {
         if(!wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin')) wp_die();
         check_ajax_referer('njt-file-manager-admin', 'nonce', true);
         $valueUserRole = $_POST['valueUserRole'] ? sanitize_text_field ($_POST['valueUserRole']) : '';
         $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
-        $dataUserRole = implode(",", !empty($arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access']) ? $arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access'] : array());
-        wp_send_json_success($dataUserRole);
+        $dataArrRoleRestrictions = array (
+            'disable_operations' => implode(",", !empty($arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access']) ? $arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access'] : array()),
+            'hide_paths' => implode(",", !empty($arrRestrictions[$valueUserRole]['hide_paths']) ? $arrRestrictions[$valueUserRole]['hide_paths'] : array())
+        );
+        wp_send_json_success($dataArrRoleRestrictions);
         wp_die();
     }
 

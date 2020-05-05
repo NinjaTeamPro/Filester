@@ -88,7 +88,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
         </tr>
         <!-- .htaccess -->
         <tr>
-          <th>Display .htaccess?</th>
+          <th>Hide .htaccess?</th>
           <td>
             <label class="shortcode-switch" for="enable_htaccess">
               <input name="enable_htaccess" type="checkbox" id="enable_htaccess" value="1"
@@ -98,7 +98,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
             </label>
 
 
-            <p class="description">Will Display .htaccess file (if exists) in file manager.</p>
+            <p class="description">Will Hide .htaccess file (if exists) in file manager.</p>
             <p>Default: <code>Not Enabled</code></p>
           </td>
         </tr>
