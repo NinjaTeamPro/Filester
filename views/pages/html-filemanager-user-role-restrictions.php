@@ -5,7 +5,9 @@ $listUserApproved = !empty($this->options['file_manager_settings']['list_user_al
 
 if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-form-user-role-restrictionst'])){
  if( ! wp_verify_nonce( $_POST['njt-fm-user-restrictions-security-token'] ,'njt-fm-user-restrictions-security-token')) wp_die();
-  if (empty($this->options['file_manager_settings']['list_user_role_restrictions'])) {
+  $userRoleRestrictedSubmited = filter_var($_POST['njt-fm-list-user-restrictions'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['njt-fm-list-user-restrictions']) : '';
+ 
+ if (empty($this->options['file_manager_settings']['list_user_role_restrictions'])) {
     $this->options['file_manager_settings']['list_user_role_restrictions'] = array();
   }
 
@@ -24,14 +26,14 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-form-user-role-res
 }
 
 $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
-$firstKeyRestrictions =  array_keys($arrRestrictions)[0];
+$firstKeyRestrictions = !empty($userRoleRestrictedSubmited) ? $userRoleRestrictedSubmited : array_keys($arrRestrictions)[0];
 ?>
 
 <form action="" class="njt-plugin-setting form-user-role-restrictions" method="POST">
   <!-- creat token -->
   <input type='hidden' name='njt-fm-user-restrictions-security-token'
     value='<?php echo wp_create_nonce('njt-fm-user-restrictions-security-token'); ?>'>
-  <table class="form-table">
+    <table class="form-table">
     <tr>
       <th>If User role is</th>
       <td>
@@ -41,7 +43,10 @@ $firstKeyRestrictions =  array_keys($arrRestrictions)[0];
               if ($listUserApproved && count($listUserApproved) != 1 && $listUserApproved[0] != 'administrator') {
               foreach ( $wp_roles->roles as $key=>$value ):
                 if ($key != 'administrator' && in_array($key,$listUserApproved) ) {?>
-            <option value="<?php echo $key; ?>"><?php echo $value['name']; ?></option>
+            <option value="<?php echo $key; ?>"
+              <?php echo(!empty($firstKeyRestrictions) && $firstKeyRestrictions == $key ) ? 'selected="selected"' : '';?>>
+              <?php echo $value['name']; ?>
+            </option>
             <?php 
                 }
               endforeach;}

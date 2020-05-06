@@ -156,7 +156,7 @@ class FileManager
                     'trashHash'     => '', // default is empty, when not enable trash
                     'uploadMaxSize' =>  $uploadMaxSize .'M',
                     'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
-                    'uploadDeny'    => array(''), 
+                    'uploadDeny'    => array(), 
                     'uploadAllow'   => array('all'),
                     'uploadOrder'   => array('deny', 'allow'),
                     'accessControl' => 'access',
@@ -232,6 +232,21 @@ class FileManager
                    array_push($opts['roots'][0]['attributes'], $arrItemHidePath);
                };
         }
+
+        //File extensions which you want to Lock
+        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['lock_files'])){
+            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['lock_files'] as $key => $value){
+                $arrItemLockFile =  array( 
+                     'pattern' => '/'.$value.'/',
+                     'read' => false,
+                     'write' => false,
+                     'hidden' => false,
+                     'locked' => true
+                   );
+                   array_push($opts['roots'][0]['attributes'], $arrItemLockFile);
+               };
+        }
+
         //End --setting User Role Restrictions
 
         $connector = new \elFinderConnector(new \elFinder($opts));
@@ -268,7 +283,7 @@ class FileManager
         $dataArrRoleRestrictions = array (
             'disable_operations' => implode(",", !empty($arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access']) ? $arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access'] : array()),
             'hide_paths' => implode(',', !empty($arrRestrictions[$valueUserRole]['hide_paths']) ? $arrRestrictions[$valueUserRole]['hide_paths'] : array()),
-            'lock_files' => implode(',', !empty($arrRestrictions[$valueUserRole]['hide_paths']) ? $arrRestrictions[$valueUserRole]['lock_files'] : array())
+            'lock_files' => implode(',', !empty($arrRestrictions[$valueUserRole]['lock_files']) ? $arrRestrictions[$valueUserRole]['lock_files'] : array())
         );
         wp_send_json_success($dataArrRoleRestrictions);
         wp_die();
