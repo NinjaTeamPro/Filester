@@ -171,7 +171,7 @@ class FileManager
                 'pattern' => '/.htaccess/',
                 'read' => false,
                 'write' => false,
-                'hidden' => false,
+                'hidden' => true,
                 'locked' => false
             );
             array_push($opts['roots'][0]['attributes'], $attributes);
@@ -222,14 +222,14 @@ class FileManager
         //Folder or File Paths That You want to Hide
         if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['hide_paths'])){
             foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['hide_paths'] as $key => $value){
-                $arr =  array( 
+                $arrItemHidePath =  array( 
                      'pattern' => '~/'.$value.'~',
                      'read' => false,
                      'write' => false,
                      'hidden' => true,
                      'locked' => false
                    );
-                   array_push($opts['roots'][0]['attributes'], $arr);
+                   array_push($opts['roots'][0]['attributes'], $arrItemHidePath);
                };
         }
         //End --setting User Role Restrictions
@@ -267,7 +267,8 @@ class FileManager
         $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
         $dataArrRoleRestrictions = array (
             'disable_operations' => implode(",", !empty($arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access']) ? $arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access'] : array()),
-            'hide_paths' => implode(",", !empty($arrRestrictions[$valueUserRole]['hide_paths']) ? $arrRestrictions[$valueUserRole]['hide_paths'] : array())
+            'hide_paths' => implode(',', !empty($arrRestrictions[$valueUserRole]['hide_paths']) ? $arrRestrictions[$valueUserRole]['hide_paths'] : array()),
+            'lock_files' => implode(',', !empty($arrRestrictions[$valueUserRole]['hide_paths']) ? $arrRestrictions[$valueUserRole]['lock_files'] : array())
         );
         wp_send_json_success($dataArrRoleRestrictions);
         wp_die();

@@ -53,7 +53,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
           <th>URL and Path</th>
           <td>
             <input type='text' name='root_folder_path' id='root_folder_path' style="width: 40%"
-              placeholder="ex: C:/wamp64/www/wp_wc/wp-admin/"
+              placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH));?>"
               value='<?php  if( isset( $this->options['file_manager_settings']['root_folder_path'] ) && !empty( $this->options['file_manager_settings']['root_folder_path'] ) ) echo esc_attr($this->options['file_manager_settings']['root_folder_path']); ?>' />
             <div class="des-path">
               <small>File Manager Pro Root Path, you can change according to your choice</small>

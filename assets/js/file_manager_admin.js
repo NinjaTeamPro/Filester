@@ -104,6 +104,18 @@ var njtFileManager = {
         }
         jQuery("#hide_paths").val(newValueHidePaths.join("|"))
       }
+
+      if (jQuery("#lock_files").val().trim().length > 0) {
+        const valueLockFiles = jQuery("#lock_files").val().trim().split("|")
+        const newValueLockFiles = []
+        for (const itemLockFile of valueLockFiles) {
+          if (itemLockFile.trim().length > 0) {
+            newValueLockFiles.push(itemLockFile.trim())
+          }
+        }
+        jQuery("#lock_files").val(newValueLockFiles.join("|"))
+      }
+
     })
   },
 
@@ -129,12 +141,15 @@ var njtFileManager = {
           console.log(response.data)
           const resRestrictionsHasApproved = response.data.disable_operations ? response.data.disable_operations.split(",") : []
           const resHidePaths = response.data.hide_paths ? response.data.hide_paths.replace(/[,]+/g, ' | ') : '';
+          const resLockFiles = response.data.lock_files ? response.data.lock_files.replace(/[,]+/g, ' | ') : '';
           jQuery('input.fm-list-user-restrictions-item').prop('checked', false);
           for (itemRestrictionsHasApproved of resRestrictionsHasApproved) {
             jQuery('input[name = ' + itemRestrictionsHasApproved + ']').prop('checked', true);
           }
           // Set value for textarea[name='hide_paths']
           jQuery('textarea#hide_paths').text(resHidePaths)
+          // Set value for textarea[name='lock_files']
+          jQuery('textarea#lock_files').text(resLockFiles)
         });
     });
   }

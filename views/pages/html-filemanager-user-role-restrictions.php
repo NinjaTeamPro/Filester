@@ -17,7 +17,10 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-form-user-role-res
   $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['hide_paths'] = 
     filter_var($_POST['hide_paths'], FILTER_SANITIZE_STRING) ?
     explode('|', preg_replace('/\s+/', '', $_POST['hide_paths'])) : array();
-    var_dump( $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['hide_paths']);
+  //Save data Enter file extensions which you want to Lock
+  $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['lock_files'] =
+    filter_var($_POST['lock_files'], FILTER_SANITIZE_STRING) ?
+    explode('|', preg_replace('/\s+/', '', $_POST['lock_files'])) : array();
 }
 
 $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
@@ -87,7 +90,10 @@ $firstKeyRestrictions =  array_keys($arrRestrictions)[0];
       <th>Enter file extensions which you want to Lock</th>
       <td>
         <div>
-          <textarea name="" id="" cols="100"></textarea>
+          <textarea name="lock_files" id="lock_files" cols="100"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array());?></textarea>
+          <p class="description">
+            e.g: .php | .png | .css. Note: Mutiple separated by Vertical Bar ( <strong>|</strong> )
+          </p>
         </div>
       </td>
     </tr>
