@@ -15,6 +15,10 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-form-user-role-res
   $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['list_user_restrictions_alow_access'] = 
     filter_var($_POST['list_user_restrictions_alow_access'], FILTER_SANITIZE_STRING) ?
     explode(',',$_POST['list_user_restrictions_alow_access']) : array();
+  //Seperate or private folder access
+  $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['private_folder_access'] =
+    filter_var($_POST['private_folder_access'], FILTER_SANITIZE_STRING) ?
+    str_replace("\\\\", "/", trim($_POST['private_folder_access'])) : '';
   //Save data Enter Folder or File Paths That You want to Hide
   $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['hide_paths'] = 
     filter_var($_POST['hide_paths'], FILTER_SANITIZE_STRING) ?
@@ -52,7 +56,7 @@ $firstKeyRestrictions = !empty($userRoleRestrictedSubmited) ? $userRoleRestricte
               endforeach;}
               else {
              ?>
-            <option value="">Nothing to choose</option>
+            <option selected disabled hidden>Nothing to choose</option>
             <?php }?>
           </select>
         </div>
@@ -75,7 +79,7 @@ $firstKeyRestrictions = !empty($userRoleRestrictedSubmited) ? $userRoleRestricte
       <th>Seperate or private folder access</th>
       <td>
         <div>
-          <textarea name="" id="" cols="100"></textarea>
+          <textarea name="private_folder_access" id="private_folder_access" cols="100"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
         </div>
       </td>
     </tr>

@@ -218,6 +218,10 @@ class FileManager
         if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['list_user_restrictions_alow_access'])){
             $opts['roots'][0]['disabled'] = $this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['list_user_restrictions_alow_access'];
         }
+        //Seperate or private folder access
+        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['private_folder_access'])){
+            $opts['roots'][0]['path'] = ABSPATH .$this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['private_folder_access'] .'/';
+        }
 
         //Folder or File Paths That You want to Hide
         if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['hide_paths'])){
@@ -282,6 +286,7 @@ class FileManager
         $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
         $dataArrRoleRestrictions = array (
             'disable_operations' => implode(",", !empty($arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access']) ? $arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access'] : array()),
+            'private_folder_access' => !empty($arrRestrictions[$valueUserRole]['private_folder_access']) ? str_replace("\\\\", "/", trim($arrRestrictions[$valueUserRole]['private_folder_access'])) : '',
             'hide_paths' => implode(',', !empty($arrRestrictions[$valueUserRole]['hide_paths']) ? $arrRestrictions[$valueUserRole]['hide_paths'] : array()),
             'lock_files' => implode(',', !empty($arrRestrictions[$valueUserRole]['lock_files']) ? $arrRestrictions[$valueUserRole]['lock_files'] : array())
         );

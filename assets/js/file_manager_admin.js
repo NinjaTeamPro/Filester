@@ -140,12 +140,15 @@ var njtFileManager = {
         function (response) {
           console.log(response.data)
           const resRestrictionsHasApproved = response.data.disable_operations ? response.data.disable_operations.split(",") : []
+          const resPrivateFolderAccess = response.data.private_folder_access ? response.data.private_folder_access : ''
           const resHidePaths = response.data.hide_paths ? response.data.hide_paths.replace(/[,]+/g, ' | ') : '';
           const resLockFiles = response.data.lock_files ? response.data.lock_files.replace(/[,]+/g, ' | ') : '';
           jQuery('input.fm-list-user-restrictions-item').prop('checked', false);
           for (itemRestrictionsHasApproved of resRestrictionsHasApproved) {
             jQuery('input[name = ' + itemRestrictionsHasApproved + ']').prop('checked', true);
           }
+          // Set value for textarea[name='private_folder_access']
+          jQuery('textarea#private_folder_access').text(resPrivateFolderAccess)
           // Set value for textarea[name='hide_paths']
           jQuery('textarea#hide_paths').text(resHidePaths)
           // Set value for textarea[name='lock_files']
