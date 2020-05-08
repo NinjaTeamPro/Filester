@@ -7,12 +7,14 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Organize thousands of WordPress media files into folders/ categories at ease.
+Made to help you focus on WordPress file management and avoid being distracted.
 
 
 == Description ==
 
+File Manager Pro has all features of other file management plugins out there, yet with a super modern and clean UI/UX.
 
+This plugin are dedicated to boost your productivity of managing WordPress. All necessary operations are fully provided and tested on a wide variety of servers, browsers and cloud storage drivers.
 
 == FEATURES ==
 
@@ -20,10 +22,7 @@ Organize thousands of WordPress media files into folders/ categories at ease.
 Drag and drop to upload/move files into folders. Drag and drop to rearrange folders.
 
 **Smart Context Menu**
-Right click your mouse to quickly create, rename or delete folders like what you do on your computer.
-
-**Full Control In One Toolbar**
-The toolbar on the left allows you control all of your folders/ files. You can create, rearrange, rename or delete folders.
+Right click your mouse to quickly create, rename or delete files/folders like what you do on your computer.
 
 **RTL Supported**
 FileBird supports RTL languages including Hebrew, Arabic, etc.
@@ -31,19 +30,23 @@ FileBird supports RTL languages including Hebrew, Arabic, etc.
 **Many Languages Supported**
 This plugin supports most popular languages such as English, Spanish, Italian, French, etc.
 
-== HOW IT WORKS ==
-Are you a WordPress website administrator?
+- Handle files and folders on a remote server:** copy, move, upload, create folder/file, rename, etc.)
 
-Developing a site means that you’ll be adding tons of new media files such as images, videos, audios, PDF, txt, docx, .ect into your site database day by day.
+- Local file system, MySQL, FTP, Box, Dropbox, GoogleDrive and OneDrive volume storage drivers**
 
-As a result, your site will have to store thousands of files. In the default WordPress media database, you are not able to arrange files in a logical manner and you wish you could do that like what you do with your files in your own computer, right? When you want to look for a particular uploaded file on your WordPress site, don’t you know how to find it?
+- Drag & drop interface:** move/copy files inbound and outbound
 
-FileBird was born to help you overcome the obstacle. This plugin gives you the ability to easily organize your files in media library of your site. With this tool in hand, you can manage and arrange thousands of images, audios, videos, and other files in your media library.
+- Flexible configuration:** access rights, upload file types, user interface and others
 
-Managing files in WordPress has never been easier. You are able to just drag and drop to upload or move files/ folders. This will help you save a ton of time that goes into putting your media files in place. The hierarchical view of your folders will also make things easier for you to quickly find specific folders in just a blink of an eye.
+- Create/extract archives:** .zip, .rar, .7z, .tar, .gzip, .bzip2
 
-In somes cases, your WordPress media library not loading, please chat with our support at [https://m.me/ninjateam.org/](https://m.me/ninjateam.org) to get help.
+- Simple client-server API based on JSON
 
+- List and Icons view
+
+- Multi-root support
+
+**Compatible with:** AWS S3, Azure, Digital Ocean Spaces, Box, Dropbox, GoogleDrive, OneDrive, and other cloud storage drivers
 
 == Installation ==
 Manual installation is easy and takes fewer than one minute.
@@ -58,7 +61,7 @@ You’re done. Enjoy.
 = Is it compatible with WordPress 5? = 
 Definitely yes! We’re always up-to-date to give you the best experience in using our plugin.
 
-= Is FileBird free? =
+= Is File Manager Pro free? =
 Yes, File Manager Pro is total free with Pro features.
 
 == Screenshots ==

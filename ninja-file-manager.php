@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: File manager Pro
+ * Plugin Name: File Manager Pro
  * Plugin URI: https://ninjateam.org/wordpress-file-manager-pro
- * Description: Internal template for plugin with OOP, namespace, autoload function.
+ * Description: Made to help you focus on WordPress file management and avoid being distracted.
  * Version: 1.0
  * Author: Ninja Team
  * Author URI: https://ninjateam.org
