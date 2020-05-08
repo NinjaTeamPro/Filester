@@ -15,7 +15,6 @@ $lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->o
       <h3 class="select-theme-title">Select theme:</h3>
       <select name="selector-themes" id="selector-themes">
         <option value="Default">Default Elfinder</option>
-        <option value="bootstrap">Bootstrap</option>
         <option value="dark-slim">Dark Slim</option>
         <option value="Material">Material</option>
         <option value="Material-Gray">Material Gray</option>
