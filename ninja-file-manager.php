@@ -24,12 +24,12 @@ if (file_exists(dirname(__FILE__) . '/includes/File_manager/FMPHPSyntaxChecker.p
 
 defined('ABSPATH') || exit;
 
-define('BN_PREFIX', 'njt-fm');
-define('BN_VERSION', '0.1.0');
-define('BN_DOMAIN', 'njt-fm');
+define('NJT_FM_BN_PREFIX', 'njt-fm');
+define('NJT_FM_BN_VERSION', '0.1.0');
+define('NJT_FM_BN_DOMAIN', 'njt-fm');
 
-define('BN_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('BN_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('NJT_FM_BN_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('NJT_FM_BN_PLUGIN_PATH', plugin_dir_path(__FILE__));
 
 spl_autoload_register(function ($class) {
   $prefix = __NAMESPACE__; // project-specific namespace prefix

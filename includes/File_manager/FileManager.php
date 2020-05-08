@@ -41,14 +41,14 @@ class FileManager
                 ),
             );
         }
-        register_shutdown_function(array($this, 'save_options'));
+        register_shutdown_function(array($this, 'saveOptions'));
 
         add_action('init', array($this, 'isAlowUserAccess'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueAdminScripts'));
         if ($this->isAlowUserAccess()) {
             add_action('admin_menu', array($this, 'FileManager'));
             add_action('wp_ajax_connector', array($this, 'connector'));
-            add_action('wp_ajax_selector_themes', array($this, 'selector_themes'));
+            add_action('wp_ajax_selector_themes', array($this, 'selectorThemes'));
             add_action('wp_ajax_get_role_restrictions', array($this, 'getArrRoleRestrictions'));
        }
     }
@@ -92,13 +92,13 @@ class FileManager
 
     public function ffmViewFileCallback()
     {
-        $viewPath = BN_PLUGIN_PATH . 'views/pages/html-filemanager.php';
+        $viewPath = NJT_FM_BN_PLUGIN_PATH . 'views/pages/html-filemanager.php';
         include_once $viewPath;
     }
 
     public function ffmSettingsPage()
     {
-        $viewPath = BN_PLUGIN_PATH . 'views/pages/html-filemanager-settings.php';
+        $viewPath = NJT_FM_BN_PLUGIN_PATH . 'views/pages/html-filemanager-settings.php';
         include_once $viewPath;
     }
 
@@ -128,9 +128,9 @@ class FileManager
             }
         }
         //elfinder js, css custom
-        wp_register_style('file_manager_admin_css',BN_PLUGIN_URL . 'assets/css/file_manager_admin.css');
+        wp_register_style('file_manager_admin_css',NJT_FM_BN_PLUGIN_URL . 'assets/css/file_manager_admin.css');
         wp_enqueue_style('file_manager_admin_css');
-        wp_enqueue_script('file_manager_admin', BN_PLUGIN_URL . 'assets/js/file_manager_admin.js', array('jquery'), BN_VERSION);
+        wp_enqueue_script('file_manager_admin', NJT_FM_BN_PLUGIN_URL . 'assets/js/file_manager_admin.js', array('jquery'), NJT_FM_BN_VERSION);
         wp_localize_script('file_manager_admin', 'wpData', array(
             'admin_ajax' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce("njt-file-manager-admin"),
@@ -182,7 +182,7 @@ class FileManager
             $trash = array(
                 'id'            => '1',
                 'driver'        => 'Trash',
-                'path'          => BN_PLUGIN_PATH.'includes/File_manager/lib/files/.trash/',
+                'path'          => NJT_FM_BN_PLUGIN_PATH.'includes/File_manager/lib/files/.trash/',
                 'tmbURL'        => site_url() . '/includes/File_manager/lib/files/.trash/.tmb',
                 'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
                 'uploadDeny'    => array(), 
@@ -266,7 +266,7 @@ class FileManager
         wp_die();
     }
     
-    public function selector_themes()
+    public function selectorThemes()
     {
         if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin')) wp_die();
         check_ajax_referer('njt-file-manager-admin', 'nonce', true);
@@ -281,7 +281,7 @@ class FileManager
         wp_die();
     }
 
-    public function save_options()
+    public function saveOptions()
     {
 		update_option('njt-fm-settings', $this->options);
     }
@@ -290,7 +290,7 @@ class FileManager
     {
         if(!wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin')) wp_die();
         check_ajax_referer('njt-file-manager-admin', 'nonce', true);
-        $valueUserRole = $_POST['valueUserRole'] ? sanitize_text_field ($_POST['valueUserRole']) : '';
+        $valueUserRole = filter_var($_POST['valueUserRole']) ? sanitize_text_field ($_POST['valueUserRole']) : '';
         $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
         $dataArrRoleRestrictions = array (
             'disable_operations' => implode(",", !empty($arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access']) ? $arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access'] : array()),

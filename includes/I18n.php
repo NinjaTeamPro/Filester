@@ -22,9 +22,9 @@ class I18n {
 
   public function loadPluginTextdomain() {
     load_plugin_textdomain(
-      BN_DOMAIN,
+      NJT_FM_BN_DOMAIN,
       false,
-      BN_PLUGIN_URL . 'i18n/languages/'
+      NJT_FM_BN_PLUGIN_URL . 'i18n/languages/'
     );
   }
 }
