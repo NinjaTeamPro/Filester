@@ -86,3 +86,19 @@
 .shortcode-switch .slider.round:before {
   border-radius: 50%;
 }
+.njt-btn-group button {
+  border: 1px solid #007cba;
+  color: #0071a1;
+  padding: 2px 15px;
+  cursor: pointer;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background: #f3f5f6;
+}
+
+.njt-btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}

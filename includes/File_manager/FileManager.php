@@ -185,7 +185,7 @@ class FileManager
                 'path'          => BN_PLUGIN_PATH.'includes/File_manager/lib/files/.trash/',
                 'tmbURL'        => site_url() . '/includes/File_manager/lib/files/.trash/.tmb',
                 'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
-                'uploadDeny'    => array(''), 
+                'uploadDeny'    => array(), 
                 'uploadAllow'   => array('all'),
                 'uploadOrder'   => array('deny', 'allow'),
                 'accessControl' => 'access',
@@ -251,6 +251,14 @@ class FileManager
                };
         }
 
+        //Enter file extensions which can be uploaded
+        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['can_upload_mime'])){
+            $opts['roots'][0]['uploadDeny'] = array('all');
+            $opts['roots'][0]['uploadAllow'] = array(); 
+            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['can_upload_mime'] as $key => $value){
+                array_push($opts['roots'][0]['uploadAllow'], $value);
+            };
+        }
         //End --setting User Role Restrictions
 
         $connector = new \elFinderConnector(new \elFinder($opts));
@@ -288,7 +296,8 @@ class FileManager
             'disable_operations' => implode(",", !empty($arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access']) ? $arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access'] : array()),
             'private_folder_access' => !empty($arrRestrictions[$valueUserRole]['private_folder_access']) ? str_replace("\\\\", "/", trim($arrRestrictions[$valueUserRole]['private_folder_access'])) : '',
             'hide_paths' => implode(',', !empty($arrRestrictions[$valueUserRole]['hide_paths']) ? $arrRestrictions[$valueUserRole]['hide_paths'] : array()),
-            'lock_files' => implode(',', !empty($arrRestrictions[$valueUserRole]['lock_files']) ? $arrRestrictions[$valueUserRole]['lock_files'] : array())
+            'lock_files' => implode(',', !empty($arrRestrictions[$valueUserRole]['lock_files']) ? $arrRestrictions[$valueUserRole]['lock_files'] : array()),
+            'can_upload_mime' => implode(',', !empty($arrRestrictions[$valueUserRole]['can_upload_mime']) ? $arrRestrictions[$valueUserRole]['can_upload_mime'] : array())
         );
         wp_send_json_success($dataArrRoleRestrictions);
         wp_die();

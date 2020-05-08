@@ -3,8 +3,11 @@ defined('ABSPATH') || exit;
 $viewListOperations = BN_PLUGIN_PATH . 'views/pages/html-filemanager-list-operations.php';
 $listUserApproved = !empty($this->options['file_manager_settings']['list_user_alow_access']) ? $this->options['file_manager_settings']['list_user_alow_access'] : array();
 
-if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-form-user-role-restrictionst'])){
- if( ! wp_verify_nonce( $_POST['njt-fm-user-restrictions-security-token'] ,'njt-fm-user-restrictions-security-token')) wp_die();
+if (isset($_POST) && !empty($_POST) && !empty($_POST['njt-form-user-role-restrictionst'])) {
+    if (!wp_verify_nonce($_POST['njt-fm-user-restrictions-security-token'], 'njt-fm-user-restrictions-security-token')) {
+        wp_die();
+    }
+
   $userRoleRestrictedSubmited = filter_var($_POST['njt-fm-list-user-restrictions'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['njt-fm-list-user-restrictions']) : '';
  
  if (empty($this->options['file_manager_settings']['list_user_role_restrictions'])) {
@@ -14,7 +17,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-form-user-role-res
   //Save data list User Restrictions alow access
   $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['list_user_restrictions_alow_access'] = 
     filter_var($_POST['list_user_restrictions_alow_access'], FILTER_SANITIZE_STRING) ?
-    explode(',',$_POST['list_user_restrictions_alow_access']) : array();
+    explode(',', $_POST['list_user_restrictions_alow_access']) : array();
   //Seperate or private folder access
   $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['private_folder_access'] =
     filter_var($_POST['private_folder_access'], FILTER_SANITIZE_STRING) ?
@@ -27,6 +30,11 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-form-user-role-res
   $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['lock_files'] =
     filter_var($_POST['lock_files'], FILTER_SANITIZE_STRING) ?
     explode('|', preg_replace('/\s+/', '', $_POST['lock_files'])) : array();
+  //Enter file extensions which can be uploaded
+  $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['can_upload_mime'] =
+    filter_var($_POST['can_upload_mime'], FILTER_SANITIZE_STRING) ?
+    explode(',', preg_replace('/\s+/', '', $_POST['can_upload_mime'])) : array();
+    
 }
 
 $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
@@ -37,7 +45,7 @@ $firstKeyRestrictions = !empty($userRoleRestrictedSubmited) ? $userRoleRestricte
   <!-- creat token -->
   <input type='hidden' name='njt-fm-user-restrictions-security-token'
     value='<?php echo wp_create_nonce('njt-fm-user-restrictions-security-token'); ?>'>
-    <table class="form-table">
+  <table class="form-table">
     <tr>
       <th>If User role is</th>
       <td>
@@ -79,7 +87,8 @@ $firstKeyRestrictions = !empty($userRoleRestrictedSubmited) ? $userRoleRestricte
       <th>Seperate or private folder access</th>
       <td>
         <div>
-          <textarea name="private_folder_access" id="private_folder_access" cols="100"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
+          <textarea name="private_folder_access" id="private_folder_access"
+            cols="100"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
         </div>
       </td>
     </tr>
@@ -99,10 +108,30 @@ $firstKeyRestrictions = !empty($userRoleRestrictedSubmited) ? $userRoleRestricte
       <th>Enter file extensions which you want to Lock</th>
       <td>
         <div>
-          <textarea name="lock_files" id="lock_files" cols="100"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array());?></textarea>
+          <textarea name="lock_files" id="lock_files"
+            cols="100"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array());?></textarea>
           <p class="description">
             e.g: .php | .png | .css. Note: Mutiple separated by Vertical Bar ( <strong>|</strong> )
           </p>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>Enter file extensions which user can be uploaded</th>
+      <td>
+        <div>
+          <div>
+            <div class="njt-btn-group" style="width:100%">
+              <button type="button" class="njt-mime-type" value="application">application</button>
+              <button type="button" class="njt-mime-type" value="audio">audio</button>
+              <button type="button" class="njt-mime-type" value="image">image</button>
+              <button type="button" class="njt-mime-type" value="video">video</button>
+              <button type="button" class="njt-mime-type" value="text">text</button>
+              <button type="button" class="njt-mime-type" value="clearall">clear all</button>
+            </div>
+          </div>
+          <textarea name="can_upload_mime" id="can_upload_mime"
+            cols="100"><?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array());?></textarea>
         </div>
       </td>
     </tr>

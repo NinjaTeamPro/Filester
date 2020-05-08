@@ -143,18 +143,38 @@ var njtFileManager = {
           const resPrivateFolderAccess = response.data.private_folder_access ? response.data.private_folder_access : ''
           const resHidePaths = response.data.hide_paths ? response.data.hide_paths.replace(/[,]+/g, ' | ') : '';
           const resLockFiles = response.data.lock_files ? response.data.lock_files.replace(/[,]+/g, ' | ') : '';
+          const resCanUploadMime = response.data.can_upload_mime ? response.data.can_upload_mime : '';
           jQuery('input.fm-list-user-restrictions-item').prop('checked', false);
           for (itemRestrictionsHasApproved of resRestrictionsHasApproved) {
             jQuery('input[name = ' + itemRestrictionsHasApproved + ']').prop('checked', true);
           }
           // Set value for textarea[name='private_folder_access']
-          jQuery('textarea#private_folder_access').text(resPrivateFolderAccess)
+          jQuery('textarea#private_folder_access').val(resPrivateFolderAccess)
           // Set value for textarea[name='hide_paths']
-          jQuery('textarea#hide_paths').text(resHidePaths)
+          jQuery('textarea#hide_paths').val(resHidePaths)
           // Set value for textarea[name='lock_files']
-          jQuery('textarea#lock_files').text(resLockFiles)
+          jQuery('textarea#lock_files').val(resLockFiles)
+          // Set value for textarea[name='can_upload_mime']
+          jQuery('textarea#can_upload_mime').val(resCanUploadMime)
         });
     });
+  },
+
+  setValueUploadMime() {
+    jQuery('.njt-mime-type').on('click', function () {
+      let arrCanUploadMime = []
+      if (jQuery('textarea#can_upload_mime').val().trim().length > 0) {
+        arrCanUploadMime = jQuery('textarea#can_upload_mime').val().split(",")
+      }
+
+      if (arrCanUploadMime.indexOf(jQuery(this).val()) == -1 && jQuery(this).val() !== 'clearall') {
+        arrCanUploadMime.push(jQuery(this).val())
+      }
+
+      if (jQuery(this).val() == 'clearall') arrCanUploadMime.length = 0
+
+      jQuery('textarea#can_upload_mime').val(arrCanUploadMime.toString())
+    })
   }
 }
 
@@ -174,6 +194,8 @@ jQuery(document).ready(function () {
     njtFileManager.restrictionsHasApproved();
     //Ajax change value
     njtFileManager.ajaxRoleRestrictions();
+    //Set value for textarea[name="can_upload_mime"]
+    njtFileManager.setValueUploadMime();
     // End- Setting for `Select User Roles Restrictions to access`
   }
 });
