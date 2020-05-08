@@ -38,7 +38,12 @@ if (isset($_POST) && !empty($_POST) && !empty($_POST['njt-form-user-role-restric
 }
 
 $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
-$firstKeyRestrictions = !empty($userRoleRestrictedSubmited) ? $userRoleRestrictedSubmited : array_keys($arrRestrictions)[0];
+if (count($arrRestrictions) > 0) {
+  $firstKeyRestrictions = !empty($userRoleRestrictedSubmited) ? $userRoleRestrictedSubmited : array_keys($arrRestrictions)[0];
+} else {
+  $firstKeyRestrictions = '';
+}
+
 ?>
 
 <form action="" class="njt-plugin-setting form-user-role-restrictions" method="POST">
