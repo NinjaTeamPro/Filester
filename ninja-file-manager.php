@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Ninja File manager
- * Plugin URI: https://ninjateam.org
- * Description: Internal template for plugin with OOP, namespace, autoload function.
- * Version: 0.1.0
+ * Plugin Name: File Manager Pro
+ * Plugin URI: https://ninjateam.org/wordpress-file-manager-pro
+ * Description: Made to help you focus on WordPress file management and avoid being distracted.
+ * Version: 1.0
  * Author: Ninja Team
  * Author URI: https://ninjateam.org
  * Text Domain: big-ninja
@@ -25,7 +25,7 @@ if (file_exists(dirname(__FILE__) . '/includes/File_manager/FMPHPSyntaxChecker.p
 defined('ABSPATH') || exit;
 
 define('NJT_FM_BN_PREFIX', 'njt-fm');
-define('NJT_FM_BN_VERSION', '0.1.0');
+define('NJT_FM_BN_VERSION', '1.0');
 define('NJT_FM_BN_DOMAIN', 'njt-fm');
 
 define('NJT_FM_BN_PLUGIN_URL', plugin_dir_url(__FILE__));
