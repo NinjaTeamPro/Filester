@@ -1,6 +1,6 @@
 <?php
 defined('ABSPATH') || exit;
-$viewListOperations = BN_PLUGIN_PATH . 'views/pages/html-filemanager-list-operations.php';
+$viewListOperations = NJT_FM_BN_PLUGIN_PATH . 'views/pages/html-filemanager-list-operations.php';
 $listUserApproved = !empty($this->options['file_manager_settings']['list_user_alow_access']) ? $this->options['file_manager_settings']['list_user_alow_access'] : array();
 
 if (isset($_POST) && !empty($_POST) && !empty($_POST['njt-form-user-role-restrictionst'])) {
@@ -89,6 +89,9 @@ $firstKeyRestrictions = !empty($userRoleRestrictedSubmited) ? $userRoleRestricte
         <div>
           <textarea name="private_folder_access" id="private_folder_access"
             cols="100"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
+          <p class="description">
+            e.g: wp-content/themes.
+          </p>
         </div>
       </td>
     </tr>
