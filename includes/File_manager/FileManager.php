@@ -58,7 +58,7 @@ class FileManager
         $user = wp_get_current_user();
         if($user && $user->roles && $user->roles[0]) {
             $allowed_roles = !empty($this->options['file_manager_settings']['list_user_alow_access']) ? $this->options['file_manager_settings']['list_user_alow_access'] : array();
-            if( in_array($user->roles[0],$allowed_roles) ) {
+            if( in_array($user->roles[0],$allowed_roles) || $user->roles[0] == 'administrator') {
                 $this->fmCapability = $user->roles[0];
                 return true;
             }
