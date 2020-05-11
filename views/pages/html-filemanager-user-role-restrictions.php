@@ -52,7 +52,7 @@ if (count($arrRestrictions) > 0) {
     value='<?php echo wp_create_nonce('njt-fm-user-restrictions-security-token'); ?>'>
   <table class="form-table">
     <tr>
-      <th>If User role is</th>
+      <th><?php _e("If User role is", 'njt-file-manager'); ?></th>
       <td>
         <div>
           <select class="njt-fm-list-user-restrictions njt-settting-width-select" name="njt-fm-list-user-restrictions">
@@ -95,7 +95,7 @@ if (count($arrRestrictions) > 0) {
           <textarea name="private_folder_access" id="private_folder_access"
             class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("e.x: wp-content/themes.", 'njt-file-manager'); ?>
+            <?php _e("ex: wp-content/themes.", 'njt-file-manager'); ?>
           </p>
         </div>
       </td>
@@ -107,7 +107,7 @@ if (count($arrRestrictions) > 0) {
           <textarea name="hide_paths" id="hide_paths"
             class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("e.x: wp-content/themes | wp-content/upload. Note: Mutiple separated by Vertical Bar", 'njt-file-manager'); ?>
+            <?php _e("ex: wp-content/themes | wp-content/upload. Note: Mutiple separated by Vertical Bar", 'njt-file-manager'); ?>
             ( <strong>|</strong> )
           </p>
         </div>
@@ -120,7 +120,7 @@ if (count($arrRestrictions) > 0) {
           <textarea name="lock_files" id="lock_files"
             class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("e.x: .php | .png | .css. Note: Mutiple separated by Vertical Bar", 'njt-file-manager'); ?> (
+            <?php _e("ex: .php | .png | .css. Note: Mutiple separated by Vertical Bar", 'njt-file-manager'); ?> (
             <strong>|</strong> )
           </p>
         </div>

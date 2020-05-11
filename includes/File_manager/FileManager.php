@@ -18,6 +18,7 @@ class FileManager
      * */
     public $options;
     public $fmCapability;
+    public $userRole = '';
     
     public static function getInstance()
     {
@@ -30,6 +31,10 @@ class FileManager
 
     private function __construct()
     {
+        //get user role
+        $user = wp_get_current_user();
+        $this->userRole = $user && $user->roles && $user->roles[0] ? $user->roles[0] : '';
+
         // Loading Options
         // Options
 		$this->options = get_option('njt-fm-settings');
@@ -55,11 +60,10 @@ class FileManager
 
     public function isAlowUserAccess()
     {
-        $user = wp_get_current_user();
-        if($user && $user->roles && $user->roles[0]) {
+        if($this->userRole) {
             $allowed_roles = !empty($this->options['file_manager_settings']['list_user_alow_access']) ? $this->options['file_manager_settings']['list_user_alow_access'] : array();
-            if( in_array($user->roles[0],$allowed_roles) || $user->roles[0] == 'administrator') {
-                $this->fmCapability = $user->roles[0];
+            if( in_array($this->userRole,$allowed_roles) || $this->userRole == 'administrator') {
+                $this->fmCapability = $this->userRole;
                 return true;
             }
         }
@@ -104,10 +108,14 @@ class FileManager
 
     public function enqueueAdminScripts()
     {
-        if (empty(get_option('selector_themes'))) {
-            update_option('selector_themes', 'Default');
+      
+        $selectorThemes = get_option('njt_fm_selector_themes');
+        if (empty($selectorThemes[$this->userRole])) {
+            $selectorThemes[$this->userRole]['themesValue'] = 'Default';
+            update_option('njt_fm_selector_themes', $selectorThemes);
         }
-        $selectedTheme = get_option('selector_themes');
+      
+        $selectedTheme = $selectorThemes[$this->userRole]['themesValue'];
 
         //elfinder css
         wp_enqueue_style('elfinder.jq.css', plugins_url('/lib/jquery/jquery-ui-1.12.0.css', __FILE__));
@@ -159,7 +167,6 @@ class FileManager
                     'uploadDeny'    => array(), 
                     'uploadAllow'   => array('all'),
                     'uploadOrder'   => array('deny', 'allow'),
-                    'accessControl' => 'access',
                     'disabled' => array(''),
                     'attributes' => array() // default is empty
                 ),
@@ -188,7 +195,6 @@ class FileManager
                 'uploadDeny'    => array(), 
                 'uploadAllow'   => array('all'),
                 'uploadOrder'   => array('deny', 'allow'),
-                'accessControl' => 'access',
                 'attributes' => array(
                     array(
                         'pattern' => '/.tmb/',
@@ -215,17 +221,17 @@ class FileManager
         $userRoles =  $user && $user->roles && $user->roles[0] ? $user->roles[0] : '';
         
         //Disable Operations
-        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['list_user_restrictions_alow_access'])){
-            $opts['roots'][0]['disabled'] = $this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['list_user_restrictions_alow_access'];
+        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['list_user_restrictions_alow_access'])){
+            $opts['roots'][0]['disabled'] = $this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['list_user_restrictions_alow_access'];
         }
         //Seperate or private folder access
-        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['private_folder_access'])){
-            $opts['roots'][0]['path'] = ABSPATH .$this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['private_folder_access'] .'/';
+        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'])){
+            $opts['roots'][0]['path'] = ABSPATH .$this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'] .'/';
         }
 
         //Folder or File Paths That You want to Hide
-        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['hide_paths'])){
-            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['hide_paths'] as $key => $value){
+        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['hide_paths'])){
+            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['hide_paths'] as $key => $value){
                 $arrItemHidePath =  array( 
                      'pattern' => '~/'.$value.'~',
                      'read' => false,
@@ -238,8 +244,8 @@ class FileManager
         }
 
         //File extensions which you want to Lock
-        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['lock_files'])){
-            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['lock_files'] as $key => $value){
+        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['lock_files'])){
+            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['lock_files'] as $key => $value){
                 $arrItemLockFile =  array( 
                      'pattern' => '/'.$value.'/',
                      'read' => false,
@@ -252,10 +258,10 @@ class FileManager
         }
 
         //Enter file extensions which can be uploaded
-        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['can_upload_mime'])){
+        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])){
             $opts['roots'][0]['uploadDeny'] = array('all');
             $opts['roots'][0]['uploadAllow'] = array(); 
-            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$userRoles]['can_upload_mime'] as $key => $value){
+            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'] as $key => $value){
                 array_push($opts['roots'][0]['uploadAllow'], $value);
             };
         }
@@ -270,13 +276,20 @@ class FileManager
     {
         if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin')) wp_die();
         check_ajax_referer('njt-file-manager-admin', 'nonce', true);
+        
         $themesValue = sanitize_text_field ($_POST['themesValue']);
-        $selector_themes = get_option('selector_themes');
-        if (empty($selector_themes) || $selector_themes != $themesValue) {
-            update_option('selector_themes', $themesValue);
+        $selectorThemes = get_option('njt_fm_selector_themes');
+        if (empty($selectorThemes[$this->userRole])) {
+            $selectorThemes[$this->userRole]['themesValue'] = 'Default';
+            update_option('njt_fm_selector_themes', $selectorThemes);
         }
-        $selected_themes = get_option('selector_themes');
-        $linkThemes = plugins_url('/lib/themes/' . $themesValue . '/css/theme.css', __FILE__);
+       
+        if ($selectorThemes[$this->userRole]['themesValue'] != $themesValue) {
+            $selectorThemes[$this->userRole]['themesValue'] = $themesValue;
+            update_option('njt_fm_selector_themes', $selectorThemes);
+        }
+        $selected_themes = get_option('njt_fm_selector_themes');
+        $linkThemes = plugins_url('/lib/themes/' . $selected_themes[$this->userRole]['themesValue'] . '/css/theme.css', __FILE__);
         wp_send_json_success($linkThemes);
         wp_die();
     }
