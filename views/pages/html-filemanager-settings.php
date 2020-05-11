@@ -30,7 +30,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
         <tr>
           <th><?php _e("Select User Roles to access", 'njt-file-manager'); ?></th>
           <td>
-            <div class="njt-fm-list-user">
+            <div class="njt-fm-list-user njt-settting-width" style="line-height:2">
               <?php foreach ( $wp_roles->roles as $key=>$value ): ?>
               <?php if ($key != 'administrator') {?>
               <span style="padding-right: 20px">
@@ -52,10 +52,10 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
         <tr>
           <th><?php _e("URL and Path", 'njt-file-manager'); ?></th>
           <td>
-            <input type='text' name='root_folder_path' id='root_folder_path' style="width: 40%"
+            <input type='text' name='root_folder_path' id='root_folder_path' class="njt-settting-width"
               placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH));?>"
               value='<?php  if( isset( $this->options['file_manager_settings']['root_folder_path'] ) && !empty( $this->options['file_manager_settings']['root_folder_path'] ) ) echo esc_attr($this->options['file_manager_settings']['root_folder_path']); ?>' />
-            <div class="des-path">
+            <div class="des-path njt-settting-width">
               <small><?php _e("File Manager Pro Root Path, you can change according to your choice", 'njt-file-manager'); ?></small>
             </div>
             <small>
@@ -68,10 +68,10 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
         <tr>
           <th><?php _e("Maximum Upload Size", 'njt-file-manager'); ?></th>
           <td>
-            <input type="number" name="upload_max_size" id="upload_max_size"
+            <input type="number" name="upload_max_size" id="upload_max_size" class="njt-settting-width"
               value="<?php  if( isset( $this->options['file_manager_settings']['upload_max_size'] ) && !empty( $this->options['file_manager_settings']['upload_max_size'] )) echo esc_attr($this->options['file_manager_settings']['upload_max_size']); ?>">
             <strong><?php _e("MB", 'njt-file-manager'); ?></strong>
-            <div class="des-path">
+            <div class="des-path njt-settting-width">
               <small>
                 <?php _e("Default:", 'njt-file-manager'); ?>
                 <b><?php _e("0 means unlimited upload.", 'njt-file-manager'); ?></b>
@@ -98,9 +98,11 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
             </label>
 
 
-            <p class="description"><?php _e("Will Hide .htaccess file (if exists) in file manager.", 'njt-file-manager'); ?>
+            <p class="description njt-settting-width">
+              <?php _e("Will Hide .htaccess file (if exists) in file manager.", 'njt-file-manager'); ?>
             </p>
-            <p><?php _e("Default: ", 'njt-file-manager'); ?><code><?php _e("Not Enabled", 'njt-file-manager'); ?></code></p>
+            <p><?php _e("Default: ", 'njt-file-manager'); ?><code><?php _e("Not Enabled", 'njt-file-manager'); ?></code>
+            </p>
           </td>
         </tr>
         <!-- Enable Trash? -->
@@ -113,9 +115,10 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
               <div class="slider round"></div>
             </label>
 
-            <p class="description">
+            <p class="description njt-settting-width">
               <?php _e("After enable trash, your files will go to trash folder.", 'njt-file-manager'); ?></p>
-            <p><?php _e("Default: ", 'njt-file-manager'); ?><code><?php _e("Not Enabled", 'njt-file-manager'); ?></code></p>
+            <p><?php _e("Default: ", 'njt-file-manager'); ?><code><?php _e("Not Enabled", 'njt-file-manager'); ?></code>
+            </p>
           </td>
         </tr>
         <!-- button submit -->

@@ -55,7 +55,7 @@ if (count($arrRestrictions) > 0) {
       <th>If User role is</th>
       <td>
         <div>
-          <select class="njt-fm-list-user-restrictions" name="njt-fm-list-user-restrictions">
+          <select class="njt-fm-list-user-restrictions njt-settting-width-select" name="njt-fm-list-user-restrictions">
             <?php
               if ($listUserApproved && count($listUserApproved) != 1 && $listUserApproved[0] != 'administrator') {
               foreach ( $wp_roles->roles as $key=>$value ):
@@ -78,7 +78,7 @@ if (count($arrRestrictions) > 0) {
     <tr>
       <th><?php _e("Disable Operations", 'njt-file-manager'); ?></th>
       <td>
-        <div style="line-height: 2">
+        <div style="line-height: 2" class="njt-settting-width">
           <?php include_once $viewListOperations; ?>
           <!-- Value to submit data -->
           <input type="hidden" name="list_user_restrictions_alow_access" id="list_user_restrictions_alow_access">
@@ -93,10 +93,9 @@ if (count($arrRestrictions) > 0) {
       <td>
         <div>
           <textarea name="private_folder_access" id="private_folder_access"
-            cols="100"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
-          <p class="description">
-            <?php _e("e.g: wp-content/themes.", 'njt-file-manager'); ?>
-
+            class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
+          <p class="description njt-settting-width">
+            <?php _e("e.x: wp-content/themes.", 'njt-file-manager'); ?>
           </p>
         </div>
       </td>
@@ -106,9 +105,9 @@ if (count($arrRestrictions) > 0) {
       <td>
         <div>
           <textarea name="hide_paths" id="hide_paths"
-            cols="100"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array());?></textarea>
-          <p class="description">
-            <?php _e("e.g: wp-content/themes | wp-content/upload. Note: Mutiple separated by Vertical Bar", 'njt-file-manager'); ?>
+            class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array());?></textarea>
+          <p class="description njt-settting-width">
+            <?php _e("e.x: wp-content/themes | wp-content/upload. Note: Mutiple separated by Vertical Bar", 'njt-file-manager'); ?>
             ( <strong>|</strong> )
           </p>
         </div>
@@ -119,9 +118,9 @@ if (count($arrRestrictions) > 0) {
       <td>
         <div>
           <textarea name="lock_files" id="lock_files"
-            cols="100"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array());?></textarea>
-          <p class="description">
-            <?php _e("e.g: .php | .png | .css. Note: Mutiple separated by Vertical Bar", 'njt-file-manager'); ?> (
+            class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array());?></textarea>
+          <p class="description njt-settting-width">
+            <?php _e("e.x: .php | .png | .css. Note: Mutiple separated by Vertical Bar", 'njt-file-manager'); ?> (
             <strong>|</strong> )
           </p>
         </div>
@@ -132,7 +131,7 @@ if (count($arrRestrictions) > 0) {
       <td>
         <div>
           <div>
-            <div class="njt-btn-group" style="width:100%">
+            <div class="njt-btn-group njt-settting-width">
               <button type="button" class="njt-mime-type" value="application">application</button>
               <button type="button" class="njt-mime-type" value="audio">audio</button>
               <button type="button" class="njt-mime-type" value="image">image</button>
@@ -142,7 +141,7 @@ if (count($arrRestrictions) > 0) {
             </div>
           </div>
           <textarea name="can_upload_mime" id="can_upload_mime"
-            cols="100"><?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array());?></textarea>
+            class="njt-settting-width"><?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array());?></textarea>
         </div>
       </td>
     </tr>

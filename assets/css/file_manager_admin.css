@@ -96,9 +96,22 @@
   margin-bottom: 10px;
   background: #f3f5f6;
 }
-
 .njt-btn-group:after {
   content: "";
   clear: both;
   display: table;
+}
+.njt-plugin-setting.settings-form .njt-settting-width,
+.form-user-role-restrictions .njt-settting-width-select {
+  width: 45%;
+}
+.form-user-role-restrictions .njt-settting-width {
+  width: 80%;
+}
+@media screen and (max-width: 769px) {
+  .form-user-role-restrictions .njt-settting-width,
+  .form-user-role-restrictions .njt-settting-width-select,
+  .njt-plugin-setting.settings-form .njt-settting-width {
+    width: 100%;
+  }
 }

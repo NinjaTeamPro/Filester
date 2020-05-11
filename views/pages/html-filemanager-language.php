@@ -38,7 +38,7 @@
   );
 ?>
 
-<select name="fm_locale" id="fm_locale">
+<select name="fm_locale" id="fm_locale" class="njt-settting-width">
   <?php foreach($locales as $key => $locale) { ?>
   <option value="<?php echo $locale;?>"
     <?php echo (isset($this->options['file_manager_settings']['fm_locale']) && $this->options['file_manager_settings']['fm_locale'] == $locale) ? 'selected="selected"' : '';?>>
