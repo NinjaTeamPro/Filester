@@ -27,8 +27,8 @@
 
 /* Hovered buttons in search field */
 .elfinder .elfinder-button-search .elfinder-button-menu .ui-button:hover {
-  background: #cce8ff;
-  border: 0px solid #99d1ff;
+  /* background: #cce8ff;
+ border: 0px solid #99d1ff;*/
 }
 
 /* Disabled buttons */
@@ -49,7 +49,7 @@
 /* Searchbar */
 .elfinder-toolbar .elfinder-button-search {
   /* */
-  border: 1px solid #ccc;
+  /*border: 1px solid #ccc;*/
   margin-right: 5px;
   border-radius: 0;
 }
@@ -77,31 +77,6 @@
     width: 16px;
   }
 
-  /* Root */
-  .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-home {
-    background-image: url('../images/16px/root.png');
-  }
-
-  /* Preference */
-  .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-preference {
-    background-image: url('../images/16px/preference.png');
-  }
-
-  /* Hide */
-  .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-hide {
-    background-image: url('../images/16px/hide.png');
-  }
-
-  /* Chmod */
-  .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-chmod {
-    background-image: url('../images/16px/chmod.png');
-  }
-
-  /* Fullscreen */
-  .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-fullscreen {
-    background-image: url('../images/16px/fullscreen.png');
-  }
-  
   /* Back */
   .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-back {
     background-image: url('../images/16px/back.png');
@@ -118,6 +93,10 @@
 
   .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-netmount {
     background-image: url('../images/16px/netmount.png');
+  }
+
+  .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-home {
+    background-image: url('../images/16px/home.png');
   }
 
   .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-up {
@@ -229,6 +208,9 @@
   }  
   .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-empty {
     background-image: url('../images/16px/clear_folder.png');
+  }
+  .elfinder .elfinder-toolbar .elfinder-buttonset .elfinder-button-icon-fullscreen{
+    background-image: url('../images/16px/full-screen-icon.png');
   }
 
   /* Menus (e.g. for sorting) */

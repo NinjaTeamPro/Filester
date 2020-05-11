@@ -5,14 +5,8 @@
 .elfinder,
 
 /* toolbar */
-.elfinder .elfinder-toolbar,
-.elfinder .elfinder-buttonset,
-.elfinder .elfinder-button,
-.elfinder .elfinder-toolbar-button-separator,
-.elfinder .elfinder-toolbar input,
 
 /* navbar */
-.elfinder .elfinder-navbar,
 .elfinder .elfinder-navbar *,
 
 /* current working directory */
@@ -35,14 +29,13 @@
 
 /* ui-widgets (normally for dialogs) */
 .elfinder .ui-widget,
-.elfinder .ui-widget-header,
 .elfinder .ui-widget-content,
 
 /* icons */
 .elfinder-button-icon,
 .elfinder-navbar-icon,
-.elfinder-cwd-icon-directory,
 .elfinder .ui-icon,
+.elfinder-cwd-icon-directory,
 
 /* statusbar */
 .elfinder .elfinder-statusbar,
@@ -54,6 +47,23 @@
 .elfinder-contextmenu-item,
 .elfinder-contextmenu-separator,
 .elfinder-contextmenu .ui-state-hover {
-  background: none;
+  /*background: none;
+  border: none;*/
+}
+.elfinder .elfinder-toolbar,
+.elfinder .elfinder-buttonset,
+.elfinder .elfinder-button,
+.elfinder .elfinder-toolbar-button-separator,
+/*.elfinder .elfinder-toolbar input,*/
+.elfinder .elfinder-navbar,
+.elfinder .ui-widget-header,
+.elfinder-dialog-confirm .ui-icon,
+.elfinder-dialog-confirm .ui-widget-content,
+.std42-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close:hover .ui-icon,
+.std42-dialog .ui-icon{
+ background: none;
   border: none;
+}
+.ui-dialog-titlebar-close{
+	background: url('../images/close.png') !important;
 }
