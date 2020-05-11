@@ -16,7 +16,7 @@ class FMPHPSyntaxChecker{
 			fwrite($fp, $args['content']);
 			fclose($fp);
 			exec("php -l " . $temp_file_path , $output, $return);
-			if(strpos($output[0], 'Errors parsing' ) !== false) $error_message = __("Syntax Error found. Please check your code for syntax error.",'file-manager');
+			if(strpos($output[0], 'Errors parsing' ) !== false) $error_message = __("Syntax Error found. Please check your code for syntax error.",'njt-file-manager');
 			unlink($temp_file_path);
 			if($return !== 0) return array(
 				'preventexec' => true,

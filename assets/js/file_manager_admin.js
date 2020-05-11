@@ -87,6 +87,10 @@ var njtFileManager = {
   actionSubmitRoleRestrictionst() {
     jQuery('#njt-form-user-role-restrictionst').on('click', function () {
       const arrayUserRestrictionsAccess = [];
+      if (!jQuery('.njt-fm-list-user-restrictions').val()) {
+        alert('Please choose User Role!')
+        return false;
+      }
       jQuery('.fm-list-user-restrictions-item').each(function () {
         if (jQuery(this).is(":checked")) {
           arrayUserRestrictionsAccess.push(jQuery(this).val());

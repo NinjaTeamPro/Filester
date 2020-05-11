@@ -5,14 +5,14 @@ $lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->o
 <div class="njt-file-manager">
   <div class="njt-fm-select-theme">
     <div>
-      <h1> File Manager Pro </h1>
+      <h1><?php _e("File Manager Pro", 'njt-file-manager'); ?></h1>
     </div>
     <div class="select-theme-content">
       <?php    
       $selectedTheme = get_option('selector_themes') ? get_option('selector_themes') : null;
     ?>
 
-      <h3 class="select-theme-title">Select theme:</h3>
+      <h3 class="select-theme-title"><?php _e("Select theme:", 'njt-file-manager'); ?></h3>
       <select name="selector-themes" id="selector-themes">
         <option value="Default">Default Elfinder</option>
         <option value="dark-slim">Dark Slim</option>

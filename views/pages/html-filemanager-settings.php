@@ -17,8 +17,8 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
 ?>
 <div class="njt-fm-settings njt-file-manager">
   <h1 id="njt-plugin-tabs" class="nav-tab-wrapper hide-if-no-js">
-    <a href="javascript:void(0)" class="nav-tab nav-tab-active">Settings</a>
-    <a href="javascript:void(0)" class="nav-tab">User Role Restrictions</a>
+    <a href="javascript:void(0)" class="nav-tab nav-tab-active"><?php _e("Settings", 'njt-file-manager'); ?></a>
+    <a href="javascript:void(0)" class="nav-tab"><?php _e("User Role Restrictions", 'njt-file-manager'); ?></a>
   </h1>
   <div class="njt-fm-settings-content">
     <form action="" class="njt-plugin-setting settings-form" method="POST">
@@ -28,7 +28,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
 
       <table class="form-table">
         <tr>
-          <th>Select User Roles to access</th>
+          <th><?php _e("Select User Roles to access", 'njt-file-manager'); ?></th>
           <td>
             <div class="njt-fm-list-user">
               <?php foreach ( $wp_roles->roles as $key=>$value ): ?>
@@ -50,45 +50,45 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
         </tr>
         <!-- URL and Path -->
         <tr>
-          <th>URL and Path</th>
+          <th><?php _e("URL and Path", 'njt-file-manager'); ?></th>
           <td>
             <input type='text' name='root_folder_path' id='root_folder_path' style="width: 40%"
               placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH));?>"
               value='<?php  if( isset( $this->options['file_manager_settings']['root_folder_path'] ) && !empty( $this->options['file_manager_settings']['root_folder_path'] ) ) echo esc_attr($this->options['file_manager_settings']['root_folder_path']); ?>' />
             <div class="des-path">
-              <small>File Manager Pro Root Path, you can change according to your choice</small>
+              <small><?php _e("File Manager Pro Root Path, you can change according to your choice", 'njt-file-manager'); ?></small>
             </div>
             <small>
-              <?php _e("Default Path:", 'file-manager'); ?>
+              <?php _e("Default Path:", 'njt-file-manager'); ?>
               <b><?php echo (str_replace("\\", "/", ABSPATH));?></b>
             </small>
           </td>
         </tr>
         <!-- Maximum Upload Size -->
         <tr>
-          <th>Maximum Upload Size</th>
+          <th><?php _e("Maximum Upload Size", 'njt-file-manager'); ?></th>
           <td>
             <input type="number" name="upload_max_size" id="upload_max_size"
               value="<?php  if( isset( $this->options['file_manager_settings']['upload_max_size'] ) && !empty( $this->options['file_manager_settings']['upload_max_size'] )) echo esc_attr($this->options['file_manager_settings']['upload_max_size']); ?>">
-            <strong>MB</strong>
+            <strong><?php _e("MB", 'njt-file-manager'); ?></strong>
             <div class="des-path">
               <small>
-                <?php _e("Default:", 'file-manager'); ?>
-                <b>0 means unlimited upload.</b>
+                <?php _e("Default:", 'njt-file-manager'); ?>
+                <b><?php _e("0 means unlimited upload.", 'njt-file-manager'); ?></b>
               </small>
             </div>
           </td>
         </tr>
         <!-- Select language -->
         <tr>
-          <th>Select language</th>
+          <th><?php _e("Select language", 'njt-file-manager'); ?></th>
           <td>
             <?php include_once $viewPathLanguage; ?>
           </td>
         </tr>
         <!-- .htaccess -->
         <tr>
-          <th>Hide .htaccess?</th>
+          <th><?php _e("Hide .htaccess?", 'njt-file-manager'); ?></th>
           <td>
             <label class="shortcode-switch" for="enable_htaccess">
               <input name="enable_htaccess" type="checkbox" id="enable_htaccess" value="1"
@@ -98,13 +98,14 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
             </label>
 
 
-            <p class="description">Will Hide .htaccess file (if exists) in file manager.</p>
-            <p>Default: <code>Not Enabled</code></p>
+            <p class="description"><?php _e("Will Hide .htaccess file (if exists) in file manager.", 'njt-file-manager'); ?>
+            </p>
+            <p><?php _e("Default: ", 'njt-file-manager'); ?><code><?php _e("Not Enabled", 'njt-file-manager'); ?></code></p>
           </td>
         </tr>
         <!-- Enable Trash? -->
         <tr>
-          <th>Enable Trash?</th>
+          <th><?php _e("Enable Trash?", 'njt-file-manager'); ?></th>
           <td>
             <label class="shortcode-switch" for="enable_trash">
               <input name="enable_trash" type="checkbox" id="enable_trash" value="1"
@@ -112,8 +113,9 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
               <div class="slider round"></div>
             </label>
 
-            <p class="description">After enable trash, your files will go to trash folder.</p>
-            <p>Default: <code>Not Enabled</code></p>
+            <p class="description">
+              <?php _e("After enable trash, your files will go to trash folder.", 'njt-file-manager'); ?></p>
+            <p><?php _e("Default: ", 'njt-file-manager'); ?><code><?php _e("Not Enabled", 'njt-file-manager'); ?></code></p>
           </td>
         </tr>
         <!-- button submit -->
