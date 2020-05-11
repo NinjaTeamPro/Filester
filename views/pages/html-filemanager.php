@@ -47,6 +47,7 @@ jQuery(document).ready(function() {
         'netunmount'
       ]
     },
+    ui: ['toolbar', 'tree', 'path', 'stat'],
     customData: {
       action: 'connector',
       nonce: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'

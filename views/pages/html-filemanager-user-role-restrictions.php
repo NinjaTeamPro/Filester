@@ -107,7 +107,7 @@ if (count($arrRestrictions) > 0) {
           <textarea name="hide_paths" id="hide_paths"
             class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("ex: wp-content/themes | wp-content/upload. Note: Mutiple separated by Vertical Bar", 'njt-file-manager'); ?>
+            <?php _e("ex: themes/storefront | themes/twentyseventeen. Note: Mutiple separated by Vertical Bar", 'njt-file-manager'); ?>
             ( <strong>|</strong> )
           </p>
         </div>
