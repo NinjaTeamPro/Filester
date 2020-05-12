@@ -68,7 +68,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
         <tr>
           <th><?php _e("Maximum Upload Size", 'njt-file-manager'); ?></th>
           <td>
-            <input type="number" name="upload_max_size" id="upload_max_size" class="njt-settting-width"
+            <input type="number" name="upload_max_size" id="upload_max_size" class="njt-settting-width-half"
               value="<?php  if( isset( $this->options['file_manager_settings']['upload_max_size'] ) && !empty( $this->options['file_manager_settings']['upload_max_size'] )) echo esc_attr($this->options['file_manager_settings']['upload_max_size']); ?>">
             <strong><?php _e("MB", 'njt-file-manager'); ?></strong>
             <div class="des-path njt-settting-width">

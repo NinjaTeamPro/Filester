@@ -13,8 +13,8 @@
     'Faroese translation' => 'fo',
     'French' => 'fr',
     'Hebrew' => 'he',
-    'hr' => 'hr',
-    'magyar' => 'hu',
+    'Croatian' => 'hr',
+    'Magyar' => 'hu',
     'Indonesian' => 'id',
     'Italiano' => 'it',
     'Japanese' => 'ja',
@@ -38,7 +38,7 @@
   );
 ?>
 
-<select name="fm_locale" id="fm_locale" class="njt-settting-width">
+<select name="fm_locale" id="fm_locale" class="njt-settting-width-half">
   <?php foreach($locales as $key => $locale) { ?>
   <option value="<?php echo $locale;?>"
     <?php echo (isset($this->options['file_manager_settings']['fm_locale']) && $this->options['file_manager_settings']['fm_locale'] == $locale) ? 'selected="selected"' : '';?>>
