@@ -98,14 +98,24 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("Seperate or private folder access", 'njt-file-manager'); ?></th>
+      <th><?php _e("URL and Path", 'njt-file-manager'); ?></th>
       <td>
         <div>
+          <div class="njt-settting-width">
+            <button type="button"
+              class="njt-fm-button js-creat-root-path"><?php _e("creat root", 'njt-file-manager'); ?></button>
+          </div>
           <textarea name="private_folder_access" id="private_folder_access"
             class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
-          <p class="description njt-settting-width">
-            <?php _e("ex: wp-content/themes.", 'njt-file-manager'); ?>
-          </p>
+          <div>
+            <p class="description njt-settting-width">
+              <?php _e("ex: ". str_replace("\\", "/", ABSPATH)."wp-content.", 'njt-file-manager'); ?>
+            </p>
+            <small>
+              <?php _e("Default Path:", 'njt-file-manager'); ?>
+              <b class="njt-fm-root-path"><?php echo (str_replace("\\", "/", ABSPATH));?></b>
+            </small>
+          </div>
         </div>
       </td>
     </tr>
@@ -141,12 +151,12 @@ if (count($arrRestrictions) > 0) {
         <div>
           <div>
             <div class="njt-btn-group njt-settting-width">
-              <button type="button" class="njt-mime-type" value="application">application</button>
-              <button type="button" class="njt-mime-type" value="audio">audio</button>
-              <button type="button" class="njt-mime-type" value="image">image</button>
-              <button type="button" class="njt-mime-type" value="video">video</button>
-              <button type="button" class="njt-mime-type" value="text">text</button>
-              <button type="button" class="njt-mime-type" value="clearall">clear all</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="application">application</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="audio">audio</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="image">image</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="video">video</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="text">text</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="clearall">clear all</button>
             </div>
           </div>
           <textarea name="can_upload_mime" id="can_upload_mime"

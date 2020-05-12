@@ -223,9 +223,9 @@ class FileManager
         if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['list_user_restrictions_alow_access'])){
             $opts['roots'][0]['disabled'] = $this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['list_user_restrictions_alow_access'];
         }
-        //Seperate or private folder access
+        //Creat root path for user
         if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'])){
-            $opts['roots'][0]['path'] = ABSPATH .$this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'] .'/';
+            $opts['roots'][0]['path'] = $this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'] .'/';
         }
 
         //Folder or File Paths That You want to Hide

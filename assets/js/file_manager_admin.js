@@ -179,6 +179,12 @@ var njtFileManager = {
 
       jQuery('textarea#can_upload_mime').val(arrCanUploadMime.toString())
     })
+  },
+  clickedCreatRootPath() {
+    jQuery('.js-creat-root-path').on('click', function () {
+      const valueRootPath = jQuery(".njt-fm-root-path").text()
+      jQuery('textarea#private_folder_access').val(valueRootPath)
+    })
   }
 }
 
@@ -200,6 +206,8 @@ jQuery(document).ready(function () {
     njtFileManager.ajaxRoleRestrictions();
     //Set value for textarea[name="can_upload_mime"]
     njtFileManager.setValueUploadMime();
+    //Creat root path default
+    njtFileManager.clickedCreatRootPath();
     // End- Setting for `Select User Roles Restrictions to access`
   }
 });
