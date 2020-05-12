@@ -17,7 +17,7 @@ class FileManager
      *
      * */
     public $options;
-    public $fmCapability;
+    public $fmCapability = '';
     public $userRole = '';
     
     public static function getInstance()
@@ -49,8 +49,8 @@ class FileManager
         register_shutdown_function(array($this, 'saveOptions'));
 
         add_action('init', array($this, 'isAlowUserAccess'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueueAdminScripts'));
         if ($this->isAlowUserAccess()) {
+            add_action('admin_enqueue_scripts', array($this, 'enqueueAdminScripts'));
             add_action('admin_menu', array($this, 'FileManager'));
             add_action('wp_ajax_connector', array($this, 'connector'));
             add_action('wp_ajax_selector_themes', array($this, 'selectorThemes'));
@@ -191,7 +191,7 @@ class FileManager
                 'path'          => NJT_FM_BN_PLUGIN_PATH.'includes/File_manager/lib/files/.trash/',
                 'tmbURL'        => site_url() . '/includes/File_manager/lib/files/.trash/.tmb',
                 'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
-                'uploadDeny'    => array(), 
+                'uploadDeny'    => array('all'), 
                 'uploadAllow'   => array('all'),
                 'uploadOrder'   => array('deny', 'allow'),
                 'attributes' => array(
