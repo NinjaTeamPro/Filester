@@ -72,6 +72,15 @@ if (count($arrRestrictions) > 0) {
             <option selected disabled hidden><?php _e("Nothing to choose", 'njt-file-manager'); ?></option>
             <?php }?>
           </select>
+          <?php 
+            if(empty($listUserApproved) || $listUserApproved && count($listUserApproved) == 1 && $listUserApproved[0] == 'administrator') {
+              ?>
+          <p class="description njt-text-error njt-settting-width">
+            <?php _e("Please choose (Select User Roles to access) in Settings tab", 'njt-file-manager'); ?>
+          </p>
+          <?php
+            }
+          ?>
         </div>
       </td>
     </tr>

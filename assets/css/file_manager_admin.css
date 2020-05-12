@@ -111,6 +111,11 @@
 .form-user-role-restrictions .njt-settting-width {
   width: 80%;
 }
+.form-user-role-restrictions .njt-text-error {
+  color: #a00;
+  margin-top: 10px;
+}
+
 @media screen and (max-width: 769px) {
   .form-user-role-restrictions .njt-settting-width,
   .form-user-role-restrictions .njt-settting-width-select,
