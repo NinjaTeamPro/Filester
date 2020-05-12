@@ -1470,7 +1470,7 @@
 										.on('click', function () {
 											editor.showSettingsMenu();
 											$('#ace_settingsmenu')
-												.css('font-size', '80%')
+												.css({ 'font-size': '80%', 'margin-top': '50px' })
 												.find('div[contains="setOptions"]').hide().end()
 												.parent().appendTo($('#elfinder'));
 										})
