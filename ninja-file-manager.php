@@ -22,6 +22,10 @@ if (file_exists(dirname(__FILE__) . '/includes/File_manager/FMPHPSyntaxChecker.p
   require_once dirname(__FILE__) . '/includes/File_manager/FMPHPSyntaxChecker.php';
 }
 
+if (file_exists(dirname(__FILE__) . '/includes/File_manager/FMPHPMimeTypes.php')) {
+  require_once dirname(__FILE__) . '/includes/File_manager/FMPHPMimeTypes.php';
+}
+
 defined('ABSPATH') || exit;
 
 define('NJT_FM_BN_PREFIX', 'njt-fm');

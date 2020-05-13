@@ -170,9 +170,20 @@ var njtFileManager = {
       if (jQuery('textarea#can_upload_mime').val().trim().length > 0) {
         arrCanUploadMime = jQuery('textarea#can_upload_mime').val().split(",")
       }
-
-      if (arrCanUploadMime.indexOf(jQuery(this).val()) == -1 && jQuery(this).val() !== 'clearall') {
-        arrCanUploadMime.push(jQuery(this).val())
+      const objMimeTypes = {
+        text: ['txt', 'htm', 'html', 'php', 'css', 'js', 'json', 'xml'],
+        images: ['png', 'jpe', 'jpeg', 'jpg', 'gif', 'bmp', 'ico', 'tiff', 'tif', 'svg', 'svgz'],
+        archives: ['zip', 'rar', 'exe', 'msi', 'cab'],
+        audio: ['mp3', 'mp4a', 'mpega', 'mpga', 'aac', 'm3u', 'mpa', 'wav', 'wma'],
+        video: ['flv', 'qt', 'mov', 'avi', 'mp4v', 'mpegv', 'mpg', 'swf', 'wmv', 'mpav'],
+        adobe: ['pdf', 'psd', 'ai', 'eps', 'ps'],
+        office: ['doc', 'rtf', 'xls', 'ppt', 'odt', 'ods', 'pptx', 'docx', 'xlsx', 'dotx', 'xltx', 'potx', 'ppsx', 'sldx']
+      }
+      if (jQuery(this).val() !== 'clearall') {
+        const mineChose = jQuery(this).val()
+        const valMimeTypes = objMimeTypes[mineChose]
+        arrMimeTypesConcat = arrCanUploadMime.concat(valMimeTypes)
+        arrCanUploadMime = arrMimeTypesConcat.filter((item, index) => arrMimeTypesConcat.indexOf(item) == index)
       }
 
       if (jQuery(this).val() == 'clearall') arrCanUploadMime.length = 0

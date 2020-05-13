@@ -259,9 +259,14 @@ class FileManager
         //Enter file extensions which can be uploaded
         if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])){
             $opts['roots'][0]['uploadDeny'] = array('all');
-            $opts['roots'][0]['uploadAllow'] = array(); 
-            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'] as $key => $value){
-                array_push($opts['roots'][0]['uploadAllow'], $value);
+            $opts['roots'][0]['uploadAllow'] = array();
+            $arrCanUploadMime = $this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'];
+            $mimeTypes = new \FMPHPMimeTypes();
+            $arrMimeTypes = $mimeTypes->getArrMimeTypes();
+            foreach ($arrMimeTypes as $key => $value){
+                if(in_array($key,$arrCanUploadMime)) {
+                    array_push($opts['roots'][0]['uploadAllow'], $value);
+                }
             };
         }
         //End --setting User Role Restrictions

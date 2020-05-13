@@ -151,16 +151,21 @@ if (count($arrRestrictions) > 0) {
         <div>
           <div>
             <div class="njt-btn-group njt-settting-width">
-              <button type="button" class="njt-mime-type njt-fm-button" value="application">application</button>
-              <button type="button" class="njt-mime-type njt-fm-button" value="audio">audio</button>
-              <button type="button" class="njt-mime-type njt-fm-button" value="image">image</button>
-              <button type="button" class="njt-mime-type njt-fm-button" value="video">video</button>
               <button type="button" class="njt-mime-type njt-fm-button" value="text">text</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="office">office</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="images">images</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="video">video</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="audio">audio</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="archives">archives</button>
+              <button type="button" class="njt-mime-type njt-fm-button" value="adobe">adobe</button>
               <button type="button" class="njt-mime-type njt-fm-button" value="clearall">clear all</button>
             </div>
           </div>
           <textarea name="can_upload_mime" id="can_upload_mime"
             class="njt-settting-width"><?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array());?></textarea>
+          <p class="description njt-settting-width">
+            <?php _e("Note: (php, txt, js, ...) are extensions of files can be uploaded", 'njt-file-manager'); ?>
+          </p>
         </div>
       </td>
     </tr>
