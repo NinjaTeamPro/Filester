@@ -14,12 +14,12 @@ $lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->o
 
       <h3 class="select-theme-title"><?php _e("Select theme:", 'njt-file-manager'); ?></h3>
       <select name="selector-themes" id="selector-themes">
-        <option value="Default">Default Elfinder</option>
-        <option value="dark-slim">Dark Slim</option>
-        <option value="Material">Material</option>
-        <option value="Material-Gray">Material Gray</option>
-        <option value="Material-Light">Material Light</option>
-        <option value="Windows-10">Windows 10</option>
+        <option value="Default"><?php _e("Default Elfinder", 'njt-file-manager'); ?></option>
+        <option value="dark-slim"><?php _e("Dark Slim", 'njt-file-manager'); ?></option>
+        <option value="Material"><?php _e("Material", 'njt-file-manager'); ?></option>
+        <option value="Material-Gray"><?php _e("Material Gray", 'njt-file-manager'); ?></option>
+        <option value="Material-Light"><?php _e("Material Light", 'njt-file-manager'); ?></option>
+        <option value="Windows-10"><?php _e("Windows 10", 'njt-file-manager'); ?></option>
       </select>
       <input type="hidden" name="selected-theme" value="<?php echo ($selectedTheme) ?>">
 
@@ -27,7 +27,7 @@ $lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->o
   </div>
 
   <div class="clear"></div>
-  <div id="wp_file_manager">
+  <div id="njt-fm-wp-file-manager">
   </div>
 </div>
 
@@ -36,23 +36,24 @@ $lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->o
 PLUGINS_URL = '<?php echo plugins_url(); ?>';
 
 jQuery(document).ready(function() {
-  console.log(ajaxurl)
-  jQuery('#wp_file_manager').elfinder({
+  jQuery('#njt-fm-wp-file-manager').elfinder({
     url: ajaxurl,
     contextmenu: {
       // current directory file menu
       files: ['getfile', '|', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload',
-        'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', '|', 'rename', 'edit',
+        'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit',
         'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod',
         'netunmount'
       ],
       // navbarfolder menu
       navbar: ['open', 'opennew', 'download', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate',
-        '|', 'rm', 'empty', '|', 'rename', '|', 'archive', '|', 'places', 'info', 'chmod', 'netunmount'
+        '|', 'rm', 'empty', 'hide', '|', 'rename', '|', 'archive', '|', 'places', 'info', 'chmod',
+        'netunmount'
       ],
       // current directory menu
       cwd: ['undo', 'redo', '|', 'back', 'up', 'reload', '|', 'upload', 'mkdir', 'mkfile', 'paste', '|',
-        'empty', '|', 'view', 'sort', 'selectall', 'colwidth', '|', 'places', 'info', 'chmod', 'netunmount',
+        'empty', 'hide', '|', 'view', 'sort', 'selectall', 'colwidth', '|', 'places', 'info', 'chmod',
+        'netunmount',
         '|', 'fullscreen', '|'
       ],
     },
@@ -74,6 +75,10 @@ jQuery(document).ready(function() {
         ['help'],
         ['fullscreen']
       ],
+      toolbarExtra: {
+        // show Preference button into contextmenu of the toolbar (true / false)
+        preferenceInContextmenu: false
+      }
     },
     ui: ['toolbar', 'tree', 'path', 'stat'],
     customData: {

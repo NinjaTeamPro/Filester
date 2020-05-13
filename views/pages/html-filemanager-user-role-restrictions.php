@@ -85,7 +85,7 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("Disable Operations", 'njt-file-manager'); ?></th>
+      <th><?php _e("Disable Command", 'njt-file-manager'); ?></th>
       <td>
         <div style="line-height: 2" class="njt-settting-width">
           <?php include_once $viewListOperations; ?>
@@ -98,7 +98,7 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("URL and Path", 'njt-file-manager'); ?></th>
+      <th><?php _e("Root Path", 'njt-file-manager'); ?></th>
       <td>
         <div>
           <div class="njt-settting-width">
@@ -109,7 +109,7 @@ if (count($arrRestrictions) > 0) {
             class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
           <div>
             <p class="description njt-settting-width">
-              <?php _e("ex: ". str_replace("\\", "/", ABSPATH)."wp-content.", 'njt-file-manager'); ?>
+              <?php _e("ex: ". str_replace("\\", "/", ABSPATH)."wp-content", 'njt-file-manager'); ?>
             </p>
             <small>
               <?php _e("Default Path:", 'njt-file-manager'); ?>
@@ -146,19 +146,27 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("Enter file extensions which user can be uploaded", 'njt-file-manager'); ?></th>
+      <th><?php _e("Enter file extensions which user can be Uploaded", 'njt-file-manager'); ?></th>
       <td>
         <div>
           <div>
             <div class="njt-btn-group njt-settting-width">
-              <button type="button" class="njt-mime-type njt-fm-button" value="text">text</button>
-              <button type="button" class="njt-mime-type njt-fm-button" value="office">office</button>
-              <button type="button" class="njt-mime-type njt-fm-button" value="images">images</button>
-              <button type="button" class="njt-mime-type njt-fm-button" value="video">video</button>
-              <button type="button" class="njt-mime-type njt-fm-button" value="audio">audio</button>
-              <button type="button" class="njt-mime-type njt-fm-button" value="archives">archives</button>
-              <button type="button" class="njt-mime-type njt-fm-button" value="adobe">adobe</button>
-              <button type="button" class="njt-mime-type njt-fm-button" value="clearall">clear all</button>
+              <button type="button" class="njt-mime-type njt-fm-button"
+                value="text"><?php _e("text", 'njt-file-manager'); ?></button>
+              <button type="button" class="njt-mime-type njt-fm-button"
+                value="office"><?php _e("office", 'njt-file-manager'); ?></button>
+              <button type="button" class="njt-mime-type njt-fm-button"
+                value="images"><?php _e("images", 'njt-file-manager'); ?></button>
+              <button type="button" class="njt-mime-type njt-fm-button"
+                value="video"><?php _e("video", 'njt-file-manager'); ?></button>
+              <button type="button" class="njt-mime-type njt-fm-button"
+                value="audio"><?php _e("audio", 'njt-file-manager'); ?></button>
+              <button type="button" class="njt-mime-type njt-fm-button"
+                value="archives"><?php _e("archives", 'njt-file-manager'); ?></button>
+              <button type="button" class="njt-mime-type njt-fm-button"
+                value="adobe"><?php _e("adobe", 'njt-file-manager'); ?></button>
+              <button type="button" class="njt-mime-type njt-fm-button"
+                value="clearall"><?php _e("clear all", 'njt-file-manager'); ?></button>
             </div>
           </div>
           <textarea name="can_upload_mime" id="can_upload_mime"

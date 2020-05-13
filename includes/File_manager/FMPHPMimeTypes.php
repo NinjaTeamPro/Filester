@@ -37,6 +37,10 @@ class FMPHPMimeTypes{
 			'exe' => 'application/x-msdownload',
 			'msi' => 'application/x-msdownload',
 			'cab' => 'application/vnd.ms-cab-compressed',
+			'tar' => 'application/x-tar',
+			'gz' => 'application/x-gzip',
+			'bz2' => 'application/x-bzip2',
+			'7z' => 'application/x-7z-compressed',
 
 			// audio
 			'mp3' => 'audio/mpeg',

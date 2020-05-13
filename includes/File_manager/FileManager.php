@@ -78,14 +78,14 @@ class FileManager
             __('Custom Menu Title', 'textdomain'),
             'File Manager',
             $this->fmCapability,
-            'custompage',
+            'ninjafilemanager',
             array($this, 'ffmViewFileCallback'),
             '',
             9
         );
         
         add_submenu_page (
-          'custompage',
+          'ninjafilemanager',
           'Settings',
           'Settings', 
           'manage_options', 

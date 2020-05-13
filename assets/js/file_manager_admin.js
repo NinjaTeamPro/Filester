@@ -1,4 +1,4 @@
-var njtFileManager = {
+const njtFileManager = {
   sunriseCreateCookie(name, value, days) {
     if (days) {
       var date = new Date();
@@ -41,12 +41,11 @@ var njtFileManager = {
   themeSelector() {
     if (jQuery('input[name = "selected-theme"]')) {
       const selectedTheme = jQuery('input[name = "selected-theme"]').val()
-      console.log(selectedTheme)
       jQuery('#selector-themes').val(selectedTheme);
     }
 
     jQuery('select#selector-themes').on('change', function () {
-      let themesValue = jQuery(this).val()
+      const themesValue = jQuery(this).val()
       const dataThemes = {
         'action': 'selector_themes',
         'themesValue': themesValue,
@@ -56,7 +55,6 @@ var njtFileManager = {
         wpData.admin_ajax,
         dataThemes,
         function (response) {
-          console.log(response)
           jQuery('link#themes-selector-css').attr('href', response.data)
         });
     });
@@ -142,7 +140,6 @@ var njtFileManager = {
         wpData.admin_ajax,
         dataUserRole,
         function (response) {
-          console.log(response.data)
           const resRestrictionsHasApproved = response.data.disable_operations ? response.data.disable_operations.split(",") : []
           const resPrivateFolderAccess = response.data.private_folder_access ? response.data.private_folder_access : ''
           const resHidePaths = response.data.hide_paths ? response.data.hide_paths.replace(/[,]+/g, ' | ') : '';
@@ -173,20 +170,20 @@ var njtFileManager = {
       const objMimeTypes = {
         text: ['txt', 'htm', 'html', 'php', 'css', 'js', 'json', 'xml'],
         images: ['png', 'jpe', 'jpeg', 'jpg', 'gif', 'bmp', 'ico', 'tiff', 'tif', 'svg', 'svgz'],
-        archives: ['zip', 'rar', 'exe', 'msi', 'cab'],
+        archives: ['zip', 'rar', 'exe', 'msi', 'cab', 'tar', 'gz', 'bz2', '7z'],
         audio: ['mp3', 'mp4a', 'mpega', 'mpga', 'aac', 'm3u', 'mpa', 'wav', 'wma'],
         video: ['flv', 'qt', 'mov', 'avi', 'mp4v', 'mpegv', 'mpg', 'swf', 'wmv', 'mpav'],
         adobe: ['pdf', 'psd', 'ai', 'eps', 'ps'],
         office: ['doc', 'rtf', 'xls', 'ppt', 'odt', 'ods', 'pptx', 'docx', 'xlsx', 'dotx', 'xltx', 'potx', 'ppsx', 'sldx']
       }
-      if (jQuery(this).val() !== 'clearall') {
+      if (jQuery(this).val() == 'clearall') {
+        arrCanUploadMime.length = 0
+      } else {
         const mineChose = jQuery(this).val()
         const valMimeTypes = objMimeTypes[mineChose]
         arrMimeTypesConcat = arrCanUploadMime.concat(valMimeTypes)
         arrCanUploadMime = arrMimeTypesConcat.filter((item, index) => arrMimeTypesConcat.indexOf(item) == index)
       }
-
-      if (jQuery(this).val() == 'clearall') arrCanUploadMime.length = 0
 
       jQuery('textarea#can_upload_mime').val(arrCanUploadMime.toString())
     })

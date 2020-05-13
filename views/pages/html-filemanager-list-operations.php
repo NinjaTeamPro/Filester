@@ -5,7 +5,6 @@ $listOperations = array(
   'rename'=>'rename',
   'duplicate'=>'duplicate',
   'paste'=>'paste',
-  'ban'=>'ban',
   'archive'=>'archive',
   'extract'=>'extract',
   'copy'=>'copy',
@@ -14,8 +13,7 @@ $listOperations = array(
   'rm'=>'rm',
   'download'=>'download',
   'upload'=>'upload',
-  'search'=>'search',
-  'info'=>'info'
+  'search'=>'search'
 )
 ?>
 

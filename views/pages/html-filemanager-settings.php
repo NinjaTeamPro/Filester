@@ -48,12 +48,12 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
             </div>
           </td>
         </tr>
-        <!-- URL and Path -->
+        <!-- root Path -->
         <tr>
-          <th><?php _e("URL and Path", 'njt-file-manager'); ?></th>
+          <th><?php _e("Root Path", 'njt-file-manager'); ?></th>
           <td>
             <input type='text' name='root_folder_path' id='root_folder_path' class="njt-settting-width"
-              placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH));?>"
+              placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH)."wp-content");?>"
               value='<?php  if( isset( $this->options['file_manager_settings']['root_folder_path'] ) && !empty( $this->options['file_manager_settings']['root_folder_path'] ) ) echo esc_attr($this->options['file_manager_settings']['root_folder_path']); ?>' />
             <div class="des-path njt-settting-width">
               <small><?php _e("File Manager Pro Root Path, you can change according to your choice", 'njt-file-manager'); ?></small>
