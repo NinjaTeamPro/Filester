@@ -33,8 +33,6 @@ $lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->o
 
 
 <script>
-PLUGINS_URL = '<?php echo plugins_url(); ?>';
-
 jQuery(document).ready(function() {
   jQuery('#njt-fm-wp-file-manager').elfinder({
     url: ajaxurl,

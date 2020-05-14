@@ -1,10 +1,10 @@
 <?php
-// Security check 
+
 defined('ABSPATH') || exit;
 
-if(!class_exists('FMPHPMimeTypes')):
+if(!class_exists('FMMimeTypes')):
 
-class FMPHPMimeTypes{
+class FMMimeTypes{
 
 	public function getArrMimeTypes(){
 		$arrMimeTypes = array (

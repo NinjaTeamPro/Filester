@@ -118,7 +118,7 @@ class FileManager
         $selectedTheme = $selectorThemes[$this->userRole]['themesValue'];
 
         //elfinder css
-        wp_enqueue_style('elfinder.jq.css', plugins_url('/lib/jquery/jquery-ui-1.12.0.css', __FILE__));
+        wp_enqueue_style('elfinder.jq.css', plugins_url('/lib/jquery/jquery-ui.css', __FILE__));
         wp_enqueue_style('elfinder.full.css', plugins_url('/lib/css/elfinder.full.css', __FILE__));
         wp_enqueue_style('themes', plugins_url('/lib/css/theme.css', __FILE__));
         wp_enqueue_style('themes-selector', plugins_url('/lib/themes/' . $selectedTheme . '/css/theme.css', __FILE__));
@@ -153,7 +153,7 @@ class FileManager
 
         $opts = array(
             'bind' => array(
-                'put.pre' => array(new \FMPHPSyntaxChecker, 'checkSyntax'), // Syntax Checking.
+                'put.pre' => array(new \FMSyntaxChecker, 'checkSyntax'), // Syntax Checking.
             ),
             'roots' => array(
                 array(
@@ -261,7 +261,7 @@ class FileManager
             $opts['roots'][0]['uploadDeny'] = array('all');
             $opts['roots'][0]['uploadAllow'] = array();
             $arrCanUploadMime = $this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'];
-            $mimeTypes = new \FMPHPMimeTypes();
+            $mimeTypes = new \FMMimeTypes();
             $arrMimeTypes = $mimeTypes->getArrMimeTypes();
             foreach ($arrMimeTypes as $key => $value){
                 if(in_array($key,$arrCanUploadMime)) {
