@@ -9,7 +9,7 @@ $lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->o
     </div>
     <div class="select-theme-content">
       <?php    
-      $selectedTheme = get_option('njt_fm_selector_themes') && get_option('njt_fm_selector_themes')[$this->userRole]['themesValue'] ? get_option('njt_fm_selector_themes')[$this->userRole]['themesValue'] : null;
+      $selectedTheme = get_option('njt_fs_selector_themes') && get_option('njt_fs_selector_themes')[$this->userRole]['themesValue'] ? get_option('njt_fs_selector_themes')[$this->userRole]['themesValue'] : null;
     ?>
 
       <h3 class="select-theme-title"><?php _e("Select theme:", 'njt-file-manager'); ?></h3>

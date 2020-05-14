@@ -109,10 +109,10 @@ class FileManager
     public function enqueueAdminScripts()
     {
       
-        $selectorThemes = get_option('njt_fm_selector_themes');
+        $selectorThemes = get_option('njt_fs_selector_themes');
         if (empty($selectorThemes[$this->userRole])) {
             $selectorThemes[$this->userRole]['themesValue'] = 'Default';
-            update_option('njt_fm_selector_themes', $selectorThemes);
+            update_option('njt_fs_selector_themes', $selectorThemes);
         }
       
         $selectedTheme = $selectorThemes[$this->userRole]['themesValue'];
@@ -285,17 +285,17 @@ class FileManager
         check_ajax_referer('njt-file-manager-admin', 'nonce', true);
         
         $themesValue = sanitize_text_field ($_POST['themesValue']);
-        $selectorThemes = get_option('njt_fm_selector_themes');
+        $selectorThemes = get_option('njt_fs_selector_themes');
         if (empty($selectorThemes[$this->userRole])) {
             $selectorThemes[$this->userRole]['themesValue'] = 'Default';
-            update_option('njt_fm_selector_themes', $selectorThemes);
+            update_option('njt_fs_selector_themes', $selectorThemes);
         }
        
         if ($selectorThemes[$this->userRole]['themesValue'] != $themesValue) {
             $selectorThemes[$this->userRole]['themesValue'] = $themesValue;
-            update_option('njt_fm_selector_themes', $selectorThemes);
+            update_option('njt_fs_selector_themes', $selectorThemes);
         }
-        $selected_themes = get_option('njt_fm_selector_themes');
+        $selected_themes = get_option('njt_fs_selector_themes');
         $linkThemes = plugins_url('/lib/themes/' . $selected_themes[$this->userRole]['themesValue'] . '/css/theme.css', __FILE__);
         wp_send_json_success($linkThemes);
         wp_die();
