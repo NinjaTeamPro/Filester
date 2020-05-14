@@ -37,7 +37,7 @@ class FileManager
 
         // Loading Options
         // Options
-		$this->options = get_option('njt-fs-settings');
+		$this->options = get_option('njt_fs_settings');
         if(empty($this->options)) {
             $this->options = array( // Setting up default values
                 'file_manager_settings' => array(
@@ -78,29 +78,29 @@ class FileManager
             __('Custom Menu Title', 'textdomain'),
             'File Manager',
             $this->fmCapability,
-            'ninjafilemanager',
-            array($this, 'ffmViewFileCallback'),
+            'njt-fs-filemanager',
+            array($this, 'fsViewFileCallback'),
             '',
             9
         );
         
         add_submenu_page (
-          'ninjafilemanager',
+          'njt-fs-filemanager',
           'Settings',
           'Settings', 
           'manage_options', 
-          'plugin-options-general-settings',
-          array($this, 'ffmSettingsPage') );
+          'njt-fs-filemanager-settings',
+          array($this, 'fsSettingsPage') );
        
     }
 
-    public function ffmViewFileCallback()
+    public function fsViewFileCallback()
     {
         $viewPath = NJT_FS_BN_PLUGIN_PATH . 'views/pages/html-filemanager.php';
         include_once $viewPath;
     }
 
-    public function ffmSettingsPage()
+    public function fsSettingsPage()
     {
         $viewPath = NJT_FS_BN_PLUGIN_PATH . 'views/pages/html-filemanager-settings.php';
         include_once $viewPath;
@@ -156,7 +156,7 @@ class FileManager
 
         $opts = array(
             'bind' => array(
-                'put.pre' => array(new \FMSyntaxChecker, 'checkSyntax'), // Syntax Checking.
+                'put.pre' => array(new \FileManagerHelper, 'madeStripcslashesFile'), // Check endcode when save file.
             ),
             'roots' => array(
                 array(
@@ -264,7 +264,7 @@ class FileManager
             $opts['roots'][0]['uploadDeny'] = array('all');
             $opts['roots'][0]['uploadAllow'] = array();
             $arrCanUploadMime = $this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'];
-            $mimeTypes = new \FMMimeTypes();
+            $mimeTypes = new \FileManagerHelper();
             $arrMimeTypes = $mimeTypes->getArrMimeTypes();
             foreach ($arrMimeTypes as $key => $value){
                 if(in_array($key,$arrCanUploadMime)) {
@@ -303,7 +303,7 @@ class FileManager
 
     public function saveOptions()
     {
-		update_option('njt-fs-settings', $this->options);
+		update_option('njt_fs_settings', $this->options);
     }
     
     public function getArrRoleRestrictions()

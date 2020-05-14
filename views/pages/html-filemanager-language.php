@@ -1,5 +1,6 @@
 <?php
  $locales = array(
+  'English' =>'en',
   'العربية' =>'ar',
   'Български' =>'bg',
   'Català' =>'ca',
@@ -7,7 +8,6 @@
   'Dansk' =>'da',
   'Deutsch' =>'de',
   'Ελληνικά' =>'el',
-  'English' =>'en',
   'Español' =>'es',
   'فارسی' =>'fa',
   'Føroyskt' =>'fo',

@@ -18,12 +18,8 @@ if (file_exists(dirname(__FILE__) . '/includes/File_manager/lib/php/autoload.php
   require_once dirname(__FILE__) . '/includes/File_manager/lib/php/autoload.php';
 }
 
-if (file_exists(dirname(__FILE__) . '/includes/File_manager/FMSyntaxChecker.php')) {
-  require_once dirname(__FILE__) . '/includes/File_manager/FMSyntaxChecker.php';
-}
-
-if (file_exists(dirname(__FILE__) . '/includes/File_manager/FMMimeTypes.php')) {
-  require_once dirname(__FILE__) . '/includes/File_manager/FMMimeTypes.php';
+if (file_exists(dirname(__FILE__) . '/includes/File_manager/FileManagerHelper.php')) {
+  require_once dirname(__FILE__) . '/includes/File_manager/FileManagerHelper.php';
 }
 
 defined('ABSPATH') || exit;

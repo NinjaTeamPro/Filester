@@ -2,11 +2,12 @@
 
 defined('ABSPATH') || exit;
 
-if(!class_exists('FMMimeTypes')):
+if(!class_exists('FileManagerHelper')):
 
-class FMMimeTypes{
-
-	public function getArrMimeTypes(){
+class FileManagerHelper{
+	
+	public function getArrMimeTypes()
+	{
 		$arrMimeTypes = array (
 			//text
 			'txt' => 'text/plain',
@@ -91,6 +92,12 @@ class FMMimeTypes{
 			'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
 		);
 		return $arrMimeTypes;
+	}
+	
+	public function madeStripcslashesFile($cmd, &$args, $elfinder, $volume)
+	{
+		$args['content'] = stripcslashes($args['content']);
+		return true;
 	}
 }
 
