@@ -85,7 +85,7 @@ const njtFileManager = {
   actionSubmitRoleRestrictionst() {
     jQuery('#njt-form-user-role-restrictionst').on('click', function () {
       const arrayUserRestrictionsAccess = [];
-      if (!jQuery('.njt-fm-list-user-restrictions').val()) {
+      if (!jQuery('.njt-fs-list-user-restrictions').val()) {
         alert('Please choose (Select User Roles to access) in Settings tab')
         return false;
       }
@@ -129,7 +129,7 @@ const njtFileManager = {
   },
 
   ajaxRoleRestrictions() {
-    jQuery('select.njt-fm-list-user-restrictions').on('change', function () {
+    jQuery('select.njt-fs-list-user-restrictions').on('change', function () {
       const valueUserRole = jQuery(this).val()
       const dataUserRole = {
         'action': 'get_role_restrictions',
@@ -190,7 +190,7 @@ const njtFileManager = {
   },
   clickedCreatRootPath() {
     jQuery('.js-creat-root-path').on('click', function () {
-      const valueRootPath = jQuery(".njt-fm-root-path").text()
+      const valueRootPath = jQuery(".njt-fs-root-path").text()
       jQuery('textarea#private_folder_access').val(valueRootPath)
     })
   }

@@ -4,35 +4,35 @@ $viewListOperations = NJT_FS_BN_PLUGIN_PATH . 'views/pages/html-filemanager-list
 $listUserApproved = !empty($this->options['file_manager_settings']['list_user_alow_access']) ? $this->options['file_manager_settings']['list_user_alow_access'] : array();
 
 if (isset($_POST) && !empty($_POST) && !empty($_POST['njt-form-user-role-restrictionst'])) {
-  if (!wp_verify_nonce($_POST['njt-fm-user-restrictions-security-token'], 'njt-fm-user-restrictions-security-token')) {
+  if (!wp_verify_nonce($_POST['njt-fs-user-restrictions-security-token'], 'njt-fs-user-restrictions-security-token')) {
       wp_die();
   }
-  if(!empty($_POST['njt-fm-list-user-restrictions'])) {
+  if(!empty($_POST['njt-fs-list-user-restrictions'])) {
 
-    $userRoleRestrictedSubmited = filter_var($_POST['njt-fm-list-user-restrictions'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['njt-fm-list-user-restrictions']) : '';
+    $userRoleRestrictedSubmited = filter_var($_POST['njt-fs-list-user-restrictions'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['njt-fs-list-user-restrictions']) : '';
     
     if (empty($this->options['file_manager_settings']['list_user_role_restrictions'])) {
       $this->options['file_manager_settings']['list_user_role_restrictions'] = array();
     }
 
     //Save data list User Restrictions alow access
-    $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['list_user_restrictions_alow_access'] = 
+    $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fs-list-user-restrictions']]['list_user_restrictions_alow_access'] = 
       filter_var($_POST['list_user_restrictions_alow_access'], FILTER_SANITIZE_STRING) ?
       explode(',', $_POST['list_user_restrictions_alow_access']) : array();
     //Seperate or private folder access
-    $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['private_folder_access'] =
+    $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fs-list-user-restrictions']]['private_folder_access'] =
       filter_var($_POST['private_folder_access'], FILTER_SANITIZE_STRING) ?
       str_replace("\\\\", "/", trim($_POST['private_folder_access'])) : '';
     //Save data Enter Folder or File Paths That You want to Hide
-    $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['hide_paths'] = 
+    $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fs-list-user-restrictions']]['hide_paths'] = 
       filter_var($_POST['hide_paths'], FILTER_SANITIZE_STRING) ?
       explode('|', preg_replace('/\s+/', '', $_POST['hide_paths'])) : array();
     //Save data Enter file extensions which you want to Lock
-    $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['lock_files'] =
+    $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fs-list-user-restrictions']]['lock_files'] =
       filter_var($_POST['lock_files'], FILTER_SANITIZE_STRING) ?
       explode('|', preg_replace('/\s+/', '', $_POST['lock_files'])) : array();
     //Enter file extensions which can be uploaded
-    $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fm-list-user-restrictions']]['can_upload_mime'] =
+    $this->options['file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fs-list-user-restrictions']]['can_upload_mime'] =
       filter_var($_POST['can_upload_mime'], FILTER_SANITIZE_STRING) ?
       explode(',', preg_replace('/\s+/', '', $_POST['can_upload_mime'])) : array();
   }
@@ -48,14 +48,14 @@ if (count($arrRestrictions) > 0) {
 
 <form action="" class="njt-plugin-setting form-user-role-restrictions" method="POST">
   <!-- creat token -->
-  <input type='hidden' name='njt-fm-user-restrictions-security-token'
-    value='<?php echo wp_create_nonce('njt-fm-user-restrictions-security-token'); ?>'>
+  <input type='hidden' name='njt-fs-user-restrictions-security-token'
+    value='<?php echo wp_create_nonce('njt-fs-user-restrictions-security-token'); ?>'>
   <table class="form-table">
     <tr>
       <th><?php _e("If User role is", 'njt-file-manager'); ?></th>
       <td>
         <div>
-          <select class="njt-fm-list-user-restrictions njt-settting-width-select" name="njt-fm-list-user-restrictions">
+          <select class="njt-fs-list-user-restrictions njt-settting-width-select" name="njt-fs-list-user-restrictions">
             <?php
               if ($listUserApproved && count($listUserApproved) != 1 && $listUserApproved[0] != 'administrator') {
               foreach ( $wp_roles->roles as $key=>$value ):
@@ -103,7 +103,7 @@ if (count($arrRestrictions) > 0) {
         <div>
           <div class="njt-settting-width">
             <button type="button"
-              class="njt-fm-button js-creat-root-path"><?php _e("creat root", 'njt-file-manager'); ?></button>
+              class="njt-fs-button js-creat-root-path"><?php _e("creat root", 'njt-file-manager'); ?></button>
           </div>
           <textarea name="private_folder_access" id="private_folder_access"
             class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
@@ -113,7 +113,7 @@ if (count($arrRestrictions) > 0) {
             </p>
             <small>
               <?php _e("Default Path:", 'njt-file-manager'); ?>
-              <b class="njt-fm-root-path"><?php echo (str_replace("\\", "/", ABSPATH));?></b>
+              <b class="njt-fs-root-path"><?php echo (str_replace("\\", "/", ABSPATH));?></b>
             </small>
           </div>
         </div>
@@ -151,21 +151,21 @@ if (count($arrRestrictions) > 0) {
         <div>
           <div>
             <div class="njt-btn-group njt-settting-width">
-              <button type="button" class="njt-mime-type njt-fm-button"
+              <button type="button" class="njt-mime-type njt-fs-button"
                 value="text"><?php _e("text", 'njt-file-manager'); ?></button>
-              <button type="button" class="njt-mime-type njt-fm-button"
+              <button type="button" class="njt-mime-type njt-fs-button"
                 value="office"><?php _e("office", 'njt-file-manager'); ?></button>
-              <button type="button" class="njt-mime-type njt-fm-button"
+              <button type="button" class="njt-mime-type njt-fs-button"
                 value="images"><?php _e("images", 'njt-file-manager'); ?></button>
-              <button type="button" class="njt-mime-type njt-fm-button"
+              <button type="button" class="njt-mime-type njt-fs-button"
                 value="video"><?php _e("video", 'njt-file-manager'); ?></button>
-              <button type="button" class="njt-mime-type njt-fm-button"
+              <button type="button" class="njt-mime-type njt-fs-button"
                 value="audio"><?php _e("audio", 'njt-file-manager'); ?></button>
-              <button type="button" class="njt-mime-type njt-fm-button"
+              <button type="button" class="njt-mime-type njt-fs-button"
                 value="archives"><?php _e("archives", 'njt-file-manager'); ?></button>
-              <button type="button" class="njt-mime-type njt-fm-button"
+              <button type="button" class="njt-mime-type njt-fs-button"
                 value="adobe"><?php _e("adobe", 'njt-file-manager'); ?></button>
-              <button type="button" class="njt-mime-type njt-fm-button"
+              <button type="button" class="njt-mime-type njt-fs-button"
                 value="clearall"><?php _e("clear all", 'njt-file-manager'); ?></button>
             </div>
           </div>

@@ -37,7 +37,7 @@ class FileManager
 
         // Loading Options
         // Options
-		$this->options = get_option('njt-fm-settings');
+		$this->options = get_option('njt-fs-settings');
         if(empty($this->options)) {
             $this->options = array( // Setting up default values
                 'file_manager_settings' => array(
@@ -303,7 +303,7 @@ class FileManager
 
     public function saveOptions()
     {
-		update_option('njt-fm-settings', $this->options);
+		update_option('njt-fs-settings', $this->options);
     }
     
     public function getArrRoleRestrictions()

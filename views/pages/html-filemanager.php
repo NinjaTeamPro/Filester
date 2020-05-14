@@ -3,7 +3,7 @@ defined('ABSPATH') || exit;
 $lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->options['file_manager_settings']['fm_locale'] : ''; 
 ?>
 <div class="njt-file-manager">
-  <div class="njt-fm-select-theme">
+  <div class="njt-fs-select-theme">
     <div>
       <h1><?php _e("File Manager Pro", 'njt-file-manager'); ?></h1>
     </div>
@@ -27,14 +27,14 @@ $lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->o
   </div>
 
   <div class="clear"></div>
-  <div id="njt-fm-wp-file-manager">
+  <div id="njt-fs-wp-file-manager">
   </div>
 </div>
 
 
 <script>
 jQuery(document).ready(function() {
-  jQuery('#njt-fm-wp-file-manager').elfinder({
+  jQuery('#njt-fs-wp-file-manager').elfinder({
     url: ajaxurl,
     contextmenu: {
       // current directory file menu

@@ -4,7 +4,7 @@ $viewPathLanguage = NJT_FS_BN_PLUGIN_PATH . 'views/pages/html-filemanager-langua
 $viewUserRoleRestrictions = NJT_FS_BN_PLUGIN_PATH . 'views/pages/html-filemanager-user-role-restrictions.php';
 global $wp_roles;
 if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-submit'])){
-  if( ! wp_verify_nonce( $_POST['njt-fm-settings-security-token'] ,'njt-fm-settings-security-token')) wp_die();
+  if( ! wp_verify_nonce( $_POST['njt-fs-settings-security-token'] ,'njt-fs-settings-security-token')) wp_die();
 
   $this->options['file_manager_settings']['root_folder_path']  = filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['root_folder_path'])) : '';
   $this->options['file_manager_settings']['enable_htaccess'] =  isset($_POST['enable_htaccess']) ? sanitize_text_field($_POST['enable_htaccess']) : 0;
@@ -15,22 +15,22 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
 }
 
 ?>
-<div class="njt-fm-settings njt-file-manager">
+<div class="njt-fs-settings njt-file-manager">
   <h1 id="njt-plugin-tabs" class="nav-tab-wrapper hide-if-no-js">
     <a href="javascript:void(0)" class="nav-tab nav-tab-active"><?php _e("Settings", 'njt-file-manager'); ?></a>
     <a href="javascript:void(0)" class="nav-tab"><?php _e("User Role Restrictions", 'njt-file-manager'); ?></a>
   </h1>
-  <div class="njt-fm-settings-content">
+  <div class="njt-fs-settings-content">
     <form action="" class="njt-plugin-setting settings-form" method="POST">
       <!-- creat token -->
-      <input type='hidden' name='njt-fm-settings-security-token'
-        value='<?php echo wp_create_nonce('njt-fm-settings-security-token'); ?>'>
+      <input type='hidden' name='njt-fs-settings-security-token'
+        value='<?php echo wp_create_nonce('njt-fs-settings-security-token'); ?>'>
 
       <table class="form-table">
         <tr>
           <th><?php _e("Select User Roles to access", 'njt-file-manager'); ?></th>
           <td>
-            <div class="njt-fm-list-user njt-settting-width" style="line-height:2">
+            <div class="njt-fs-list-user njt-settting-width" style="line-height:2">
               <?php foreach ( $wp_roles->roles as $key=>$value ): ?>
               <?php if ($key != 'administrator') {?>
               <span style="padding-right: 20px">
