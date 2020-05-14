@@ -40,7 +40,7 @@ class FileManager
 		$this->options = get_option('njt_fs_settings');
         if(empty($this->options)) {
             $this->options = array( // Setting up default values
-                'file_manager_settings' => array(
+                'njt_fs_file_manager_settings' => array(
                     'root_folder_path' =>  ABSPATH,
                     'root_folder_url' => site_url()
                 ),
@@ -61,7 +61,7 @@ class FileManager
     public function isAlowUserAccess()
     {
         if($this->userRole) {
-            $allowed_roles = !empty($this->options['file_manager_settings']['list_user_alow_access']) ? $this->options['file_manager_settings']['list_user_alow_access'] : array();
+            $allowed_roles = !empty($this->options['njt_fs_file_manager_settings']['list_user_alow_access']) ? $this->options['njt_fs_file_manager_settings']['list_user_alow_access'] : array();
             if( in_array($this->userRole,$allowed_roles) || $this->userRole == 'administrator') {
                 $this->fmCapability = $this->userRole;
                 return true;
@@ -128,8 +128,8 @@ class FileManager
         wp_enqueue_script('elFinderd', plugins_url('/lib/js/elfinder.full.js', __FILE__));
         wp_enqueue_script('elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
         //js load fm_locale
-        if(isset($this->options['file_manager_settings']['fm_locale'])) {
-            $locale = $this->options['file_manager_settings']['fm_locale'];
+        if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
+            $locale = $this->options['njt_fs_file_manager_settings']['fm_locale'];
             if($locale != 'en') {
                 wp_enqueue_script( 'fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
             }
@@ -140,7 +140,7 @@ class FileManager
         wp_enqueue_script('file_manager_admin', NJT_FS_BN_PLUGIN_URL . 'assets/js/file_manager_admin.js', array('jquery'), NJT_FS_BN_VERSION);
         wp_localize_script('file_manager_admin', 'wpData', array(
             'admin_ajax' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce("njt-file-manager-admin"),
+            'nonce' => wp_create_nonce("njt-fs-file-manager-admin"),
             'PLUGIN_URL' => NJT_FS_BN_PLUGIN_URL .'includes/File_manager/lib/',
             'PLUGIN_PATH' => NJT_FS_BN_PLUGIN_PATH.'includes/File_manager/lib/',
             'PLUGIN_DIR'=> NJT_FS_BN_PLUGIN_DIR
@@ -152,7 +152,7 @@ class FileManager
     public function connector()
     {
         if( isset( $_POST ) && !empty( $_POST ) && ! wp_verify_nonce( $_POST['nonce'] ,'file-manager-security-token') ) wp_die();
-        $uploadMaxSize = isset($this->options['file_manager_settings']['upload_max_size']) && !empty($this->options['file_manager_settings']['upload_max_size']) ? $this->options['file_manager_settings']['upload_max_size'] : 0;
+        $uploadMaxSize = isset($this->options['njt_fs_file_manager_settings']['upload_max_size']) && !empty($this->options['njt_fs_file_manager_settings']['upload_max_size']) ? $this->options['njt_fs_file_manager_settings']['upload_max_size'] : 0;
 
         $opts = array(
             'bind' => array(
@@ -161,8 +161,8 @@ class FileManager
             'roots' => array(
                 array(
                     'driver' => 'LocalFileSystem',
-                    'path' => isset($this->options['file_manager_settings']['root_folder_path']) && !empty($this->options['file_manager_settings']['root_folder_path']) ? $this->options['file_manager_settings']['root_folder_path'] : ABSPATH,
-                    'URL' => isset($this->options['file_manager_settings']['root_folder_url']) && !empty($this->options['file_manager_settings']['root_folder_url']) ? $this->options['file_manager_settings']['root_folder_url'] :site_url(),
+                    'path' => isset($this->options['njt_fs_file_manager_settings']['root_folder_path']) && !empty($this->options['njt_fs_file_manager_settings']['root_folder_path']) ? $this->options['njt_fs_file_manager_settings']['root_folder_path'] : ABSPATH,
+                    'URL' => isset($this->options['njt_fs_file_manager_settings']['root_folder_url']) && !empty($this->options['njt_fs_file_manager_settings']['root_folder_url']) ? $this->options['njt_fs_file_manager_settings']['root_folder_url'] :site_url(),
                     'trashHash'     => '', // default is empty, when not enable trash
                     'uploadMaxSize' =>  $uploadMaxSize .'M',
                     'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
@@ -175,7 +175,7 @@ class FileManager
             ),
         );
         // .htaccess
-        if(isset($this->options['file_manager_settings']['enable_htaccess']) && ($this->options['file_manager_settings']['enable_htaccess'] == '1')) {
+        if(isset($this->options['njt_fs_file_manager_settings']['enable_htaccess']) && ($this->options['njt_fs_file_manager_settings']['enable_htaccess'] == '1')) {
             $attributes = array(
                 'pattern' => '/.htaccess/',
                 'read' => false,
@@ -187,7 +187,7 @@ class FileManager
         }
 
         //Enable Trash
-        if(isset($this->options['file_manager_settings']['enable_trash']) && ($this->options['file_manager_settings']['enable_trash'] == '1')) {
+        if(isset($this->options['njt_fs_file_manager_settings']['enable_trash']) && ($this->options['njt_fs_file_manager_settings']['enable_trash'] == '1')) {
             $trash = array(
                 'id'            => '1',
                 'driver'        => 'Trash',
@@ -223,17 +223,17 @@ class FileManager
         $userRoles =  $user && $user->roles && $user->roles[0] ? $user->roles[0] : '';
         
         //Disable Operations
-        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['list_user_restrictions_alow_access'])){
-            $opts['roots'][0]['disabled'] = $this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['list_user_restrictions_alow_access'];
+        if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['list_user_restrictions_alow_access'])){
+            $opts['roots'][0]['disabled'] = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['list_user_restrictions_alow_access'];
         }
         //Creat root path for user
-        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'])){
-            $opts['roots'][0]['path'] = $this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'] .'/';
+        if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'])){
+            $opts['roots'][0]['path'] = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'] .'/';
         }
 
         //Folder or File Paths That You want to Hide
-        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['hide_paths'])){
-            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['hide_paths'] as $key => $value){
+        if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['hide_paths'])){
+            foreach ($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['hide_paths'] as $key => $value){
                 $arrItemHidePath =  array( 
                      'pattern' => '~/'.$value.'~',
                      'read' => false,
@@ -246,8 +246,8 @@ class FileManager
         }
 
         //File extensions which you want to Lock
-        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['lock_files'])){
-            foreach ($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['lock_files'] as $key => $value){
+        if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['lock_files'])){
+            foreach ($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['lock_files'] as $key => $value){
                 $arrItemLockFile =  array( 
                      'pattern' => '/'.$value.'/',
                      'read' => false,
@@ -260,10 +260,10 @@ class FileManager
         }
 
         //Enter file extensions which can be uploaded
-        if(!empty($this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])){
+        if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])){
             $opts['roots'][0]['uploadDeny'] = array('all');
             $opts['roots'][0]['uploadAllow'] = array();
-            $arrCanUploadMime = $this->options['file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'];
+            $arrCanUploadMime = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'];
             $mimeTypes = new \FileManagerHelper();
             $arrMimeTypes = $mimeTypes->getArrMimeTypes();
             foreach ($arrMimeTypes as $key => $value){
@@ -281,8 +281,8 @@ class FileManager
     
     public function selectorThemes()
     {
-        if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin')) wp_die();
-        check_ajax_referer('njt-file-manager-admin', 'nonce', true);
+        if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-fs-file-manager-admin')) wp_die();
+        check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
         
         $themesValue = sanitize_text_field ($_POST['themesValue']);
         $selectorThemes = get_option('njt_fs_selector_themes');
@@ -308,10 +308,10 @@ class FileManager
     
     public function getArrRoleRestrictions()
     {
-        if(!wp_verify_nonce( $_POST['nonce'] ,'njt-file-manager-admin')) wp_die();
-        check_ajax_referer('njt-file-manager-admin', 'nonce', true);
+        if(!wp_verify_nonce( $_POST['nonce'] ,'njt-fs-file-manager-admin')) wp_die();
+        check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
         $valueUserRole = filter_var($_POST['valueUserRole']) ? sanitize_text_field ($_POST['valueUserRole']) : '';
-        $arrRestrictions = !empty($this->options['file_manager_settings']['list_user_role_restrictions']) ? $this->options['file_manager_settings']['list_user_role_restrictions'] : array();
+        $arrRestrictions = !empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions']) ? $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'] : array();
         $dataArrRoleRestrictions = array (
             'disable_operations' => implode(",", !empty($arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access']) ? $arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access'] : array()),
             'private_folder_access' => !empty($arrRestrictions[$valueUserRole]['private_folder_access']) ? str_replace("\\\\", "/", trim($arrRestrictions[$valueUserRole]['private_folder_access'])) : '',

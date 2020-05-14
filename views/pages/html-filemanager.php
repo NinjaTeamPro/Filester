@@ -1,25 +1,25 @@
 <?php
 defined('ABSPATH') || exit;
-$lang = !empty( $this->options['file_manager_settings']['fm_locale']) ? $this->options['file_manager_settings']['fm_locale'] : ''; 
+$lang = !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? $this->options['njt_fs_file_manager_settings']['fm_locale'] : ''; 
 ?>
-<div class="njt-file-manager">
+<div class="njt-fs-file-manager">
   <div class="njt-fs-select-theme">
     <div>
-      <h1><?php _e("File Manager Pro", 'njt-file-manager'); ?></h1>
+      <h1><?php _e("File Manager Pro", 'njt-fs-file-manager'); ?></h1>
     </div>
     <div class="select-theme-content">
       <?php    
       $selectedTheme = get_option('njt_fs_selector_themes') && get_option('njt_fs_selector_themes')[$this->userRole]['themesValue'] ? get_option('njt_fs_selector_themes')[$this->userRole]['themesValue'] : null;
     ?>
 
-      <h3 class="select-theme-title"><?php _e("Select theme:", 'njt-file-manager'); ?></h3>
+      <h3 class="select-theme-title"><?php _e("Select theme:", 'njt-fs-file-manager'); ?></h3>
       <select name="selector-themes" id="selector-themes">
-        <option value="Default"><?php _e("Default Elfinder", 'njt-file-manager'); ?></option>
-        <option value="dark-slim"><?php _e("Dark Slim", 'njt-file-manager'); ?></option>
-        <option value="Material"><?php _e("Material", 'njt-file-manager'); ?></option>
-        <option value="Material-Gray"><?php _e("Material Gray", 'njt-file-manager'); ?></option>
-        <option value="Material-Light"><?php _e("Material Light", 'njt-file-manager'); ?></option>
-        <option value="Windows-10"><?php _e("Windows 10", 'njt-file-manager'); ?></option>
+        <option value="Default"><?php _e("Default Elfinder", 'njt-fs-file-manager'); ?></option>
+        <option value="dark-slim"><?php _e("Dark Slim", 'njt-fs-file-manager'); ?></option>
+        <option value="Material"><?php _e("Material", 'njt-fs-file-manager'); ?></option>
+        <option value="Material-Gray"><?php _e("Material Gray", 'njt-fs-file-manager'); ?></option>
+        <option value="Material-Light"><?php _e("Material Light", 'njt-fs-file-manager'); ?></option>
+        <option value="Windows-10"><?php _e("Windows 10", 'njt-fs-file-manager'); ?></option>
       </select>
       <input type="hidden" name="selected-theme" value="<?php echo ($selectedTheme) ?>">
 

@@ -1,7 +1,7 @@
-.njt-file-manager {
+.njt-fs-file-manager {
   padding-right: 20px;
 }
-.njt-file-manager .nav-tab-active {
+.njt-fs-file-manager .nav-tab-active {
   background-color: #ffff !important;
   border-bottom: 1px solid #ffff;
 }
@@ -112,7 +112,7 @@
 .form-user-role-restrictions .njt-settting-width-select {
   width: 45%;
 }
-.njt-plugin-setting.settings-form .njt-settting-width-half {
+.njt-plugin-setting.settings-form .njt-fs-settting-width-half {
   width: 20%;
 }
 .form-user-role-restrictions .njt-settting-width {
@@ -127,7 +127,7 @@
   .form-user-role-restrictions .njt-settting-width,
   .form-user-role-restrictions .njt-settting-width-select,
   .njt-plugin-setting.settings-form .njt-settting-width,
-  .njt-plugin-setting.settings-form .njt-settting-width-half {
+  .njt-plugin-setting.settings-form .njt-fs-settting-width-half {
     width: 100%;
   }
 }

@@ -197,7 +197,7 @@ const njtFileManager = {
 }
 
 jQuery(document).ready(function () {
-  if (jQuery("div").hasClass("njt-file-manager")) {
+  if (jQuery("div").hasClass("njt-fs-file-manager")) {
     //set select value
     njtFileManager.themeSelector();
     // Start- Setting for `Select User Roles to access`
