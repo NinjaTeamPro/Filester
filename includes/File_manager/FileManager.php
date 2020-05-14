@@ -141,6 +141,9 @@ class FileManager
         wp_localize_script('file_manager_admin', 'wpData', array(
             'admin_ajax' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce("njt-file-manager-admin"),
+            'PLUGIN_URL' => NJT_FM_BN_PLUGIN_URL .'includes/File_manager/lib/',
+            'PLUGIN_PATH' => NJT_FM_BN_PLUGIN_PATH.'includes/File_manager/lib/',
+            'PLUGIN_DIR'=> NJT_FM_BN_PLUGIN_DIR
         ));
     }
 

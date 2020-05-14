@@ -32,6 +32,7 @@ define('NJT_FM_BN_PREFIX', 'njt-fm');
 define('NJT_FM_BN_VERSION', '1.0');
 define('NJT_FM_BN_DOMAIN', 'njt-fm');
 
+define('NJT_FM_BN_PLUGIN_DIR', basename(__DIR__));
 define('NJT_FM_BN_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('NJT_FM_BN_PLUGIN_PATH', plugin_dir_path(__FILE__));
 
