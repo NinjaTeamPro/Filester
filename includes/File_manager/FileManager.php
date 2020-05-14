@@ -96,13 +96,13 @@ class FileManager
 
     public function ffmViewFileCallback()
     {
-        $viewPath = NJT_FM_BN_PLUGIN_PATH . 'views/pages/html-filemanager.php';
+        $viewPath = NJT_FS_BN_PLUGIN_PATH . 'views/pages/html-filemanager.php';
         include_once $viewPath;
     }
 
     public function ffmSettingsPage()
     {
-        $viewPath = NJT_FM_BN_PLUGIN_PATH . 'views/pages/html-filemanager-settings.php';
+        $viewPath = NJT_FS_BN_PLUGIN_PATH . 'views/pages/html-filemanager-settings.php';
         include_once $viewPath;
     }
 
@@ -135,15 +135,15 @@ class FileManager
             }
         }
         //elfinder js, css custom
-        wp_register_style('file_manager_admin_css',NJT_FM_BN_PLUGIN_URL . 'assets/css/file_manager_admin.css');
+        wp_register_style('file_manager_admin_css',NJT_FS_BN_PLUGIN_URL . 'assets/css/file_manager_admin.css');
         wp_enqueue_style('file_manager_admin_css');
-        wp_enqueue_script('file_manager_admin', NJT_FM_BN_PLUGIN_URL . 'assets/js/file_manager_admin.js', array('jquery'), NJT_FM_BN_VERSION);
+        wp_enqueue_script('file_manager_admin', NJT_FS_BN_PLUGIN_URL . 'assets/js/file_manager_admin.js', array('jquery'), NJT_FS_BN_VERSION);
         wp_localize_script('file_manager_admin', 'wpData', array(
             'admin_ajax' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce("njt-file-manager-admin"),
-            'PLUGIN_URL' => NJT_FM_BN_PLUGIN_URL .'includes/File_manager/lib/',
-            'PLUGIN_PATH' => NJT_FM_BN_PLUGIN_PATH.'includes/File_manager/lib/',
-            'PLUGIN_DIR'=> NJT_FM_BN_PLUGIN_DIR
+            'PLUGIN_URL' => NJT_FS_BN_PLUGIN_URL .'includes/File_manager/lib/',
+            'PLUGIN_PATH' => NJT_FS_BN_PLUGIN_PATH.'includes/File_manager/lib/',
+            'PLUGIN_DIR'=> NJT_FS_BN_PLUGIN_DIR
         ));
     }
 
@@ -191,7 +191,7 @@ class FileManager
             $trash = array(
                 'id'            => '1',
                 'driver'        => 'Trash',
-                'path'          => NJT_FM_BN_PLUGIN_PATH.'includes/File_manager/lib/files/.trash/',
+                'path'          => NJT_FS_BN_PLUGIN_PATH.'includes/File_manager/lib/files/.trash/',
                 'tmbURL'        => site_url() . '/includes/File_manager/lib/files/.trash/.tmb',
                 'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
                 'uploadDeny'    => array('all'), 

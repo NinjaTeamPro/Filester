@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || exit;
-$viewPathLanguage = NJT_FM_BN_PLUGIN_PATH . 'views/pages/html-filemanager-language.php';
-$viewUserRoleRestrictions = NJT_FM_BN_PLUGIN_PATH . 'views/pages/html-filemanager-user-role-restrictions.php';
+$viewPathLanguage = NJT_FS_BN_PLUGIN_PATH . 'views/pages/html-filemanager-language.php';
+$viewUserRoleRestrictions = NJT_FS_BN_PLUGIN_PATH . 'views/pages/html-filemanager-user-role-restrictions.php';
 global $wp_roles;
 if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-submit'])){
   if( ! wp_verify_nonce( $_POST['njt-fm-settings-security-token'] ,'njt-fm-settings-security-token')) wp_die();

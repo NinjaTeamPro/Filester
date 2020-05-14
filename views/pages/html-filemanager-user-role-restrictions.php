@@ -1,6 +1,6 @@
 <?php
 defined('ABSPATH') || exit;
-$viewListOperations = NJT_FM_BN_PLUGIN_PATH . 'views/pages/html-filemanager-list-operations.php';
+$viewListOperations = NJT_FS_BN_PLUGIN_PATH . 'views/pages/html-filemanager-list-operations.php';
 $listUserApproved = !empty($this->options['file_manager_settings']['list_user_alow_access']) ? $this->options['file_manager_settings']['list_user_alow_access'] : array();
 
 if (isset($_POST) && !empty($_POST) && !empty($_POST['njt-form-user-role-restrictionst'])) {
