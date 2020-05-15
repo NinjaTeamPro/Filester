@@ -80,7 +80,7 @@ class FileManager
             $this->fmCapability,
             'njt-fs-filemanager',
             array($this, 'fsViewFileCallback'),
-            '',
+            NJT_FS_BN_PLUGIN_URL . 'assets/img/fs_icon.svg',
             9
         );
         

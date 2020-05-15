@@ -1,3 +1,8 @@
+/* style icon */
+#toplevel_page_njt-fs-filemanager .wp-menu-image.dashicons-before img {
+  padding-top: 7px;
+}
+
 .njt-fs-file-manager {
   padding-right: 20px;
 }
