@@ -86,7 +86,7 @@ const njtFileManager = {
     jQuery('#njt-form-user-role-restrictionst').on('click', function () {
       const arrayUserRestrictionsAccess = [];
       if (!jQuery('.njt-fs-list-user-restrictions').val()) {
-        alert('Please choose (Select User Roles to access) in Settings tab')
+        alert('Please select a User Role at Setings tab to use this option.')
         return false;
       }
       jQuery('.fm-list-user-restrictions-item').each(function () {

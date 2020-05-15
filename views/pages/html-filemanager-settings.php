@@ -55,13 +55,15 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
             <input type='text' name='root_folder_path' id='root_folder_path' class="njt-settting-width"
               placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH)."wp-content");?>"
               value='<?php  if( isset( $this->options['njt_fs_file_manager_settings']['root_folder_path'] ) && !empty( $this->options['njt_fs_file_manager_settings']['root_folder_path'] ) ) echo str_replace("\\", "/",esc_attr($this->options['njt_fs_file_manager_settings']['root_folder_path'])); ?>' />
-            <div class="des-path njt-settting-width">
-              <small><?php _e("File Manager Pro Root Path, you can change according to your choice", 'njt-fs-file-manager'); ?></small>
-            </div>
-            <small>
-              <?php _e("Default Path:", 'njt-fs-file-manager'); ?>
-              <b><?php echo (str_replace("\\", "/", ABSPATH));?></b>
-            </small>
+            <div>
+            <p class="description njt-settting-width">
+              <?php _e("Default patch is: "."<code>". str_replace("\\", "/", ABSPATH)."</code>", 'njt-fs-file-manager'); ?>
+            </p>
+            <p class="description njt-settting-width">
+            <?php _e("Eg: If you want to set root patch access is ". "<strong>wp-content</strong>". " folder. Just enter ", 'njt-fs-file-manager'); ?>
+              <?php echo (str_replace("\\", "/", ABSPATH));?>wp-content
+            </p>
+          </div>
           </td>
         </tr>
         <!-- Maximum Upload Size -->
@@ -101,9 +103,6 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
             <p class="description njt-settting-width">
               <?php _e("Will Hide .htaccess file (if exists) in file manager.", 'njt-fs-file-manager'); ?>
             </p>
-            <p>
-              <?php _e("Default: ", 'njt-fs-file-manager'); ?><code><?php _e("Not Enabled", 'njt-fs-file-manager'); ?></code>
-            </p>
           </td>
         </tr>
         <!-- Enable Trash? -->
@@ -117,10 +116,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
             </label>
 
             <p class="description njt-settting-width">
-              <?php _e("After enable trash, your files will go to trash folder.", 'njt-fs-file-manager'); ?></p>
-            <p>
-              <?php _e("Default: ", 'njt-fs-file-manager'); ?><code><?php _e("Not Enabled", 'njt-fs-file-manager'); ?></code>
-            </p>
+              <?php _e("After enable trash, after delete your files will go to trash folder.", 'njt-fs-file-manager'); ?></p>
           </td>
         </tr>
         <!-- button submit -->

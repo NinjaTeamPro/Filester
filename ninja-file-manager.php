@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: File Manager Pro
- * Plugin URI: https://ninjateam.org/wordpress-file-manager-pro
+ * Plugin Name: Filester
+ * Plugin URI: https://ninjateam.org/filester
  * Description: Made to help you focus on WordPress file management and avoid being distracted.
  * Version: 1.0
  * Author: Ninja Team
  * Author URI: https://ninjateam.org
- * Text Domain: big-ninja
+ * Text Domain: filester
  * Domain Path: /i18n/languages/
  *
  * @package BigPlugin

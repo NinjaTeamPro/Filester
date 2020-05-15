@@ -5,7 +5,7 @@ $lang = !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? $
 <div class="njt-fs-file-manager">
   <div class="njt-fs-select-theme">
     <div>
-      <h1><?php _e("File Manager Pro", 'njt-fs-file-manager'); ?></h1>
+      <h1 class="wp-heading-inline"><?php _e("Filester - WordPress File Manager", 'njt-fs-file-manager'); ?></h1>
     </div>
     <div class="select-theme-content">
       <?php    

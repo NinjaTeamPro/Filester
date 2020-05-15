@@ -52,7 +52,7 @@ if (count($arrRestrictions) > 0) {
     value='<?php echo wp_create_nonce('njt-fs-user-restrictions-security-token'); ?>'>
   <table class="form-table">
     <tr>
-      <th><?php _e("If User role is", 'njt-fs-file-manager'); ?></th>
+      <th><?php _e("If User Role is", 'njt-fs-file-manager'); ?></th>
       <td>
         <div>
           <select class="njt-fs-list-user-restrictions njt-settting-width-select" name="njt-fs-list-user-restrictions">
@@ -76,7 +76,7 @@ if (count($arrRestrictions) > 0) {
             if(empty($listUserApproved) || $listUserApproved && count($listUserApproved) == 1 && $listUserApproved[0] == 'administrator') {
               ?>
           <p class="description njt-text-error njt-settting-width">
-            <?php _e("Please choose (Select User Roles to access) in Settings tab", 'njt-fs-file-manager'); ?>
+            <?php _e("Please select a User Role at Setings tab to use this option.", 'njt-fs-file-manager'); ?>
           </p>
           <?php
             }
@@ -85,7 +85,7 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("Disable Command", 'njt-fs-file-manager'); ?></th>
+      <th><?php _e("Disable command", 'njt-fs-file-manager'); ?></th>
       <td>
         <div style="line-height: 2" class="njt-settting-width">
           <?php include_once $viewListOperations; ?>
@@ -98,36 +98,35 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("Root Path", 'njt-fs-file-manager'); ?></th>
+      <th><?php _e("Root Path for this User Role", 'njt-fs-file-manager'); ?></th>
       <td>
         <div>
           <div class="njt-settting-width">
             <button type="button"
-              class="njt-fs-button js-creat-root-path"><?php _e("creat root", 'njt-fs-file-manager'); ?></button>
+              class="njt-fs-button js-creat-root-path"><?php _e("Insert Root Patch", 'njt-fs-file-manager'); ?></button>
           </div>
           <textarea name="private_folder_access" id="private_folder_access"
             class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
           <div>
             <p class="description njt-settting-width">
-              <?php _e("ex: ". str_replace("\\", "/", ABSPATH)."wp-content", 'njt-fs-file-manager'); ?>
+              <?php _e("Default patch is: "."<code>". str_replace("\\", "/", ABSPATH)."</code>", 'njt-fs-file-manager'); ?>
             </p>
-            <small>
-              <?php _e("Default Path:", 'njt-fs-file-manager'); ?>
-              <b class="njt-fs-root-path"><?php echo (str_replace("\\", "/", ABSPATH));?></b>
-            </small>
+            <p class="description njt-settting-width">
+            <?php _e("Eg: If you want to set root patch access is ". "<strong>wp-content</strong>". " folder. Just enter ", 'njt-fs-file-manager'); ?>
+              <?php echo (str_replace("\\", "/", ABSPATH));?>wp-content
+            </p>
           </div>
         </div>
       </td>
     </tr>
     <tr>
-      <th> <?php _e("Enter Folder or File Paths That You want to Hide", 'njt-fs-file-manager'); ?></th>
+      <th> <?php _e("Enter folder or file paths that you want to Hide", 'njt-fs-file-manager'); ?></th>
       <td>
         <div>
           <textarea name="hide_paths" id="hide_paths"
             class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("ex: themes/storefront | themes/twentyseventeen. Note: Mutiple separated by Vertical Bar", 'njt-fs-file-manager'); ?>
-            ( <strong>|</strong> )
+            <?php _e("Multiple separated by vertical bar (|). Eg: themes/twentytwenty | themes/avada.", 'njt-fs-file-manager'); ?>
           </p>
         </div>
       </td>
@@ -139,8 +138,7 @@ if (count($arrRestrictions) > 0) {
           <textarea name="lock_files" id="lock_files"
             class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("ex: .php | .png | .css. Note: Mutiple separated by Vertical Bar", 'njt-fs-file-manager'); ?> (
-            <strong>|</strong> )
+            <?php _e("Multiple separated by vertical bar (|). Eg: .php | .png | .css", 'njt-fs-file-manager'); ?>
           </p>
         </div>
       </td>
@@ -172,7 +170,7 @@ if (count($arrRestrictions) > 0) {
           <textarea name="can_upload_mime" id="can_upload_mime"
             class="njt-settting-width"><?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Note: (php, txt, js, ...) are extensions of files can be uploaded", 'njt-fs-file-manager'); ?>
+            <?php _e("Multiple separated by comma. If left empty, this means user can't upload any files.", 'njt-fs-file-manager'); ?>
           </p>
         </div>
       </td>
