@@ -1,4 +1,4 @@
-=== Filester ===
+=== Filester - File Manager Pro ===
 Contributors: ninjateam
 Tags: wordpress file manager, file management, wordpress media manager, file manager, wp file manager, elfinder
 Requires at least: 3.0
