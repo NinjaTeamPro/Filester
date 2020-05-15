@@ -1,6 +1,6 @@
-=== File Manager Pro ===
+=== Filester ===
 Contributors: ninjateam
-Tags: wordpress file manager, wordpress media manager, file manager, wp file manager, elfinder
+Tags: wordpress file manager, file management, wordpress media manager, file manager, wp file manager, elfinder
 Requires at least: 3.0
 Tested up to: 5.4
 Stable tag: trunk
@@ -12,46 +12,51 @@ Made to help you focus on WordPress file management and avoid being distracted.
 
 == Description ==
 
-File Manager Pro has all features of other file management plugins out there, yet with a super modern and clean UI/UX.
+Filester has all features of other file manager plugins out there, yet with a super modern and clean UI/UX.
 
-This plugin are dedicated to boost your productivity of managing WordPress. All necessary operations are fully provided and tested on a wide variety of servers, browsers and cloud storage drivers.
+This plugin are dedicated to boost your productivity of managing WordPress. All necessary operations are fully provided and tested on a wide variety of servers and browsers.
+
 
 == FEATURES ==
 
-**Friendly User Interface**
-Drag and drop to upload/move files into folders. Drag and drop to rearrange folders.
+**Drag & drop interface:** easily move/copy files inbound and outbound
 
-**Smart Context Menu**
-Right click your mouse to quickly create, rename or delete files/folders like what you do on your computer.
+**Smart context menu:** right-click to create, rename or delete files/folders 
 
-**RTL Supported**
-FileBird supports RTL languages including Hebrew, Arabic, etc.
+**Handle files and folders on a remote server:** copy, move, upload, create folder/file, rename, etc.
 
-**Many Languages Supported**
-This plugin supports most popular languages such as English, Spanish, Italian, French, etc.
+**Flexible configuration:** access rights, upload file types, user interface and others
 
-- Handle files and folders on a remote server:** copy, move, upload, create folder/file, rename, etc.)
+**Create/extract archives:** .zip, .rar, .7z, .tar, .gzip, .bzip2
 
-- Local file system, MySQL, FTP, Box, Dropbox, GoogleDrive and OneDrive volume storage drivers**
+**Multiple languages supported:** English, German, Spanish, Italian, French, etc.
 
-- Drag & drop interface:** move/copy files inbound and outbound
+**RTL supported:** Hebrew, Arabic, Persian, Kurdish, etc.
 
-- Flexible configuration:** access rights, upload file types, user interface and others
+OTHER FEATURES
 
-- Create/extract archives:** .zip, .rar, .7z, .tar, .gzip, .bzip2
+- Local file system, FTP
 
 - Simple client-server API based on JSON
 
-- List and Icons view
+- List and icons view
 
 - Multi-root support
 
-**Compatible with:** AWS S3, Azure, Digital Ocean Spaces, Box, Dropbox, GoogleDrive, OneDrive, and other cloud storage drivers
+- Hidden files/folders options
+
+- Set file visibility for each user
+
+
+== HOW IT WORKS ==
+Filester plugin enables WordPress source file management without FTP access. 
+You can edit, copy, upload files/folders to your server from File Manager menu.
+
 
 == Installation ==
 Manual installation is easy and takes fewer than one minute.
 
-1. Download the plugin from wordpress.org, unpack it and upload the **[File Manager Pro]** folder to your **wp-content/plugins/** directory.
+1. Download the plugin from wordpress.org, unpack it and upload the **[Filester]** folder to your **wp-content/plugins/** directory.
 2. Activate the plugin through the ‘Plugins‘ menu in WordPress.
 3. Go to your main **WordPress menu > File Manager** to use.
 
@@ -61,8 +66,8 @@ You’re done. Enjoy.
 = Is it compatible with WordPress 5? = 
 Definitely yes! We’re always up-to-date to give you the best experience in using our plugin.
 
-= Is File Manager Pro free? =
-Yes, File Manager Pro is total free with Pro features.
+= Is Filester free? =
+Yes, Filester is total free with Pro features.
 
 == Screenshots ==
 
