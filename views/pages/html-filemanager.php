@@ -80,7 +80,7 @@ jQuery(document).ready(function() {
     },
     ui: ['toolbar', 'tree', 'path', 'stat'],
     customData: {
-      action: 'connector',
+      action: 'fs_connector',
       nonce: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'
     },
     lang: '<?php echo ($lang)?>',
