@@ -190,7 +190,7 @@ const njtFileManager = {
   },
   clickedCreatRootPath() {
     jQuery('.js-creat-root-path').on('click', function () {
-      const valueRootPath = jQuery(".njt-fs-root-path").text()
+      const valueRootPath = wpData.ABSPATH
       jQuery('textarea#private_folder_access').val(valueRootPath)
     })
   }

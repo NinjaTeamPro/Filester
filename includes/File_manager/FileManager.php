@@ -52,7 +52,7 @@ class FileManager
         if ($this->isAlowUserAccess()) {
             add_action('admin_enqueue_scripts', array($this, 'enqueueAdminScripts'));
             add_action('admin_menu', array($this, 'FileManager'));
-            add_action('wp_ajax_connector', array($this, 'connector'));
+            add_action('wp_ajax_fs_connector', array($this, 'fsConnector'));
             add_action('wp_ajax_selector_themes', array($this, 'selectorThemes'));
             add_action('wp_ajax_get_role_restrictions', array($this, 'getArrRoleRestrictions'));
        }
@@ -143,13 +143,15 @@ class FileManager
             'nonce' => wp_create_nonce("njt-fs-file-manager-admin"),
             'PLUGIN_URL' => NJT_FS_BN_PLUGIN_URL .'includes/File_manager/lib/',
             'PLUGIN_PATH' => NJT_FS_BN_PLUGIN_PATH.'includes/File_manager/lib/',
-            'PLUGIN_DIR'=> NJT_FS_BN_PLUGIN_DIR
+            'PLUGIN_DIR'=> NJT_FS_BN_PLUGIN_DIR,
+            'ABSPATH'=> str_replace("\\", "/", ABSPATH)
+
         ));
     }
 
     //File manager connector function
 
-    public function connector()
+    public function fsConnector()
     {
         if( isset( $_POST ) && !empty( $_POST ) && ! wp_verify_nonce( $_POST['nonce'] ,'file-manager-security-token') ) wp_die();
         $uploadMaxSize = isset($this->options['njt_fs_file_manager_settings']['upload_max_size']) && !empty($this->options['njt_fs_file_manager_settings']['upload_max_size']) ? $this->options['njt_fs_file_manager_settings']['upload_max_size'] : 0;
