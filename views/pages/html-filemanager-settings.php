@@ -30,10 +30,10 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
         <tr>
           <th><?php _e("Select User Roles to access", 'njt-fs-file-manager'); ?></th>
           <td>
-            <div class="njt-fs-list-user njt-settting-width" style="line-height:2">
+            <div class="njt-fs-list-user njt-settting-width njt-fs-list-col4" style="line-height:2">
               <?php foreach ( $wp_roles->roles as $key=>$value ): ?>
               <?php if ($key != 'administrator') {?>
-              <span style="padding-right: 20px">
+              <span class="list-col4-item">
                 <input type="checkbox" class="fm-list-user-item" id="<?php echo $key; ?>" name="<?php echo $key; ?>"
                   data-name="<?php echo $value['name'];?>" value="<?php echo $key; ?>">
                 <label for="<?php echo $key; ?>"><?php echo $value['name']; ?></label>
@@ -52,9 +52,8 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
         <tr>
           <th><?php _e("Root Path", 'njt-fs-file-manager'); ?></th>
           <td>
-            <input type='text' name='root_folder_path' id='root_folder_path' class="njt-settting-width"
-              placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH)."wp-content");?>"
-              value='<?php  if( isset( $this->options['njt_fs_file_manager_settings']['root_folder_path'] ) && !empty( $this->options['njt_fs_file_manager_settings']['root_folder_path'] ) ) echo str_replace("\\", "/",esc_attr($this->options['njt_fs_file_manager_settings']['root_folder_path'])); ?>' />
+            <textarea type='text' name='root_folder_path' id='root_folder_path' class="njt-settting-width"
+              placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH)."wp-content");?>"> <?php  if( isset( $this->options['njt_fs_file_manager_settings']['root_folder_path'] ) && !empty( $this->options['njt_fs_file_manager_settings']['root_folder_path'] ) ) echo str_replace("\\", "/",esc_attr($this->options['njt_fs_file_manager_settings']['root_folder_path'])); ?></textarea>
             <div>
             <p class="description njt-settting-width">
               <?php _e("Default patch is: "."<code>". str_replace("\\", "/", ABSPATH)."</code>", 'njt-fs-file-manager'); ?>

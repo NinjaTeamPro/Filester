@@ -87,7 +87,7 @@ if (count($arrRestrictions) > 0) {
     <tr>
       <th><?php _e("Disable command", 'njt-fs-file-manager'); ?></th>
       <td>
-        <div style="line-height: 2" class="njt-settting-width">
+        <div style="line-height: 2" class="njt-settting-width njt-fs-list-col4">
           <?php include_once $viewListOperations; ?>
           <!-- Value to submit data -->
           <input type="hidden" name="list_user_restrictions_alow_access" id="list_user_restrictions_alow_access">

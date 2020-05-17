@@ -2,7 +2,12 @@
 #toplevel_page_njt-fs-filemanager .wp-menu-image.dashicons-before img {
   padding-top: 7px;
 }
-
+.njt-fs-mr0 {
+  margin: 0 !important;
+}
+.njt-fs-pd0 {
+  margin: 0 !important;
+}
 .njt-fs-file-manager {
   padding-right: 20px;
 }
@@ -14,7 +19,9 @@
   display: flex;
   position: relative;
   height: 50px;
-  margin-top: 20px;
+  margin-top: 10px;
+  align-items: center;
+  margin-bottom: 10px;
 }
 .njt-fs-select-theme .select-theme-content {
   position: absolute;
@@ -24,6 +31,7 @@
 
 .njt-fs-select-theme .select-theme-title {
   margin: 8px 10px;
+  font-size: 14px;
 }
 /* CSS Setting */
 
@@ -123,11 +131,30 @@
 .form-user-role-restrictions .njt-settting-width {
   width: 80%;
 }
+.njt-fs-list-col4 {
+  display: flex;
+  flex-wrap: wrap;
+}
+.njt-fs-list-col4 .list-col4-item {
+  flex: 0 0 25%;
+    max-width: 25%;
+    padding: 0!important;
+    display: block;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.njt-fs-list-col4 .list-col4-item label {
+  padding-right: 25px;
+}
 .form-user-role-restrictions .njt-text-error {
   color: #a00;
   margin-top: 10px;
 }
-
+.njt-fs-list-user.njt-settting-width {
+  width: 80% !important;
+}
 @media screen and (max-width: 769px) {
   .form-user-role-restrictions .njt-settting-width,
   .form-user-role-restrictions .njt-settting-width-select,
