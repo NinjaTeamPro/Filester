@@ -105,7 +105,7 @@ if (count($arrRestrictions) > 0) {
             <button type="button"
               class="njt-fs-button js-creat-root-path"><?php _e("Insert Root Patch", 'njt-fs-file-manager'); ?></button>
           </div>
-          <textarea name="private_folder_access" id="private_folder_access"
+          <textarea name="private_folder_access" id="private_folder_access" placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH)."wp-content");?>"
             class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
           <div>
             <p class="description njt-settting-width">

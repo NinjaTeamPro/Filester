@@ -197,7 +197,7 @@ class FileManager
                 'tmbURL'        => site_url() . '/includes/File_manager/lib/files/.trash/.tmb',
                 'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
                 'uploadDeny'    => array('all'), 
-                'uploadAllow'   => array('all'),
+                'uploadAllow'   => array(),
                 'uploadOrder'   => array('deny', 'allow'),
                 'attributes' => array(
                     array(
