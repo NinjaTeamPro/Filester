@@ -262,7 +262,10 @@ class FileManager
         }
 
         //Enter file extensions which can be uploaded
-        if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])){
+        if($this->userRole !== 'administrator' && empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])) {
+            $opts['roots'][0]['uploadDeny'] = array('all');
+            $opts['roots'][0]['uploadAllow'] = array();
+        } else if ( $this->userRole !== 'administrator' && !empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])) {
             $opts['roots'][0]['uploadDeny'] = array('all');
             $opts['roots'][0]['uploadAllow'] = array();
             $arrCanUploadMime = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'];
@@ -273,6 +276,9 @@ class FileManager
                     array_push($opts['roots'][0]['uploadAllow'], $value);
                 }
             };
+        } else {
+            $opts['roots'][0]['uploadDeny'] = array();
+            $opts['roots'][0]['uploadAllow'] = array('all');
         }
         //End --setting User Role Restrictions
 
