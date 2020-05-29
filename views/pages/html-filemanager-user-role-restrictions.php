@@ -52,7 +52,7 @@ if (count($arrRestrictions) > 0) {
     value='<?php echo wp_create_nonce('njt-fs-user-restrictions-security-token'); ?>'>
   <table class="form-table">
     <tr>
-      <th><?php _e("If User Role is", 'njt-fs-file-manager'); ?></th>
+      <th><?php _e("If User Role is", NJT_FS_BN_DOMAIN); ?></th>
       <td>
         <div>
           <select class="njt-fs-list-user-restrictions njt-settting-width-select" name="njt-fs-list-user-restrictions">
@@ -69,14 +69,14 @@ if (count($arrRestrictions) > 0) {
               endforeach;}
               else {
              ?>
-            <option selected disabled hidden><?php _e("Nothing to choose", 'njt-fs-file-manager'); ?></option>
+            <option selected disabled hidden><?php _e("Nothing to choose", NJT_FS_BN_DOMAIN); ?></option>
             <?php }?>
           </select>
           <?php 
             if(empty($listUserApproved) || $listUserApproved && count($listUserApproved) == 1 && $listUserApproved[0] == 'administrator') {
               ?>
           <p class="description njt-text-error njt-settting-width">
-            <?php _e("Please select a User Role at Setings tab to use this option.", 'njt-fs-file-manager'); ?>
+            <?php _e("Please select a User Role at Setings tab to use this option.", NJT_FS_BN_DOMAIN); ?>
           </p>
           <?php
             }
@@ -85,7 +85,7 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("Disable command", 'njt-fs-file-manager'); ?></th>
+      <th><?php _e("Disable command", NJT_FS_BN_DOMAIN); ?></th>
       <td>
         <div style="line-height: 2" class="njt-settting-width njt-fs-list-col4">
           <?php include_once $viewListOperations; ?>
@@ -98,21 +98,21 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("Root Path for this User Role", 'njt-fs-file-manager'); ?></th>
+      <th><?php _e("Root Path for this User Role", NJT_FS_BN_DOMAIN); ?></th>
       <td>
         <div>
           <div class="njt-settting-width">
             <button type="button"
-              class="njt-fs-button js-creat-root-path"><?php _e("Insert Root Patch", 'njt-fs-file-manager'); ?></button>
+              class="njt-fs-button js-creat-root-path"><?php _e("Insert Root Path", NJT_FS_BN_DOMAIN); ?></button>
           </div>
           <textarea name="private_folder_access" id="private_folder_access" placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH)."wp-content");?>"
             class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
           <div>
             <p class="description njt-settting-width">
-              <?php _e("Default patch is: "."<code>". str_replace("\\", "/", ABSPATH)."</code>", 'njt-fs-file-manager'); ?>
+              <?php _e("Default path is: "."<code>". str_replace("\\", "/", ABSPATH)."</code>", NJT_FS_BN_DOMAIN); ?>
             </p>
             <p class="description njt-settting-width">
-            <?php _e("Eg: If you want to set root patch access is ". "<strong>wp-content</strong>". " folder. Just enter ", 'njt-fs-file-manager'); ?>
+            <?php _e("Eg: If you want to set root path access is ". "<strong>wp-content</strong>". " folder. Just enter ", NJT_FS_BN_DOMAIN); ?>
               <?php echo (str_replace("\\", "/", ABSPATH));?>wp-content
             </p>
           </div>
@@ -120,57 +120,57 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th> <?php _e("Enter folder or file paths that you want to Hide", 'njt-fs-file-manager'); ?></th>
+      <th> <?php _e("Enter folder or file paths that you want to Hide", NJT_FS_BN_DOMAIN); ?></th>
       <td>
         <div>
           <textarea name="hide_paths" id="hide_paths"
             class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Multiple separated by vertical bar (|). Eg: themes/twentytwenty | themes/avada.", 'njt-fs-file-manager'); ?>
+            <?php _e("Multiple separated by vertical bar (|). Eg: themes/twentytwenty | themes/avada.", NJT_FS_BN_DOMAIN); ?>
           </p>
         </div>
       </td>
     </tr>
     <tr>
-      <th><?php _e("Enter file extensions which you want to Lock", 'njt-fs-file-manager'); ?></th>
+      <th><?php _e("Enter file extensions which you want to Lock", NJT_FS_BN_DOMAIN); ?></th>
       <td>
         <div>
           <textarea name="lock_files" id="lock_files"
             class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Multiple separated by vertical bar (|). Eg: .php | .png | .css", 'njt-fs-file-manager'); ?>
+            <?php _e("Multiple separated by vertical bar (|). Eg: .php | .png | .css", NJT_FS_BN_DOMAIN); ?>
           </p>
         </div>
       </td>
     </tr>
     <tr>
-      <th><?php _e("Enter file extensions which user can be Uploaded", 'njt-fs-file-manager'); ?></th>
+      <th><?php _e("Enter file extensions which user can be Uploaded", NJT_FS_BN_DOMAIN); ?></th>
       <td>
         <div>
           <div>
             <div class="njt-btn-group njt-settting-width">
               <button type="button" class="njt-mime-type njt-fs-button"
-                value="text"><?php _e("text", 'njt-fs-file-manager'); ?></button>
+                value="text"><?php _e("text", NJT_FS_BN_DOMAIN); ?></button>
               <button type="button" class="njt-mime-type njt-fs-button"
-                value="office"><?php _e("office", 'njt-fs-file-manager'); ?></button>
+                value="office"><?php _e("office", NJT_FS_BN_DOMAIN); ?></button>
               <button type="button" class="njt-mime-type njt-fs-button"
-                value="images"><?php _e("images", 'njt-fs-file-manager'); ?></button>
+                value="images"><?php _e("images", NJT_FS_BN_DOMAIN); ?></button>
               <button type="button" class="njt-mime-type njt-fs-button"
-                value="video"><?php _e("video", 'njt-fs-file-manager'); ?></button>
+                value="video"><?php _e("video", NJT_FS_BN_DOMAIN); ?></button>
               <button type="button" class="njt-mime-type njt-fs-button"
-                value="audio"><?php _e("audio", 'njt-fs-file-manager'); ?></button>
+                value="audio"><?php _e("audio", NJT_FS_BN_DOMAIN); ?></button>
               <button type="button" class="njt-mime-type njt-fs-button"
-                value="archives"><?php _e("archives", 'njt-fs-file-manager'); ?></button>
+                value="archives"><?php _e("archives", NJT_FS_BN_DOMAIN); ?></button>
               <button type="button" class="njt-mime-type njt-fs-button"
-                value="adobe"><?php _e("adobe", 'njt-fs-file-manager'); ?></button>
+                value="adobe"><?php _e("adobe", NJT_FS_BN_DOMAIN); ?></button>
               <button type="button" class="njt-mime-type njt-fs-button"
-                value="clearall"><?php _e("clear all", 'njt-fs-file-manager'); ?></button>
+                value="clearall"><?php _e("clear all", NJT_FS_BN_DOMAIN); ?></button>
             </div>
           </div>
           <textarea name="can_upload_mime" id="can_upload_mime"
             class="njt-settting-width"><?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Multiple separated by comma. If left empty, this means user can't upload any files.", 'njt-fs-file-manager'); ?>
+            <?php _e("Multiple separated by comma. If left empty, this means user can't upload any files.", NJT_FS_BN_DOMAIN); ?>
           </p>
         </div>
       </td>

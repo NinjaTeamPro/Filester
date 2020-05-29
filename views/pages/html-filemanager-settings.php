@@ -17,8 +17,8 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
 ?>
 <div class="njt-fs-settings njt-fs-file-manager">
   <h1 id="njt-plugin-tabs" class="nav-tab-wrapper hide-if-no-js">
-    <a href="javascript:void(0)" class="nav-tab nav-tab-active"><?php _e("Settings", 'njt-fs-file-manager'); ?></a>
-    <a href="javascript:void(0)" class="nav-tab"><?php _e("User Role Restrictions", 'njt-fs-file-manager'); ?></a>
+    <a href="javascript:void(0)" class="nav-tab nav-tab-active"><?php _e("Settings", NJT_FS_BN_DOMAIN); ?></a>
+    <a href="javascript:void(0)" class="nav-tab"><?php _e("User Role Restrictions", NJT_FS_BN_DOMAIN); ?></a>
   </h1>
   <div class="njt-fs-settings-content">
     <form action="" class="njt-plugin-setting settings-form" method="POST">
@@ -28,7 +28,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
 
       <table class="form-table">
         <tr>
-          <th><?php _e("Select User Roles to access", 'njt-fs-file-manager'); ?></th>
+          <th><?php _e("Select User Roles to access", NJT_FS_BN_DOMAIN); ?></th>
           <td>
             <div class="njt-fs-list-user njt-settting-width njt-fs-list-col4" style="line-height:2">
               <?php foreach ( $wp_roles->roles as $key=>$value ): ?>
@@ -50,16 +50,16 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
         </tr>
         <!-- root Path -->
         <tr>
-          <th><?php _e("Root Path", 'njt-fs-file-manager'); ?></th>
+          <th><?php _e("Root Path", NJT_FS_BN_DOMAIN); ?></th>
           <td>
             <textarea type='text' name='root_folder_path' id='root_folder_path' class="njt-settting-width"
               placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH)."wp-content");?>"> <?php  if( isset( $this->options['njt_fs_file_manager_settings']['root_folder_path'] ) && !empty( $this->options['njt_fs_file_manager_settings']['root_folder_path'] ) ) echo str_replace("\\", "/",esc_attr($this->options['njt_fs_file_manager_settings']['root_folder_path'])); ?></textarea>
             <div>
             <p class="description njt-settting-width">
-              <?php _e("Default patch is: "."<code>". str_replace("\\", "/", ABSPATH)."</code>", 'njt-fs-file-manager'); ?>
+              <?php _e("Default path is: "."<code>". str_replace("\\", "/", ABSPATH)."</code>", NJT_FS_BN_DOMAIN); ?>
             </p>
             <p class="description njt-settting-width">
-            <?php _e("Eg: If you want to set root patch access is ". "<strong>wp-content</strong>". " folder. Just enter ", 'njt-fs-file-manager'); ?>
+            <?php _e("Eg: If you want to set root path access is ". "<strong>wp-content</strong>". " folder. Just enter ", NJT_FS_BN_DOMAIN); ?>
               <?php echo (str_replace("\\", "/", ABSPATH));?>wp-content
             </p>
           </div>
@@ -67,29 +67,29 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
         </tr>
         <!-- Maximum Upload Size -->
         <tr>
-          <th><?php _e("Maximum Upload Size", 'njt-fs-file-manager'); ?></th>
+          <th><?php _e("Maximum Upload Size", NJT_FS_BN_DOMAIN); ?></th>
           <td>
             <input type="number" name="upload_max_size" id="upload_max_size" class="njt-fs-settting-width-half"
               value="<?php  if( isset( $this->options['njt_fs_file_manager_settings']['upload_max_size'] ) && !empty( $this->options['njt_fs_file_manager_settings']['upload_max_size'] )) echo esc_attr($this->options['njt_fs_file_manager_settings']['upload_max_size']); ?>">
-            <strong><?php _e("MB", 'njt-fs-file-manager'); ?></strong>
+            <strong><?php _e("MB", NJT_FS_BN_DOMAIN); ?></strong>
             <div class="des-path njt-settting-width">
               <small>
-                <?php _e("Default:", 'njt-fs-file-manager'); ?>
-                <b><?php _e("0 means unlimited upload.", 'njt-fs-file-manager'); ?></b>
+                <?php _e("Default:", NJT_FS_BN_DOMAIN); ?>
+                <b><?php _e("0 means unlimited upload.", NJT_FS_BN_DOMAIN); ?></b>
               </small>
             </div>
           </td>
         </tr>
         <!-- Select language -->
         <tr>
-          <th><?php _e("Select language", 'njt-fs-file-manager'); ?></th>
+          <th><?php _e("Select language", NJT_FS_BN_DOMAIN); ?></th>
           <td>
             <?php include_once $viewPathLanguage; ?>
           </td>
         </tr>
         <!-- .htaccess -->
         <tr>
-          <th><?php _e("Hide .htaccess?", 'njt-fs-file-manager'); ?></th>
+          <th><?php _e("Hide .htaccess?", NJT_FS_BN_DOMAIN); ?></th>
           <td>
             <label class="shortcode-switch" for="enable_htaccess">
               <input name="enable_htaccess" type="checkbox" id="enable_htaccess" value="1"
@@ -100,13 +100,13 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
 
 
             <p class="description njt-settting-width">
-              <?php _e("Will Hide .htaccess file (if exists) in file manager.", 'njt-fs-file-manager'); ?>
+              <?php _e("Will Hide .htaccess file (if exists) in file manager.", NJT_FS_BN_DOMAIN); ?>
             </p>
           </td>
         </tr>
         <!-- Enable Trash? -->
         <tr>
-          <th><?php _e("Enable Trash?", 'njt-fs-file-manager'); ?></th>
+          <th><?php _e("Enable Trash?", NJT_FS_BN_DOMAIN); ?></th>
           <td>
             <label class="shortcode-switch" for="enable_trash">
               <input name="enable_trash" type="checkbox" id="enable_trash" value="1"
@@ -115,7 +115,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
             </label>
 
             <p class="description njt-settting-width">
-              <?php _e("After enable trash, after delete your files will go to trash folder.", 'njt-fs-file-manager'); ?></p>
+              <?php _e("After enable trash, after delete your files will go to trash folder.", NJT_FS_BN_DOMAIN); ?></p>
           </td>
         </tr>
         <!-- button submit -->

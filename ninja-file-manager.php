@@ -26,7 +26,7 @@ defined('ABSPATH') || exit;
 
 define('NJT_FS_BN_PREFIX', 'njt-fs');
 define('NJT_FS_BN_VERSION', '1.0');
-define('NJT_FS_BN_DOMAIN', 'njt-fs');
+define('NJT_FS_BN_DOMAIN', 'filester');
 
 define('NJT_FS_BN_PLUGIN_DIR', basename(__DIR__));
 define('NJT_FS_BN_PLUGIN_URL', plugin_dir_url(__FILE__));
