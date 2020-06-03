@@ -1,8 +1,8 @@
 <?php
 
-define('NJT_ELFINDER_PHP_ROOT_PATH', dirname(__FILE__));
+define('NJT_FS_ELFINDER_PHP_ROOT_PATH', dirname(__FILE__));
 
-function njt_elFinderAutoloader($name)
+function njt_fs_elFinderAutoloader($name)
 {
     $map = array(
         'elFinder' => 'elFinder.class.php',
@@ -29,18 +29,18 @@ function njt_elFinderAutoloader($name)
         'elFinderVolumeTrash' => 'elFinderVolumeTrash.class.php',
     );
     if (isset($map[$name])) {
-        return include_once(NJT_ELFINDER_PHP_ROOT_PATH . '/' . $map[$name]);
+        return include_once(NJT_FS_ELFINDER_PHP_ROOT_PATH . '/' . $map[$name]);
     }
     $prefix = substr($name, 0, 14);
     if (substr($prefix, 0, 8) === 'elFinder') {
         if ($prefix === 'elFinderVolume') {
-            $file = NJT_ELFINDER_PHP_ROOT_PATH . '/' . $name . '.class.php';
+            $file = NJT_FS_ELFINDER_PHP_ROOT_PATH . '/' . $name . '.class.php';
             return (is_file($file) && include_once($file));
         } else if ($prefix === 'elFinderPlugin') {
-            $file = NJT_ELFINDER_PHP_ROOT_PATH . '/plugins/' . substr($name, 14) . '/plugin.php';
+            $file = NJT_FS_ELFINDER_PHP_ROOT_PATH . '/plugins/' . substr($name, 14) . '/plugin.php';
             return (is_file($file) && include_once($file));
         } else if ($prefix === 'elFinderEditor') {
-            $file = NJT_ELFINDER_PHP_ROOT_PATH . '/editors/' . substr($name, 14) . '/editor.php';
+            $file = NJT_FS_ELFINDER_PHP_ROOT_PATH . '/editors/' . substr($name, 14) . '/editor.php';
             return (is_file($file) && include_once($file));
         }
     }
@@ -48,8 +48,8 @@ function njt_elFinderAutoloader($name)
 }
 
 if (version_compare(PHP_VERSION, '5.3', '<')) {
-    spl_autoload_register('njt_elFinderAutoloader');
+    spl_autoload_register('njt_fs_elFinderAutoloader');
 } else {
-    spl_autoload_register('njt_elFinderAutoloader', true, true);
+    spl_autoload_register('njt_fs_elFinderAutoloader', true, true);
 }
 
