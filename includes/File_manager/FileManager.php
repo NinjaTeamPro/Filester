@@ -172,6 +172,7 @@ class FileManager
                     'uploadAllow'   => array('all'),
                     'uploadOrder'   => array('deny', 'allow'),
                     'disabled' => array(''),
+                    'acceptedName' => 'validName',
                     'attributes' => array() // default is empty
                 ),
             ),
@@ -199,6 +200,7 @@ class FileManager
                 'uploadDeny'    => array('all'), 
                 'uploadAllow'   => array(),
                 'uploadOrder'   => array('deny', 'allow'),
+                'acceptedName' => 'validName',
                 'attributes' => array(
                     array(
                         'pattern' => '/.tmb/',
