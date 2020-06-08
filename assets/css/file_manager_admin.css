@@ -2,6 +2,12 @@
 #toplevel_page_njt-fs-filemanager .wp-menu-image.dashicons-before img {
   padding-top: 7px;
 }
+.njt-fs-wrap .wp-heading-inline{
+  font-size: 23px;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.3;
+}
 .njt-fs-mr0 {
   margin: 0 !important;
 }
