@@ -200,8 +200,8 @@ class FileManager
                 'path'          => NJT_FS_BN_PLUGIN_PATH.'includes/File_manager/lib/files/.trash/',
                 'tmbURL'        => site_url() . '/includes/File_manager/lib/files/.trash/.tmb',
                 'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
-                'uploadDeny'    => array('all'), 
-                'uploadAllow'   => array(),
+                'uploadDeny'    => array(), 
+                'uploadAllow'   => array('all'),
                 'uploadOrder'   => array('deny', 'allow'),
                 'acceptedName' => 'validName',
                 'attributes' => array(
