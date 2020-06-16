@@ -2,7 +2,7 @@
 Contributors: ninjateam
 Tags: file manager, file management, wordpress media manager, wordpress file manager, wp file manager, elfinder, manage file
 Requires at least: 3.0
-Tested up to: 5.4
+Tested up to: 5.4.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -86,9 +86,16 @@ Yes. You can click on any folder / file to preview or edit its contents. The fil
 Yes, Filester is totally free and full-fledged with premium features. You won't be asked to upgrade to any pro versions.
 
 == Screenshots ==
-
+1. File manager
+2. Filester general settings
+3. Filester user role restriction settings
 
 == Changelog ==
+
+= 1.2 =
+Jun 16, 2020 – Version 1.2
+* Fixed: Trash issue
+* Fixed: Some small bugs
 
 = 1.1 =
 May 29, 2020 – Version 1.1
