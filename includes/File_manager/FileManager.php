@@ -125,8 +125,7 @@ class FileManager
        
         //elfinder core
         wp_enqueue_script('jquery_min', plugins_url('/lib/jquery/jquery-ui.min.js', __FILE__));
-        wp_enqueue_script('elFinderd', plugins_url('/lib/js/elfinder.full.js', __FILE__));
-        wp_enqueue_script('elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
+      
         //js load fm_locale
         if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
             $locale = $this->options['njt_fs_file_manager_settings']['fm_locale'];
@@ -147,6 +146,10 @@ class FileManager
             'ABSPATH'=> str_replace("\\", "/", ABSPATH)
 
         ));
+
+        //js load elFinder
+        wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder.full.js', __FILE__));
+        wp_enqueue_script('elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
     }
 
     //File manager connector function
