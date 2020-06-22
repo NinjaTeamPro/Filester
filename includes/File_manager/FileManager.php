@@ -19,7 +19,7 @@ class FileManager
     public $options;
     public $fmCapability = '';
     public $userRole = '';
-    private $hook_suffix = null;
+    private $hook_suffix = array();
     
     public static function getInstance()
     {
@@ -110,6 +110,9 @@ class FileManager
 
     public function enqueueAdminScripts($suffix)
     {
+        wp_register_style('file_manager_icon_css',NJT_FS_BN_PLUGIN_URL . 'assets/css/style-icon.css');
+        wp_enqueue_style('file_manager_icon_css');
+
         if (in_array($suffix, $this->hook_suffix)) {
             $selectorThemes = get_option('njt_fs_selector_themes');
             if (empty($selectorThemes[$this->userRole])) {
