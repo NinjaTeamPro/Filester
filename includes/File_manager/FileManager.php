@@ -19,6 +19,7 @@ class FileManager
     public $options;
     public $fmCapability = '';
     public $userRole = '';
+    private $hook_suffix = null;
     
     public static function getInstance()
     {
@@ -74,7 +75,7 @@ class FileManager
     public function FileManager()
     {
 
-        add_menu_page(
+        $display_suffix = add_menu_page(
             __('Custom Menu Title', 'textdomain'),
             'File Manager',
             $this->fmCapability,
@@ -84,14 +85,15 @@ class FileManager
             9
         );
         
-        add_submenu_page (
+        $settings_suffix = add_submenu_page (
           'njt-fs-filemanager',
           'Settings',
           'Settings', 
           'manage_options', 
           'njt-fs-filemanager-settings',
           array($this, 'fsSettingsPage') );
-       
+
+        $this->hook_suffix = array($display_suffix, $settings_suffix);
     }
 
     public function fsViewFileCallback()
@@ -106,50 +108,51 @@ class FileManager
         include_once $viewPath;
     }
 
-    public function enqueueAdminScripts()
+    public function enqueueAdminScripts($suffix)
     {
-      
-        $selectorThemes = get_option('njt_fs_selector_themes');
-        if (empty($selectorThemes[$this->userRole])) {
-            $selectorThemes[$this->userRole]['themesValue'] = 'Default';
-            update_option('njt_fs_selector_themes', $selectorThemes);
-        }
-      
-        $selectedTheme = $selectorThemes[$this->userRole]['themesValue'];
-
-        //elfinder css
-        wp_enqueue_style('elfinder.jq.css', plugins_url('/lib/jquery/jquery-ui.css', __FILE__));
-        wp_enqueue_style('elfinder.full.css', plugins_url('/lib/css/elfinder.full.css', __FILE__));
-        wp_enqueue_style('themes', plugins_url('/lib/css/theme.css', __FILE__));
-        wp_enqueue_style('themes-selector', plugins_url('/lib/themes/' . $selectedTheme . '/css/theme.css', __FILE__));
-       
-        //elfinder core
-        wp_enqueue_script('jquery_min', plugins_url('/lib/jquery/jquery-ui.min.js', __FILE__));
-      
-        //js load fm_locale
-        if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
-            $locale = $this->options['njt_fs_file_manager_settings']['fm_locale'];
-            if($locale != 'en') {
-                wp_enqueue_script( 'fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
+        if (in_array($suffix, $this->hook_suffix)) {
+            $selectorThemes = get_option('njt_fs_selector_themes');
+            if (empty($selectorThemes[$this->userRole])) {
+                $selectorThemes[$this->userRole]['themesValue'] = 'Default';
+                update_option('njt_fs_selector_themes', $selectorThemes);
             }
+        
+            $selectedTheme = $selectorThemes[$this->userRole]['themesValue'];
+
+            //elfinder css
+            wp_enqueue_style('elfinder.jq.css', plugins_url('/lib/jquery/jquery-ui.css', __FILE__));
+            wp_enqueue_style('elfinder.full.css', plugins_url('/lib/css/elfinder.full.css', __FILE__));
+            wp_enqueue_style('themes', plugins_url('/lib/css/theme.css', __FILE__));
+            wp_enqueue_style('themes-selector', plugins_url('/lib/themes/' . $selectedTheme . '/css/theme.css', __FILE__));
+        
+            //elfinder core
+            wp_enqueue_script('jquery_min', plugins_url('/lib/jquery/jquery-ui.min.js', __FILE__));
+        
+            //js load fm_locale
+            if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
+                $locale = $this->options['njt_fs_file_manager_settings']['fm_locale'];
+                if($locale != 'en') {
+                    wp_enqueue_script( 'fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
+                }
+            }
+            //elfinder js, css custom
+            wp_register_style('file_manager_admin_css',NJT_FS_BN_PLUGIN_URL . 'assets/css/file_manager_admin.css');
+            wp_enqueue_style('file_manager_admin_css');
+            wp_enqueue_script('file_manager_admin', NJT_FS_BN_PLUGIN_URL . 'assets/js/file_manager_admin.js', array('jquery'), NJT_FS_BN_VERSION);
+            wp_localize_script('file_manager_admin', 'wpData', array(
+                'admin_ajax' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce("njt-fs-file-manager-admin"),
+                'PLUGIN_URL' => NJT_FS_BN_PLUGIN_URL .'includes/File_manager/lib/',
+                'PLUGIN_PATH' => NJT_FS_BN_PLUGIN_PATH.'includes/File_manager/lib/',
+                'PLUGIN_DIR'=> NJT_FS_BN_PLUGIN_DIR,
+                'ABSPATH'=> str_replace("\\", "/", ABSPATH)
+
+            ));
+
+            //js load elFinder
+            wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder.full.js', __FILE__));
+            wp_enqueue_script('elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
         }
-        //elfinder js, css custom
-        wp_register_style('file_manager_admin_css',NJT_FS_BN_PLUGIN_URL . 'assets/css/file_manager_admin.css');
-        wp_enqueue_style('file_manager_admin_css');
-        wp_enqueue_script('file_manager_admin', NJT_FS_BN_PLUGIN_URL . 'assets/js/file_manager_admin.js', array('jquery'), NJT_FS_BN_VERSION);
-        wp_localize_script('file_manager_admin', 'wpData', array(
-            'admin_ajax' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce("njt-fs-file-manager-admin"),
-            'PLUGIN_URL' => NJT_FS_BN_PLUGIN_URL .'includes/File_manager/lib/',
-            'PLUGIN_PATH' => NJT_FS_BN_PLUGIN_PATH.'includes/File_manager/lib/',
-            'PLUGIN_DIR'=> NJT_FS_BN_PLUGIN_DIR,
-            'ABSPATH'=> str_replace("\\", "/", ABSPATH)
-
-        ));
-
-        //js load elFinder
-        wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder.full.js', __FILE__));
-        wp_enqueue_script('elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
     }
 
     //File manager connector function
