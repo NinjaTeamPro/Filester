@@ -28,14 +28,14 @@ $lang = !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? $
   </div>
 
   <div class="clear"></div>
-  <div id="njt-fs-wp-file-manager">
+  <div id="njt-fs-file-manager">
   </div>
 </div>
 
 
 <script>
 jQuery(document).ready(function() {
-  jQuery('#njt-fs-wp-file-manager').elfinder({
+  jQuery('#njt-fs-file-manager').elfinder({
     url: ajaxurl,
     contextmenu: {
       // current directory file menu

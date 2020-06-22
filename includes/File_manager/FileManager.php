@@ -127,14 +127,7 @@ class FileManager
         
             //elfinder core
             wp_enqueue_script('jquery_min', plugins_url('/lib/jquery/jquery-ui.min.js', __FILE__));
-        
-            //js load fm_locale
-            if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
-                $locale = $this->options['njt_fs_file_manager_settings']['fm_locale'];
-                if($locale != 'en') {
-                    wp_enqueue_script( 'fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
-                }
-            }
+            
             //elfinder js, css custom
             wp_register_style('file_manager_admin_css',NJT_FS_BN_PLUGIN_URL . 'assets/css/file_manager_admin.css');
             wp_enqueue_style('file_manager_admin_css');
@@ -152,6 +145,13 @@ class FileManager
             //js load elFinder
             wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder.full.js', __FILE__));
             wp_enqueue_script('elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
+            //js load fm_locale
+            if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
+                $locale = $this->options['njt_fs_file_manager_settings']['fm_locale'];
+                if($locale != 'en') {
+                    wp_enqueue_script( 'fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
+                }
+            }
         }
     }
 
