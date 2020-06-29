@@ -275,7 +275,7 @@ class FileManager
         //Enter file extensions which can be uploaded
         if($this->userRole !== 'administrator' && empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])) {
             $opts['roots'][0]['uploadDeny'] = array('all');
-            $opts['roots'][0]['uploadAllow'] = array();
+            $opts['roots'][0]['uploadAllow'] = array('');
         } else if ( $this->userRole !== 'administrator' && !empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])) {
             $opts['roots'][0]['uploadDeny'] = array('all');
             $opts['roots'][0]['uploadAllow'] = array();

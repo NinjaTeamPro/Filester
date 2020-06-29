@@ -13,11 +13,11 @@ class FileManagerHelper{
 			'txt' => 'text/plain',
 			'htm' => 'text/html',
 			'html' => 'text/html',
-			'php' => 'text/html',
+			'php' => 'text/x-php',
 			'css' => 'text/css',
-			'js' => 'application/javascript',
+			'js' => 'text/javascript',
 			'json' => 'application/json',
-			'xml' => 'application/xml',
+			'xml' => 'text/xml',
 
 			// images
 			'png' => 'image/png',

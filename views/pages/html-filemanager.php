@@ -37,6 +37,23 @@ $lang = !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? $
 jQuery(document).ready(function() {
   jQuery('#njt-fs-file-manager').elfinder({
     url: ajaxurl,
+    handlers : {
+      dblclick : function(event, elfinderInstance) {
+        event.preventDefault();
+        elfinderInstance.exec('getfile')
+        .done(function() { 
+          try {
+            elfinderInstance.exec('edit'); 
+          } catch (e) {
+            elfinderInstance.exec('quicklook'); 
+          }
+        })
+        .fail(function() { elfinderInstance.exec('open');});
+      }
+    },
+    getFileCallback : function(files, fm) {
+      return false;
+    }, 
     contextmenu: {
       // current directory file menu
       files: ['getfile', '|', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload',
