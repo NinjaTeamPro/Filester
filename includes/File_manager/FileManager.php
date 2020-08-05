@@ -68,6 +68,10 @@ class FileManager
                 return true;
             }
         }
+        if (is_super_admin()) {
+            $this->fmCapability = 'administrator';
+            return true;
+        }
         $this->fmCapability = 'read';
         return false;
     }
