@@ -123,7 +123,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
           <td></td>
           <td>
             <p class="submit">
-              <input type="submit" name="njt-settings-form-submit" id="submit"
+              <input type="button" name="njt-settings-form-submit" id="submit"
                 class="button button-primary njt-settings-form-submit" value="Save changes">
             </p>
           </td>

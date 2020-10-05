@@ -56,6 +56,7 @@ class FileManager
             add_action('wp_ajax_fs_connector', array($this, 'fsConnector'));
             add_action('wp_ajax_selector_themes', array($this, 'selectorThemes'));
             add_action('wp_ajax_get_role_restrictions', array($this, 'getArrRoleRestrictions'));
+            add_action('wp_ajax_njt_fs_save_setting', array($this, 'njt_fs_saveSetting'));
        }
     }
 
@@ -326,8 +327,21 @@ class FileManager
 
     public function saveOptions()
     {
-		update_option('njt_fs_settings', $this->options);
+        if(isset($_POST['njt-settings-form-submit'])) {
+            $u =  update_option('njt_fs_settings', $this->options);
+            if($u) {
+                $this->f('?page=njt-fs-filemanager-settings&status=1');
+            } else {
+                $this->f('?page=njt-fs-filemanager-settings&status=2');
+            }
+        }
     }
+
+    public function f($u) {
+		echo '<script>';
+		echo 'window.location.href="'.$u.'"';
+		echo '</script>';
+	}
     
     public function getArrRoleRestrictions()
     {
@@ -343,6 +357,30 @@ class FileManager
             'can_upload_mime' => implode(',', !empty($arrRestrictions[$valueUserRole]['can_upload_mime']) ? $arrRestrictions[$valueUserRole]['can_upload_mime'] : array())
         );
         wp_send_json_success($dataArrRoleRestrictions);
+        wp_die();
+    }
+
+    public function njt_fs_saveSetting()
+    {
+        if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-fs-file-manager-admin')) wp_die();
+        check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
+
+        $root_folder_path =  filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['root_folder_path'])) : '';
+        $list_user_alow_access = filter_var($_POST['list_user_alow_access'], FILTER_SANITIZE_STRING) ? explode(',',$_POST['list_user_alow_access']) : array();
+        $upload_max_size = filter_var($_POST['upload_max_size'], FILTER_SANITIZE_STRING) ? sanitize_text_field(trim($_POST['upload_max_size'])) : 0;
+        $fm_locale = filter_var($_POST['fm_locale'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['fm_locale']) : 'en';
+        $enable_htaccess =  isset($_POST['enable_htaccess']) && $_POST['enable_htaccess'] == 'true' ? 1 : 0;
+        $enable_trash = isset($_POST['enable_trash']) && $_POST['enable_trash'] == 'true' ? 1 : 0;
+        //save options
+        $this->options['njt_fs_file_manager_settings']['root_folder_path'] = $root_folder_path;
+        $this->options['njt_fs_file_manager_settings']['list_user_alow_access'] = $list_user_alow_access;
+        $this->options['njt_fs_file_manager_settings']['upload_max_size'] = $upload_max_size;
+        $this->options['njt_fs_file_manager_settings']['fm_locale'] = $fm_locale;
+        $this->options['njt_fs_file_manager_settings']['enable_htaccess'] = $enable_htaccess;
+        $this->options['njt_fs_file_manager_settings']['enable_trash'] = $enable_trash;
+        //update options
+        update_option('njt_fs_settings', $this->options);
+        wp_send_json_success(get_option('njt_fs_settings'));
         wp_die();
     }
 
