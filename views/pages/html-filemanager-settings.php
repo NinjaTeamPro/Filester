@@ -17,8 +17,8 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
 ?>
 <div class="njt-fs-settings njt-fs-file-manager">
   <h1 id="njt-plugin-tabs" class="nav-tab-wrapper hide-if-no-js">
-    <a href="javascript:void(0)" class="nav-tab nav-tab-active"><?php _e("Settings", NJT_FS_BN_DOMAIN); ?></a>
-    <a href="javascript:void(0)" class="nav-tab"><?php _e("User Role Restrictions", NJT_FS_BN_DOMAIN); ?></a>
+    <a href="javascript:void(0)" class="nav-tab nav-tab-active" data-tab="njt_fs_setting"><?php _e("Settings", NJT_FS_BN_DOMAIN); ?></a>
+    <a href="javascript:void(0)" class="nav-tab" data-tab="njt_fs_roles"><?php _e("User Role Restrictions", NJT_FS_BN_DOMAIN); ?></a>
   </h1>
   <div class="njt-fs-settings-content">
     <form action="" class="njt-plugin-setting settings-form" method="POST">

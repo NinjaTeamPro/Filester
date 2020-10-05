@@ -23,9 +23,17 @@ const njtFileManager = {
   activeTabSetting() {
     var pagenow = "njt-fs-filemanager-settings-tab";
     jQuery("#njt-plugin-tabs a").click(function (event) {
+      console.log(1111)
       jQuery("#njt-plugin-tabs a").removeClass("nav-tab-active");
       jQuery(".njt-plugin-setting").hide();
       jQuery(this).addClass("nav-tab-active");
+      if (jQuery(this).data('tab') == 'njt_fs_roles') {
+        location.hash = "#user-role-restrictions";
+      } else {
+        var noHashURL = window.location.href.replace(/#.*$/, '');
+        window.history.replaceState('', document.title, noHashURL)
+      }
+
       // Show current pane
       jQuery(".njt-plugin-setting:eq(" + jQuery(this).index() + ")").show();
       njtFileManager.sunriseCreateCookie(pagenow + "_last_tab", jQuery(this).index(), 365);
