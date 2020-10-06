@@ -19,6 +19,10 @@ const njtFileManager = {
     return null;
   },
 
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  },
+
   //Setting tab
   activeTabSetting() {
     var pagenow = "njt-fs-filemanager-settings-tab";
@@ -234,7 +238,24 @@ const njtFileManager = {
         wpData.admin_ajax,
         data,
         function (response) {
-          console.log(response)
+          const list_access = response.data.njt_fs_file_manager_settings.list_user_alow_access
+          const index = list_access.indexOf('administrator');
+          if (index > -1) {
+            list_access.splice(index, 1);
+          }
+
+          if (list_access.length > 0) {
+            jQuery('.njt-fs-list-user-restrictions').empty()
+            list_access.forEach((item) => {
+              jQuery('.njt-fs-list-user-restrictions').append(`<option value="${item}"> ${njtFileManager.capitalizeFirstLetter(item)} </option>`);
+            });
+            jQuery('.njt-text-error').hide()
+          } else {
+            jQuery('.njt-fs-list-user-restrictions').empty()
+            jQuery('.njt-fs-list-user-restrictions').append('<option selected="" disabled="" hidden="">Nothing to choose</option>');
+            jQuery('.njt-text-error').show()
+          }
+          jQuery('.njt-fs-list-user-restrictions').change()
         });
     })
   }

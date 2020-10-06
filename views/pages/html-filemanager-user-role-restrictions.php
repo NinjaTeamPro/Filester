@@ -79,7 +79,13 @@ if (count($arrRestrictions) > 0) {
             <?php _e("Please select a User Role at Setings tab to use this option.", NJT_FS_BN_DOMAIN); ?>
           </p>
           <?php
-            }
+            } else {
+          ?>
+          <p class="description njt-text-error njt-settting-width" style="display:none">
+            <?php _e("Please select a User Role at Setings tab to use this option.", NJT_FS_BN_DOMAIN); ?>
+          </p>
+          <?php
+            } 
           ?>
         </div>
       </td>

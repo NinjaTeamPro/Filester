@@ -327,14 +327,14 @@ class FileManager
 
     public function saveOptions()
     {
-        if(isset($_POST['njt-settings-form-submit'])) {
-            $u =  update_option('njt_fs_settings', $this->options);
-            if($u) {
-                $this->f('?page=njt-fs-filemanager-settings&status=1');
-            } else {
-                $this->f('?page=njt-fs-filemanager-settings&status=2');
-            }
-        }
+        //if(isset($_POST['njt-settings-form-submit'])) {
+           update_option('njt_fs_settings', $this->options);
+            // if($u) {
+            //     $this->f('?page=njt-fs-filemanager-settings&status=1');
+            // } else {
+            //     $this->f('?page=njt-fs-filemanager-settings&status=2');
+            // }
+       // }
     }
 
     public function f($u) {
