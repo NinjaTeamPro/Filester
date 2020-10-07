@@ -258,6 +258,34 @@ const njtFileManager = {
           jQuery('.njt-fs-list-user-restrictions').change()
         });
     })
+  },
+  ajaxSaveSettingsRestrictions() {
+    jQuery('#njt-form-user-role-restrictionst').on('click', function () {
+      const njt_fs_list_user_restrictions = jQuery(".njt-fs-list-user-restrictions").val()
+      const list_user_restrictions_alow_access = jQuery("#list_user_restrictions_alow_access").val()
+      const private_folder_access = jQuery("#private_folder_access").val()
+      const hide_paths = jQuery("#hide_paths").val()
+      const lock_files = jQuery("#lock_files").val()
+      const can_upload_mime = jQuery("#can_upload_mime").val()
+
+      const data = {
+        'nonce': wpData.nonce,
+        'action': 'njt_fs_save_setting_restrictions',
+        'njt_fs_list_user_restrictions': njt_fs_list_user_restrictions,
+        'list_user_restrictions_alow_access': list_user_restrictions_alow_access,
+        'private_folder_access': private_folder_access,
+        'hide_paths': hide_paths,
+        'lock_files': lock_files,
+        'can_upload_mime': can_upload_mime
+      }
+
+      jQuery.post(
+        wpData.admin_ajax,
+        data,
+        function (response) {
+          console.log(response)
+        });
+    })
   }
 }
 
@@ -283,9 +311,9 @@ jQuery(document).ready(function () {
     njtFileManager.clickedCreatRootPath();
     // End- Setting for `Select User Roles Restrictions to access`
 
-    //test ajax
-    njtFileManager.ajaxSaveSettings()
-
+    //Ajax settings
+    njtFileManager.ajaxSaveSettings();
+    njtFileManager.ajaxSaveSettingsRestrictions();
 
   }
 });

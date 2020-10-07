@@ -187,7 +187,7 @@ if (count($arrRestrictions) > 0) {
       <td></td>
       <td>
         <p class="submit">
-          <input type="submit" name="njt-form-user-role-restrictionst" id="njt-form-user-role-restrictionst"
+          <input type="button" name="njt-form-user-role-restrictionst" id="njt-form-user-role-restrictionst"
             class="button button-primary" value="Save Changes">
         </p>
       </td>

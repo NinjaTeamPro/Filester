@@ -57,6 +57,7 @@ class FileManager
             add_action('wp_ajax_selector_themes', array($this, 'selectorThemes'));
             add_action('wp_ajax_get_role_restrictions', array($this, 'getArrRoleRestrictions'));
             add_action('wp_ajax_njt_fs_save_setting', array($this, 'njt_fs_saveSetting'));
+            add_action('wp_ajax_njt_fs_save_setting_restrictions', array($this, 'njt_fs_saveSettingRestrictions'));
        }
     }
 
@@ -378,6 +379,31 @@ class FileManager
         $this->options['njt_fs_file_manager_settings']['fm_locale'] = $fm_locale;
         $this->options['njt_fs_file_manager_settings']['enable_htaccess'] = $enable_htaccess;
         $this->options['njt_fs_file_manager_settings']['enable_trash'] = $enable_trash;
+        //update options
+        update_option('njt_fs_settings', $this->options);
+        wp_send_json_success(get_option('njt_fs_settings'));
+        wp_die();
+    }
+
+    public function njt_fs_saveSettingRestrictions() {
+        if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-fs-file-manager-admin')) wp_die();
+        check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
+
+        if(! $_POST['njt_fs_list_user_restrictions']) wp_die();
+
+        $njt_fs_list_user_restrictions = $_POST['njt_fs_list_user_restrictions'];
+        $list_user_restrictions_alow_access = filter_var($_POST['list_user_restrictions_alow_access'], FILTER_SANITIZE_STRING) ? explode(',', $_POST['list_user_restrictions_alow_access']) : array();
+        $private_folder_access = filter_var($_POST['private_folder_access'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['private_folder_access'])) : '';
+        $hide_paths = filter_var($_POST['hide_paths'], FILTER_SANITIZE_STRING) ? explode('|', preg_replace('/\s+/', '', $_POST['hide_paths'])) : array();
+        $lock_files =  filter_var($_POST['lock_files'], FILTER_SANITIZE_STRING) ? explode('|', preg_replace('/\s+/', '', $_POST['lock_files'])) : array();
+        $can_upload_mime = filter_var($_POST['can_upload_mime'], FILTER_SANITIZE_STRING) ? explode(',', preg_replace('/\s+/', '', $_POST['can_upload_mime'])) : array();
+
+        //save options
+        $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['list_user_restrictions_alow_access'] = $list_user_restrictions_alow_access;
+        $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['private_folder_access'] = $private_folder_access;
+        $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['hide_paths'] = $hide_paths;
+        $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['lock_files'] = $lock_files;
+        $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['can_upload_mime'] = $can_upload_mime;
         //update options
         update_option('njt_fs_settings', $this->options);
         wp_send_json_success(get_option('njt_fs_settings'));
