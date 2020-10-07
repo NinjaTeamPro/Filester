@@ -21,6 +21,6 @@ $listOperations = array(
 <span class="list-col4-item">
   <input type="checkbox" class="fm-list-user-restrictions-item" id="<?php echo $key; ?>" name="<?php echo $key; ?>"
     value="<?php echo $key; ?>">
-  <label for="vehicle1"><?php echo $listOperation; ?></label>
+  <label for="<?php echo $key; ?>"><?php echo $listOperation; ?></label>
 </span>
 <?php } ?>

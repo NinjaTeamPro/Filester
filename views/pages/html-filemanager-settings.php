@@ -36,7 +36,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
               <span class="list-col4-item">
                 <input type="checkbox" class="fm-list-user-item" id="<?php echo $key; ?>" name="<?php echo $key; ?>"
                   data-name="<?php echo $value['name'];?>" value="<?php echo $key; ?>">
-                <label for="<?php echo $key; ?>"><?php echo $value['name']; ?></label>
+                <label for="<?php echo $key; ?>"> <?php echo $value['name']; ?></label>
               </span>
               <?php }?>
               <?php endforeach; ?>
