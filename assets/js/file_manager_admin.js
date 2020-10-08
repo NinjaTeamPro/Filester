@@ -237,7 +237,8 @@ const njtFileManager = {
         closeButton: true,
         showDuration: 300,
         hideDuration: 200,
-        hideMethod: "slideUp"
+        hideMethod: "slideUp",
+        positionClass: "toast-top-right njt-fs-toastr"
       }
       jQuery.post(
         wpData.admin_ajax,
@@ -292,7 +293,8 @@ const njtFileManager = {
         closeButton: true,
         showDuration: 300,
         hideDuration: 200,
-        hideMethod: "slideUp"
+        hideMethod: "slideUp",
+        positionClass: "toast-top-right njt-fs-toastr"
       }
       jQuery.post(
         wpData.admin_ajax,
@@ -301,7 +303,7 @@ const njtFileManager = {
           if (response.success) {
             toastr.success('Changes Saved', '', toastr_opt)
           } else {
-            toastr.error('Please try again later', '', toastr_opt)
+            toastr.error('Error! Please try again', '', toastr_opt)
           }
         });
     })
@@ -334,6 +336,5 @@ jQuery(document).ready(function () {
     //Ajax settings
     njtFileManager.ajaxSaveSettings();
     njtFileManager.ajaxSaveSettingsRestrictions();
-
   }
 });
