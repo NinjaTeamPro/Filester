@@ -36,7 +36,9 @@
   font-size: 14px;
 }
 /* CSS Setting */
-
+#njt-plugin-tabs {
+  padding-top: 20px;
+}
 .njt-fs-settings-content {
   background-color: #ffff;
   padding: 20px 20px;
@@ -147,9 +149,9 @@
     padding-right: 15px;
     padding-left: 15px;
 }
-.njt-fs-list-col4 .list-col4-item label {
+/* .njt-fs-list-col4 .list-col4-item label {
   padding-right: 25px;
-}
+} */
 .form-user-role-restrictions .njt-text-error {
   color: #a00;
   margin-top: 10px;
@@ -163,6 +165,27 @@
   .njt-plugin-setting.settings-form .njt-settting-width,
   .njt-plugin-setting.settings-form .njt-fs-settting-width-half {
     width: 100%;
+  }
+  #upload_max_size.njt-fs-settting-width-half,
+  #fm_locale.njt-fs-settting-width-half {
+    width: 50%;
+  }
+  .njt-fs-settings-content {
+    padding: 20px 20px;
+  }
+  .njt-fs-list-col4 .list-col4-item {
+    flex: 0 0 33%;
+    max-width: 33%;
+  }
+  .settings-form .njt-fs-list-col4 .list-col4-item {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .njt-fs-file-manager {
+    padding-right: 10px;
+  }
+  #njt-plugin-tabs {
+    padding-top: 0;
   }
 }
 #toast-container>.toast-success {
@@ -186,3 +209,11 @@
   color: rgba(0,0,0,.45);
   top: -3px;
 }
+
+@media only screen and (min-width: 1400px){
+  .njt-fs-list-col4 .list-col4-item {
+    flex: 0 0 14%;
+    max-width: 14%;
+  }
+}
+

@@ -27,7 +27,6 @@ const njtFileManager = {
   activeTabSetting() {
     var pagenow = "njt-fs-filemanager-settings-tab";
     jQuery("#njt-plugin-tabs a").click(function (event) {
-      console.log(1111)
       jQuery("#njt-plugin-tabs a").removeClass("nav-tab-active");
       jQuery(".njt-plugin-setting").hide();
       jQuery(this).addClass("nav-tab-active");

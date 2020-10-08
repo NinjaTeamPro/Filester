@@ -87,7 +87,7 @@ class FileManager
             $this->fmCapability,
             'njt-fs-filemanager',
             array($this, 'fsViewFileCallback'),
-            NJT_FS_BN_PLUGIN_URL . 'assets/img/fs_icon.svg',
+            '',
             9
         );
         
@@ -96,7 +96,7 @@ class FileManager
           'Settings',
           'Settings', 
           'manage_options', 
-          'njt-fs-filemanager-settings',
+          'filester-settings',
           array($this, 'fsSettingsPage') );
 
         $this->hook_suffix = array($display_suffix, $settings_suffix);
