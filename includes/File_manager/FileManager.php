@@ -137,7 +137,11 @@ class FileManager
             //elfinder core
             wp_enqueue_script('jquery_min', plugins_url('/lib/jquery/jquery-ui.min.js', __FILE__));
             
-            //elfinder js, css custom
+            //elfinder js, toastr JS, css custom
+            wp_register_style('njt_fs_toastr_css',NJT_FS_BN_PLUGIN_URL . 'assets/js/toastr/toastr.min.css');
+            wp_enqueue_style('njt_fs_toastr_css');
+            wp_enqueue_script('njt_fs_toastr_js', NJT_FS_BN_PLUGIN_URL . 'assets/js/toastr/toastr.min.js', array('jquery'), NJT_FS_BN_VERSION);
+
             wp_register_style('file_manager_admin_css',NJT_FS_BN_PLUGIN_URL . 'assets/css/file_manager_admin.css');
             wp_enqueue_style('file_manager_admin_css');
             wp_enqueue_script('file_manager_admin', NJT_FS_BN_PLUGIN_URL . 'assets/js/file_manager_admin.js', array('jquery'), NJT_FS_BN_VERSION);

@@ -234,6 +234,12 @@ const njtFileManager = {
         'enable_trash': enable_trash
 
       }
+      const toastr_opt = {
+        closeButton: true,
+        showDuration: 300,
+        hideDuration: 200,
+        hideMethod: "slideUp"
+      }
       jQuery.post(
         wpData.admin_ajax,
         data,
@@ -256,6 +262,11 @@ const njtFileManager = {
             jQuery('.njt-text-error').show()
           }
           jQuery('.njt-fs-list-user-restrictions').change()
+          if (response.success) {
+            toastr.success('Changes Saved', '', toastr_opt)
+          } else {
+            toastr.error('Please try again later', '', toastr_opt)
+          }
         });
     })
   },
@@ -278,12 +289,21 @@ const njtFileManager = {
         'lock_files': lock_files,
         'can_upload_mime': can_upload_mime
       }
-
+      const toastr_opt = {
+        closeButton: true,
+        showDuration: 300,
+        hideDuration: 200,
+        hideMethod: "slideUp"
+      }
       jQuery.post(
         wpData.admin_ajax,
         data,
         function (response) {
-          console.log(response)
+          if (response.success) {
+            toastr.success('Changes Saved', '', toastr_opt)
+          } else {
+            toastr.error('Please try again later', '', toastr_opt)
+          }
         });
     })
   }
@@ -291,6 +311,7 @@ const njtFileManager = {
 
 jQuery(document).ready(function () {
   if (jQuery("div").hasClass("njt-fs-file-manager")) {
+
     //set select value
     njtFileManager.themeSelector();
     // Start- Setting for `Select User Roles to access`
