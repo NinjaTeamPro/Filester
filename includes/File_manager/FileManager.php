@@ -294,7 +294,10 @@ class FileManager
             $arrMimeTypes = $mimeTypes->getArrMimeTypes();
             foreach ($arrMimeTypes as $key => $value){
                 if(in_array($key,$arrCanUploadMime)) {
-                    array_push($opts['roots'][0]['uploadAllow'], $value);
+                    $explodeValue = explode(',',$value);
+                    foreach($explodeValue as $item) {
+                        array_push($opts['roots'][0]['uploadAllow'], $item );
+                    }
                 }
             };
         } else {
