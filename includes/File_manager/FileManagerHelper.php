@@ -20,7 +20,7 @@ class FileManagerHelper{
 			'.xml' => 'text/xml',
 
 			//font
-			'.woff' => 'font/woff, application/font-woff, application/x-font-opentype, application/x-font-truetype, application/vnd.ms-fontobject',
+			'.woff' => 'font/woff,application/font-woff,application/x-font-opentype,application/x-font-truetype,application/vnd.ms-fontobject',
 			'.woff2' => 'font/woff2',
 			'.ttf' => 'application/x-font-ttf,font/ttf',
 			'.otf' => 'font/otf',
@@ -34,7 +34,7 @@ class FileManagerHelper{
 			'.jpg' => 'image/jpeg',
 			'.gif' => 'image/gif',
 			'.bmp' => 'image/bmp',
-			'.ico' => 'image/vnd.microsoft.icon, image/x-icon',
+			'.ico' => 'image/vnd.microsoft.icon,image/x-icon',
 			'.tiff' => 'image/tiff',
 			'.tif' => 'image/tiff',
 			'.svg' => 'image/svg+xml',

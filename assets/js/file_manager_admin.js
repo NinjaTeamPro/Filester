@@ -171,35 +171,6 @@ const njtFileManager = {
         });
     });
   },
-
-  setValueUploadMime() {
-    jQuery('.njt-mime-type').on('click', function () {
-      let arrCanUploadMime = []
-      if (jQuery('textarea#can_upload_mime').val().trim().length > 0) {
-        arrCanUploadMime = jQuery('textarea#can_upload_mime').val().split(",")
-      }
-      const objMimeTypes = {
-        text: ['txt', 'htm', 'html', 'php', 'css', 'js', 'json', 'xml'],
-        font: [ 'font_woffx', 'font_woff2', 'font_woff', 'font_ttf', 'font_otf', 'font_sfnt', 'font_ttfx', 'font_opentype', 'font_truetype', 'font_sfntx','fontobject'],
-        images: ['png', 'jpe', 'jpeg', 'jpg', 'gif', 'bmp', 'ico', 'iconx', 'tiff', 'tif', 'svg', 'svgz'],
-        archives: ['zip', 'rar', 'exe', 'msi', 'cab', 'tar', 'gz', 'bz2', '7z'],
-        audio: ['mp3', 'mp4a', 'mpega', 'mpga', 'aac', 'm3u', 'mpa', 'wav', 'wma'],
-        video: ['flv', 'qt', 'mov', 'avi', 'mp4v', 'mpegv', 'mpg', 'swf', 'wmv', 'mpav'],
-        adobe: ['pdf', 'psd', 'ai', 'eps', 'ps'],
-        office: ['doc', 'rtf', 'xls', 'ppt', 'odt', 'ods', 'pptx', 'docx', 'xlsx', 'dotx', 'xltx', 'potx', 'ppsx', 'sldx']
-      }
-      if (jQuery(this).val() == 'clearall') {
-        arrCanUploadMime.length = 0
-      } else {
-        const mineChose = jQuery(this).val()
-        const valMimeTypes = objMimeTypes[mineChose]
-        arrMimeTypesConcat = arrCanUploadMime.concat(valMimeTypes)
-        arrCanUploadMime = arrMimeTypesConcat.filter((item, index) => arrMimeTypesConcat.indexOf(item) == index)
-      }
-
-      jQuery('textarea#can_upload_mime').val(arrCanUploadMime.toString())
-    })
-  },
   clickedCreatRootPath() {
     jQuery('.js-creat-root-path').on('click', function () {
       const valueRootPath = wpData.ABSPATH
@@ -328,8 +299,6 @@ jQuery(document).ready(function () {
     njtFileManager.restrictionsHasApproved();
     //Ajax change value
     njtFileManager.ajaxRoleRestrictions();
-    //Set value for textarea[name="can_upload_mime"]
-    njtFileManager.setValueUploadMime();
     //Creat root path default
     njtFileManager.clickedCreatRootPath();
     // End- Setting for `Select User Roles Restrictions to access`

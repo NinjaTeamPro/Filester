@@ -132,7 +132,7 @@ if (count($arrRestrictions) > 0) {
           <textarea name="hide_paths" id="hide_paths"
             class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Multiple separated by vertical bar (|). Eg: themes/twentytwenty | themes/avada.", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Multiple separated by vertical bar (|). Eg: themes/twentytwenty | themes/avada", NJT_FS_BN_DOMAIN); ?>
           </p>
         </div>
       </td>
@@ -153,32 +153,10 @@ if (count($arrRestrictions) > 0) {
       <th><?php _e("Enter file extensions which user can be Uploaded", NJT_FS_BN_DOMAIN); ?></th>
       <td>
         <div>
-          <div>
-            <div class="njt-btn-group njt-settting-width">
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="text"><?php _e("text", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="font"><?php _e("font", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="office"><?php _e("office", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="images"><?php _e("images", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="video"><?php _e("video", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="audio"><?php _e("audio", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="archives"><?php _e("archives", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="adobe"><?php _e("adobe", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="clearall"><?php _e("clear all", NJT_FS_BN_DOMAIN); ?></button>
-            </div>
-          </div>
           <textarea name="can_upload_mime" id="can_upload_mime"
             class="njt-settting-width"><?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Multiple separated by comma. If left empty, this means user can't upload any files.", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Multiple separated by comma. If left empty, this means user can't upload any files. Eg: .php, .png, .css", NJT_FS_BN_DOMAIN); ?>
           </p>
         </div>
       </td>
