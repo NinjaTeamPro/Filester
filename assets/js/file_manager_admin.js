@@ -180,7 +180,8 @@ const njtFileManager = {
       }
       const objMimeTypes = {
         text: ['txt', 'htm', 'html', 'php', 'css', 'js', 'json', 'xml'],
-        images: ['png', 'jpe', 'jpeg', 'jpg', 'gif', 'bmp', 'ico', 'tiff', 'tif', 'svg', 'svgz'],
+        font: [ 'font_woffx', 'font_woff2', 'font_woff', 'font_ttf', 'font_otf', 'font_sfnt', 'font_ttfx', 'font_opentype', 'font_truetype', 'font_sfntx','fontobject'],
+        images: ['png', 'jpe', 'jpeg', 'jpg', 'gif', 'bmp', 'ico', 'iconx', 'tiff', 'tif', 'svg', 'svgz'],
         archives: ['zip', 'rar', 'exe', 'msi', 'cab', 'tar', 'gz', 'bz2', '7z'],
         audio: ['mp3', 'mp4a', 'mpega', 'mpga', 'aac', 'm3u', 'mpa', 'wav', 'wma'],
         video: ['flv', 'qt', 'mov', 'avi', 'mp4v', 'mpegv', 'mpg', 'swf', 'wmv', 'mpav'],

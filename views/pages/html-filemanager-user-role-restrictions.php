@@ -158,6 +158,8 @@ if (count($arrRestrictions) > 0) {
               <button type="button" class="njt-mime-type njt-fs-button"
                 value="text"><?php _e("text", NJT_FS_BN_DOMAIN); ?></button>
               <button type="button" class="njt-mime-type njt-fs-button"
+                value="font"><?php _e("font", NJT_FS_BN_DOMAIN); ?></button>
+              <button type="button" class="njt-mime-type njt-fs-button"
                 value="office"><?php _e("office", NJT_FS_BN_DOMAIN); ?></button>
               <button type="button" class="njt-mime-type njt-fs-button"
                 value="images"><?php _e("images", NJT_FS_BN_DOMAIN); ?></button>

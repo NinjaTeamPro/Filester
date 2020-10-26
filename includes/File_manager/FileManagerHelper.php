@@ -19,6 +19,19 @@ class FileManagerHelper{
 			'json' => 'application/json',
 			'xml' => 'text/xml',
 
+			//font
+			'font_woffx' => 'application/font-woff',
+			'font_woff2' => 'font/woff2',
+			'font_woff' => 'font/woff',
+			'font_ttf' => 'font/ttf',
+			'font_otf' => 'font/otf',
+			'font_sfnt' => 'font/sfnt',
+			'font_ttfx' => 'application/x-font-ttf',
+			'font_opentype' => 'application/x-font-opentype',
+			'font_truetype' => 'application/x-font-truetype',
+			'font_sfntx' => 'application/font-sfnt',
+			'fontobject' => 'application/vnd.ms-fontobject',
+
 			// images
 			'png' => 'image/png',
 			'jpe' => 'image/jpeg',
@@ -27,6 +40,7 @@ class FileManagerHelper{
 			'gif' => 'image/gif',
 			'bmp' => 'image/bmp',
 			'ico' => 'image/vnd.microsoft.icon',
+			'iconx' => 'image/x-icon',
 			'tiff' => 'image/tiff',
 			'tif' => 'image/tiff',
 			'svg' => 'image/svg+xml',
