@@ -129,7 +129,7 @@ class FileManager
             $selectedTheme = $selectorThemes[$this->userRole]['themesValue'];
 
             //elfinder css
-            wp_enqueue_style('elfinder.jq.css', plugins_url('/lib/jquery/jquery-ui.css', __FILE__));
+            wp_enqueue_style('elfinder.jq.css', plugins_url('/lib/jquery/jquery-ui.min.css', __FILE__));
             wp_enqueue_style('elfinder.full.css', plugins_url('/lib/css/elfinder.min.css', __FILE__));
             wp_enqueue_style('themes', plugins_url('/lib/css/theme.css', __FILE__));
             wp_enqueue_style('themes-selector', plugins_url('/lib/themes/' . $selectedTheme . '/css/theme.css', __FILE__));
