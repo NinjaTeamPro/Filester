@@ -135,7 +135,11 @@ class FileManager
             wp_enqueue_style('themes-selector', plugins_url('/lib/themes/' . $selectedTheme . '/css/theme.css', __FILE__));
         
             //elfinder core
-            wp_enqueue_script('jquery_min', plugins_url('/lib/jquery/jquery-ui.min.js', __FILE__));
+            if(version_compare(get_bloginfo('version'),'5.6', '>=') ){
+                wp_enqueue_script('jquery_min', plugins_url('/lib/jquery/jquery-ui.min.js', __FILE__));
+            } else {
+                wp_enqueue_script('jquery_min', plugins_url('/lib/jquery/jquery-ui-old.min.js', __FILE__));
+            }          
             
             //elfinder js, toastr JS, css custom
             wp_register_style('njt_fs_toastr_css',NJT_FS_BN_PLUGIN_URL . 'assets/js/toastr/toastr.min.css');
@@ -156,11 +160,7 @@ class FileManager
             ));
 
             //js load elFinder
-            if(version_compare(get_bloginfo('version'),'5.6', '>=') ){
-                wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder.min.js', __FILE__));
-            } else {
-                wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder-256.min.js', __FILE__));
-            }
+            wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder.min.js', __FILE__));
 
             wp_enqueue_script('elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
             //js load fm_locale
