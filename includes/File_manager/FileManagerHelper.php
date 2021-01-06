@@ -15,6 +15,7 @@ class FileManagerHelper{
 			'.html' => 'text/html',
 			'.php' => 'text/x-php',
 			'.css' => 'text/css',
+			'.csv' => 'text/csv',
 			'.js' => 'text/javascript',
 			'.json' => 'application/json',
 			'.xml' => 'text/xml',
