@@ -156,7 +156,12 @@ class FileManager
             ));
 
             //js load elFinder
-            wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder.min.js', __FILE__));
+            if(version_compare(get_bloginfo('version'),'5.6', '>=') ){
+                wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder.min.js', __FILE__));
+            } else {
+                wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder-256.min.js', __FILE__));
+            }
+
             wp_enqueue_script('elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
             //js load fm_locale
             if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
