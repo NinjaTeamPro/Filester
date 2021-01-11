@@ -90,6 +90,7 @@ class FileManagerHelper{
 			'.docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 			'.pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 			'.xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+			'.xlsb' => 'application/vnd.ms-excel.sheet.binary.macroenabled.12',
 			'.dotx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
 			'.xltx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
 			'.potx' => 'application/vnd.openxmlformats-officedocument.presentationml.template',
