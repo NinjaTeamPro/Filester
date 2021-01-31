@@ -303,16 +303,13 @@ class FileManager
             $mimeTypes = new \FileManagerHelper();
             $arrMimeTypes = $mimeTypes->getArrMimeTypes();
             foreach ($arrMimeTypes as $key => $value){
-                //if(strpos(".",key) !== false) {
-                    if(in_array($key,$arrCanUploadMime)) {
-                        $explodeValue = explode(',',$value);
-                        foreach($explodeValue as $item) {
-                            array_push($opts['roots'][0]['uploadAllow'], $item );
-                        }
+                if(in_array($key,$arrCanUploadMime)) {
+                    $explodeValue = explode(',',$value);
+                    foreach($explodeValue as $item) {
+                        array_push($opts['roots'][0]['uploadAllow'], $item );
                     }
-                // } else {
-                //     array_push($opts['roots'][0]['uploadAllow'], $key );
-                // }
+                }
+          
             };
             foreach ($arrCanUploadMime as $value){
                 if(strpos($value,"x-conference") !== false
