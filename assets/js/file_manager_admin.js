@@ -153,6 +153,7 @@ const njtFileManager = {
         function (response) {
           const resRestrictionsHasApproved = response.data.disable_operations ? response.data.disable_operations.split(",") : []
           const resPrivateFolderAccess = response.data.private_folder_access ? response.data.private_folder_access : ''
+          const resPrivateURLFolderAccess = response.data.private_url_folder_access ? response.data.private_url_folder_access : ''
           const resHidePaths = response.data.hide_paths ? response.data.hide_paths.replace(/[,]+/g, ' | ') : '';
           const resLockFiles = response.data.lock_files ? response.data.lock_files.replace(/[,]+/g, ' | ') : '';
           const resCanUploadMime = response.data.can_upload_mime ? response.data.can_upload_mime : '';
@@ -162,6 +163,8 @@ const njtFileManager = {
           }
           // Set value for textarea[name='private_folder_access']
           jQuery('textarea#private_folder_access').val(resPrivateFolderAccess)
+          // Set value for textarea[name='private_url_folder_access']
+          jQuery('textarea#private_url_folder_access').val(resPrivateURLFolderAccess)
           // Set value for textarea[name='hide_paths']
           jQuery('textarea#hide_paths').val(resHidePaths)
           // Set value for textarea[name='lock_files']
@@ -190,6 +193,7 @@ const njtFileManager = {
       jQuery("#list_user_alow_access").val(arraylistUserAccess)
       const list_user_alow_access = jQuery("#list_user_alow_access").val()
       const root_folder_path = jQuery("#root_folder_path").val()
+      const root_folder_url = jQuery("#root_folder_url").val()
       const upload_max_size = jQuery("#upload_max_size").val()
       const fm_locale = jQuery("#fm_locale").val()
       const enable_htaccess = jQuery("#enable_htaccess").is(":checked")
@@ -198,6 +202,7 @@ const njtFileManager = {
         'nonce': wpData.nonce,
         'action': 'njt_fs_save_setting',
         'root_folder_path': root_folder_path,
+        'root_folder_url': root_folder_url,
         'list_user_alow_access': list_user_alow_access,
         'upload_max_size': upload_max_size,
         'fm_locale': fm_locale,
@@ -247,6 +252,7 @@ const njtFileManager = {
       const njt_fs_list_user_restrictions = jQuery(".njt-fs-list-user-restrictions").val()
       const list_user_restrictions_alow_access = jQuery("#list_user_restrictions_alow_access").val()
       const private_folder_access = jQuery("#private_folder_access").val()
+      const private_url_folder_access = jQuery("#private_url_folder_access").val()
       const hide_paths = jQuery("#hide_paths").val()
       const lock_files = jQuery("#lock_files").val()
       const can_upload_mime = jQuery("#can_upload_mime").val()
@@ -257,6 +263,7 @@ const njtFileManager = {
         'njt_fs_list_user_restrictions': njt_fs_list_user_restrictions,
         'list_user_restrictions_alow_access': list_user_restrictions_alow_access,
         'private_folder_access': private_folder_access,
+        'private_url_folder_access': private_url_folder_access,
         'hide_paths': hide_paths,
         'lock_files': lock_files,
         'can_upload_mime': can_upload_mime

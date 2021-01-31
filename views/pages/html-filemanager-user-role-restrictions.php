@@ -126,6 +126,24 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
+      <th><?php _e("Files URL for this User Role", NJT_FS_BN_DOMAIN); ?></th>
+      <td>
+        <div>
+          <textarea name="private_url_folder_access" id="private_url_folder_access" placeholder="ex: <?php echo (site_url());?>"
+            class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_url_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_url_folder_access'] : '');?></textarea>
+          <div>
+            <p class="description njt-settting-width">
+              <?php _e("Default path is: "."<code>". str_replace("\\", "/", site_url())."</code>", NJT_FS_BN_DOMAIN); ?>
+            </p>
+            <p class="description njt-settting-width">
+            <?php _e("Eg: If you want to set file url path access is ". "<strong>wp-content</strong>". " folder. Just enter ", NJT_FS_BN_DOMAIN); ?>
+              <?php echo (str_replace("\\", "/", site_url()));?>/wp-content
+            </p>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
       <th> <?php _e("Enter folder or file paths that you want to Hide", NJT_FS_BN_DOMAIN); ?></th>
       <td>
         <div>

@@ -188,7 +188,7 @@ class FileManager
                 array(
                     'driver' => 'LocalFileSystem',
                     'path' => isset($this->options['njt_fs_file_manager_settings']['root_folder_path']) && !empty($this->options['njt_fs_file_manager_settings']['root_folder_path']) ? $this->options['njt_fs_file_manager_settings']['root_folder_path'] : ABSPATH,
-                    'URL' => isset($this->options['njt_fs_file_manager_settings']['root_folder_url']) && !empty($this->options['njt_fs_file_manager_settings']['root_folder_url']) ? $this->options['njt_fs_file_manager_settings']['root_folder_url'] :site_url(),
+                    'URL' => isset($this->options['njt_fs_file_manager_settings']['root_folder_url']) && !empty($this->options['njt_fs_file_manager_settings']['root_folder_url']) ? $this->options['njt_fs_file_manager_settings']['root_folder_url'] : site_url(),
                     'trashHash'     => '', // default is empty, when not enable trash
                     'uploadMaxSize' =>  $uploadMaxSize .'M',
                     'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
@@ -257,6 +257,11 @@ class FileManager
         //Creat root path for user
         if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'])){
             $opts['roots'][0]['path'] = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'] .'/';
+        }
+
+         //Creat url root path for user
+         if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_url_folder_access'])){
+            $opts['roots'][0]['URL'] = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_url_folder_access'] .'/';
         }
 
         //Folder or File Paths That You want to Hide
@@ -365,6 +370,7 @@ class FileManager
         $dataArrRoleRestrictions = array (
             'disable_operations' => implode(",", !empty($arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access']) ? $arrRestrictions[$valueUserRole]['list_user_restrictions_alow_access'] : array()),
             'private_folder_access' => !empty($arrRestrictions[$valueUserRole]['private_folder_access']) ? str_replace("\\\\", "/", trim($arrRestrictions[$valueUserRole]['private_folder_access'])) : '',
+            'private_url_folder_access' => !empty($arrRestrictions[$valueUserRole]['private_url_folder_access']) ? str_replace("\\\\", "/", trim($arrRestrictions[$valueUserRole]['private_url_folder_access'])) : '',
             'hide_paths' => implode(',', !empty($arrRestrictions[$valueUserRole]['hide_paths']) ? $arrRestrictions[$valueUserRole]['hide_paths'] : array()),
             'lock_files' => implode(',', !empty($arrRestrictions[$valueUserRole]['lock_files']) ? $arrRestrictions[$valueUserRole]['lock_files'] : array()),
             'can_upload_mime' => implode(',', !empty($arrRestrictions[$valueUserRole]['can_upload_mime']) ? $arrRestrictions[$valueUserRole]['can_upload_mime'] : array())
@@ -379,6 +385,7 @@ class FileManager
         check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
 
         $root_folder_path =  filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['root_folder_path'])) : '';
+        $root_folder_url =  filter_var($_POST['root_folder_url'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['root_folder_url'])) : site_url();
         $list_user_alow_access = filter_var($_POST['list_user_alow_access'], FILTER_SANITIZE_STRING) ? explode(',',$_POST['list_user_alow_access']) : array();
         $upload_max_size = filter_var($_POST['upload_max_size'], FILTER_SANITIZE_STRING) ? sanitize_text_field(trim($_POST['upload_max_size'])) : 0;
         $fm_locale = filter_var($_POST['fm_locale'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['fm_locale']) : 'en';
@@ -386,6 +393,7 @@ class FileManager
         $enable_trash = isset($_POST['enable_trash']) && $_POST['enable_trash'] == 'true' ? 1 : 0;
         //save options
         $this->options['njt_fs_file_manager_settings']['root_folder_path'] = $root_folder_path;
+        $this->options['njt_fs_file_manager_settings']['root_folder_url'] = $root_folder_url;
         $this->options['njt_fs_file_manager_settings']['list_user_alow_access'] = $list_user_alow_access;
         $this->options['njt_fs_file_manager_settings']['upload_max_size'] = $upload_max_size;
         $this->options['njt_fs_file_manager_settings']['fm_locale'] = $fm_locale;
@@ -406,6 +414,7 @@ class FileManager
         $njt_fs_list_user_restrictions = $_POST['njt_fs_list_user_restrictions'];
         $list_user_restrictions_alow_access = filter_var($_POST['list_user_restrictions_alow_access'], FILTER_SANITIZE_STRING) ? explode(',', $_POST['list_user_restrictions_alow_access']) : array();
         $private_folder_access = filter_var($_POST['private_folder_access'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['private_folder_access'])) : '';
+        $private_url_folder_access = filter_var($_POST['private_url_folder_access'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['private_url_folder_access'])) : '';
         $hide_paths = filter_var($_POST['hide_paths'], FILTER_SANITIZE_STRING) ? explode('|', preg_replace('/\s+/', '', $_POST['hide_paths'])) : array();
         $lock_files =  filter_var($_POST['lock_files'], FILTER_SANITIZE_STRING) ? explode('|', preg_replace('/\s+/', '', $_POST['lock_files'])) : array();
         $can_upload_mime = filter_var($_POST['can_upload_mime'], FILTER_SANITIZE_STRING) ? explode(',', preg_replace('/\s+/', '', $_POST['can_upload_mime'])) : array();
@@ -413,6 +422,7 @@ class FileManager
         //save options
         $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['list_user_restrictions_alow_access'] = $list_user_restrictions_alow_access;
         $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['private_folder_access'] = $private_folder_access;
+        $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['private_url_folder_access'] = $private_url_folder_access;
         $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['hide_paths'] = $hide_paths;
         $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['lock_files'] = $lock_files;
         $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['can_upload_mime'] = $can_upload_mime;

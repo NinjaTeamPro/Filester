@@ -65,6 +65,19 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
           </div>
           </td>
         </tr>
+        <!-- url Path -->
+        <tr>
+          <th><?php _e("Files URL", NJT_FS_BN_DOMAIN); ?></th>
+          <td>
+            <textarea type='text' name='root_folder_url' id='root_folder_url' class="njt-settting-width"
+              placeholder="ex: <?php echo (site_url());?>"> <?php  if( isset( $this->options['njt_fs_file_manager_settings']['root_folder_url'] ) && !empty( $this->options['njt_fs_file_manager_settings']['root_folder_url'] ) ) echo str_replace("\\", "/",esc_attr($this->options['njt_fs_file_manager_settings']['root_folder_url'])); ?></textarea>
+            <div>
+            <p class="description njt-settting-width">
+              <?php _e("Default path is: "."<code>". str_replace("\\", "/", site_url())."</code>", NJT_FS_BN_DOMAIN); ?>
+            </p>
+          </div>
+          </td>
+        </tr>
         <!-- Maximum Upload Size -->
         <tr>
           <th><?php _e("Maximum Upload Size", NJT_FS_BN_DOMAIN); ?></th>
