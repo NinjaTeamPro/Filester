@@ -303,13 +303,33 @@ class FileManager
             $mimeTypes = new \FileManagerHelper();
             $arrMimeTypes = $mimeTypes->getArrMimeTypes();
             foreach ($arrMimeTypes as $key => $value){
-                if(in_array($key,$arrCanUploadMime)) {
-                    $explodeValue = explode(',',$value);
-                    foreach($explodeValue as $item) {
-                        array_push($opts['roots'][0]['uploadAllow'], $item );
+                //if(strpos(".",key) !== false) {
+                    if(in_array($key,$arrCanUploadMime)) {
+                        $explodeValue = explode(',',$value);
+                        foreach($explodeValue as $item) {
+                            array_push($opts['roots'][0]['uploadAllow'], $item );
+                        }
                     }
-                }
+                // } else {
+                //     array_push($opts['roots'][0]['uploadAllow'], $key );
+                // }
             };
+            foreach ($arrCanUploadMime as $value){
+                if(strpos($value,"x-conference") !== false
+                   || strpos($value,"video") !== false
+                   || strpos($value,"text") !== false
+                   || strpos($value,"model") !== false
+                   || strpos($value,"message") !== false
+                   || strpos($value,"image") !== false
+                   || strpos($value,"font") !== false
+                   || strpos($value,"chemical") !== false
+                   || strpos($value,"audio") !== false
+                   || strpos($value,"application") !== false
+                   ) {
+                    array_push($opts['roots'][0]['uploadAllow'], $value );
+                }
+            }
+
         } else {
             $opts['roots'][0]['uploadDeny'] = array();
             $opts['roots'][0]['uploadAllow'] = array('all');
