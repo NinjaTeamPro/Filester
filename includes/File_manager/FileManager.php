@@ -209,8 +209,21 @@ class FileManager
 
             wp_register_style('file_manager_admin_css',NJT_FS_BN_PLUGIN_URL . 'assets/css/file_manager_admin.css');
             wp_enqueue_style('file_manager_admin_css');
-            wp_enqueue_script('file_manager_admin', NJT_FS_BN_PLUGIN_URL . 'assets/js/file_manager_admin.js', array('jquery'), NJT_FS_BN_VERSION);
-            wp_localize_script('file_manager_admin', 'wpData', array(
+            wp_enqueue_script('file_manager_admin', NJT_FS_BN_PLUGIN_URL . 'assets/js/file_manager_admin.js', array('jquery'), NJT_FS_BN_VERSION, true);
+
+            //js load elFinder
+            wp_enqueue_script('njt_fs_elFinder', plugins_url('/lib/js/elfinder.min.js', __FILE__));
+
+            wp_enqueue_script('njt_fs_elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
+            //js load fm_locale
+            if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
+                $locale = $this->options['njt_fs_file_manager_settings']['fm_locale'];
+                if($locale != 'en') {
+                    wp_enqueue_script( 'njt_fs_fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
+                }
+            }
+            
+            wp_localize_script('njt_fs_elFinder', 'wpData', array(
                 'admin_ajax' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce("njt-fs-file-manager-admin"),
                 'PLUGIN_URL' => NJT_FS_BN_PLUGIN_URL .'includes/File_manager/lib/',
@@ -219,18 +232,6 @@ class FileManager
                 'ABSPATH'=> str_replace("\\", "/", ABSPATH)
 
             ));
-
-            //js load elFinder
-            wp_enqueue_script('elFinder', plugins_url('/lib/js/elfinder.min.js', __FILE__));
-
-            wp_enqueue_script('elfinder_editor', plugins_url('/lib/js/extras/editors.default.js', __FILE__));
-            //js load fm_locale
-            if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
-                $locale = $this->options['njt_fs_file_manager_settings']['fm_locale'];
-                if($locale != 'en') {
-                    wp_enqueue_script( 'fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
-                }
-            }
         }
     }
 

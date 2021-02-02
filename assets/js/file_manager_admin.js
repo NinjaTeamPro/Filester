@@ -313,5 +313,8 @@ jQuery(document).ready(function () {
     //Ajax settings
     njtFileManager.ajaxSaveSettings();
     njtFileManager.ajaxSaveSettingsRestrictions();
+    if(jQuery(".elfinder-theme-ext") > 0) {
+      jQuery(".elfinder-theme-ext").remove()
+    }
   }
 });
