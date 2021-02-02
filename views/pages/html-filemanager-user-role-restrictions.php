@@ -136,7 +136,7 @@ if (count($arrRestrictions) > 0) {
               <?php _e("Default path is: "."<code>". str_replace("\\", "/", site_url())."</code>", NJT_FS_BN_DOMAIN); ?>
             </p>
             <p class="description njt-settting-width">
-            <?php _e("Eg: If you want to set file url path access is ". "<strong>wp-content</strong>". " folder. Just enter ", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Eg: If you want to set files url path access is ". "<strong>wp-content</strong>". " folder. Just enter ", NJT_FS_BN_DOMAIN); ?>
               <?php echo (str_replace("\\", "/", site_url()));?>/wp-content
             </p>
           </div>

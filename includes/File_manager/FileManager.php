@@ -58,7 +58,68 @@ class FileManager
             add_action('wp_ajax_get_role_restrictions', array($this, 'getArrRoleRestrictions'));
             add_action('wp_ajax_njt_fs_save_setting', array($this, 'njt_fs_saveSetting'));
             add_action('wp_ajax_njt_fs_save_setting_restrictions', array($this, 'njt_fs_saveSettingRestrictions'));
+            
+            $optionReview = get_option('njt_fs_review');
+            if (time() >= (int)$optionReview && $optionReview !== '0'){
+                add_action('admin_notices', array($this, 'njt_fs_give_review'));
+            }
+            
+            add_action('wp_ajax_njt_fs_save_review', array($this, 'njt_fs_save_review'));
        }
+    }
+
+    public function njt_fs_give_review()
+    {
+        if (function_exists('get_current_screen')) {
+            if (get_current_screen()->id == 'upload' || get_current_screen()->id == 'plugins') {
+                $this->enqueue_scripts();
+                ?>
+                <div class="notice notice-success is-dismissible" id="njt-fs-review">
+                    <h3><?php _e('Give Filester a review', 'filester')?></h3>
+                    <p>
+                        <?php _e('Thank you for choosing Filester. We hope you love it. Could you take a couple of seconds posting a nice review to share your happy experience?', 'filester')?>
+                    </p>
+                    <p>
+                        <?php _e('We will be forever grateful. Thank you in advance ;)', 'filester')?>
+                    </p>
+                    <p>
+                        <a href="javascript:;" data="rateNow" class="button button-primary" style="margin-right: 5px"><?php _e('Rate now', 'filester')?></a>
+                        <a href="javascript:;" data="later" class="button" style="margin-right: 5px"><?php _e('Later', 'filester')?></a>
+                        <a href="javascript:;" data="alreadyDid" class="button"><?php _e('Already did', 'filester')?></a>
+                    </p>
+                </div>
+                <?php
+            }
+        }
+    }
+
+    public function njt_fs_save_review()
+    {
+        if ( isset( $_POST ) ) {
+            $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : null;
+            $field = isset( $_POST['field'] ) ? sanitize_text_field( $_POST['field'] ) : null;
+
+            if ( ! wp_verify_nonce( $nonce, 'njt-fs-review' ) ) {
+				wp_send_json_error( array( 'status' => 'Wrong nonce validate!' ) );
+				exit();
+            }
+            
+            if ($field == 'later'){
+                update_option('njt_fs_review', time() + 3*60*60*24); //After 3 days show
+            } else if ($field == 'alreadyDid'){
+                update_option('njt_fs_review', 0);
+            }
+            wp_send_json_success();
+        }
+        wp_send_json_error( array( 'message' => 'Update fail!' ) );
+    }
+
+    public function enqueue_scripts(){
+        wp_enqueue_script('njt-fs-review', NJT_FS_BN_PLUGIN_URL . 'assets/js/review.js', array('jquery'), NJT_FS_BN_VERSION, false);
+        wp_localize_script('njt-fs-review', 'wpDataFs', array(
+            'admin_ajax' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce("njt-fs-review"),
+        ));
     }
 
     public function isAlowUserAccess()
