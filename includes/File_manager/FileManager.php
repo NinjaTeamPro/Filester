@@ -143,7 +143,7 @@ class FileManager
     {
 
         $display_suffix = add_menu_page(
-            __('Custom Menu Title', 'textdomain'),
+            __('Filester', 'textdomain'),
             'File Manager',
             $this->fmCapability,
             'njt-fs-filemanager',
