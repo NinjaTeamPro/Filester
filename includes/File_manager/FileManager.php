@@ -71,7 +71,7 @@ class FileManager
     public function njt_fs_give_review()
     {
         if (function_exists('get_current_screen')) {
-            if (get_current_screen()->id == 'upload' || get_current_screen()->id == 'plugins') {
+            if (get_current_screen()->id == 'file-manager_page_filester-settings' || get_current_screen()->id == 'toplevel_page_njt-fs-filemanager' || get_current_screen()->id == 'plugins') {
                 $this->enqueue_scripts();
                 ?>
                 <div class="notice notice-success is-dismissible" id="njt-fs-review">
