@@ -186,7 +186,7 @@ if (count($arrRestrictions) > 0) {
       <td>
         <p class="submit">
           <button type="button" name="njt-form-user-role-restrictionst" id="njt-form-user-role-restrictionst"
-            class="button button-primary">Save Changes</button>
+            class="button button-primary"><?php _e("Save Changes", NJT_FS_BN_DOMAIN); ?></button>
         </p>
       </td>
     </tr>

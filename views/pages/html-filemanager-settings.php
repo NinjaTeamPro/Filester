@@ -154,7 +154,7 @@ if ( isset( $_POST ) && ! empty( $_POST ) && ! empty( $_POST['njt-settings-form-
 		  <td>
 			<p class="submit">
 			  <button type="button" name="njt-settings-form-submit" id="submit"
-				class="button button-primary njt-settings-form-submit">Save changes</button>
+				class="button button-primary njt-settings-form-submit"><?php _e( 'Save changes', NJT_FS_BN_DOMAIN ); ?></button>
 			</p>
 		  </td>
 		</tr>
