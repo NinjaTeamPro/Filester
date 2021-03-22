@@ -223,3 +223,58 @@
   }
 }
 
+.button-primary.njt-fs-updating-message::after{
+  color: #e10909;
+  font-family: dashicons;
+  display: inline-block;
+  line-height: 1;
+  font-weight: 400;
+  font-style: normal;
+  speak: never;
+  text-decoration: inherit;
+  text-transform: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  vertical-align: top;
+  text-align: center;
+  transition: color .1s ease-in;
+}
+
+.button.njt-fs-updating-message:after {
+  margin: 4px 0px 0px 10px;
+}
+
+.button.njt-fs-updating-message:after {
+  animation: rotation 2s infinite linear;
+}
+
+.button.njt-fs-updating-message:after {
+  color: #f0f0f1;
+  content: "\f463";
+}
+
+.button.njt-fs-updating-message:after{
+  display: inline-block;
+  font: normal 20px/1 dashicons;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  vertical-align: top;
+}
+
+.njt-fs-toastr {
+  animation: mytoastr .35s linear;
+}
+@keyframes mytoastr {
+  from {
+    opacity: 0;
+  	transform: translateY(20px);
+  }
+  to {
+  	transform: none;
+    opacity: 1;
+  }
+} 

@@ -184,6 +184,7 @@ const njtFileManager = {
   ajaxSaveSettings() {
     jQuery('.njt-settings-form-submit').on('click', function () {
       const arraylistUserAccess = [];
+      jQuery(this).addClass('njt-fs-updating-message');
       jQuery('.fm-list-user-item').each(function () {
         if (jQuery(this).is(":checked")) {
           arraylistUserAccess.push(jQuery(this).val());
@@ -213,8 +214,8 @@ const njtFileManager = {
       const toastr_opt = {
         closeButton: true,
         showDuration: 300,
-        hideDuration: 200,
-        hideMethod: "slideUp",
+        hideDuration: 300,
+        hideMethod: "fadeOut",
         positionClass: "toast-top-right njt-fs-toastr"
       }
       jQuery.post(
@@ -240,8 +241,10 @@ const njtFileManager = {
           }
           jQuery('.njt-fs-list-user-restrictions').change()
           if (response.success) {
+            jQuery('.njt-settings-form-submit').removeClass('njt-fs-updating-message');
             toastr.success('Changes Saved', '', toastr_opt)
           } else {
+            jQuery('.njt-settings-form-submit').removeClass('njt-fs-updating-message');
             toastr.error('Please try again later', '', toastr_opt)
           }
         });
@@ -249,6 +252,7 @@ const njtFileManager = {
   },
   ajaxSaveSettingsRestrictions() {
     jQuery('#njt-form-user-role-restrictionst').on('click', function () {
+      jQuery(this).addClass('njt-fs-updating-message');
       const njt_fs_list_user_restrictions = jQuery(".njt-fs-list-user-restrictions").val()
       const list_user_restrictions_alow_access = jQuery("#list_user_restrictions_alow_access").val()
       const private_folder_access = jQuery("#private_folder_access").val()
@@ -272,7 +276,7 @@ const njtFileManager = {
         closeButton: true,
         showDuration: 300,
         hideDuration: 200,
-        hideMethod: "slideUp",
+        hideMethod: "fadeOut",
         positionClass: "toast-top-right njt-fs-toastr"
       }
       jQuery.post(
@@ -280,8 +284,10 @@ const njtFileManager = {
         data,
         function (response) {
           if (response.success) {
+            jQuery('#njt-form-user-role-restrictionst').removeClass('njt-fs-updating-message');
             toastr.success('Changes Saved', '', toastr_opt)
           } else {
+            jQuery('#njt-form-user-role-restrictionst').removeClass('njt-fs-updating-message');
             toastr.error('Error! Please try again', '', toastr_opt)
           }
         });
