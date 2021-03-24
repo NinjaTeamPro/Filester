@@ -31,7 +31,9 @@ class Plugin {
     }
 
     $current_version = get_option('njt_fs_version');
-    if ( version_compare(NJT_FS_BN_VERSION, $current_version, '>') ) { 
+    if ( version_compare(NJT_FS_BN_VERSION, $current_version, '>') ) {
+      $filebirdCross = \FileBirdCross::get_instance('filebird', 'filebird+ninjateam', NJT_FS_BN_PLUGIN_URL, array('filebird/filebird.php', 'filebird-pro/filebird.php'));
+      $filebirdCross->need_update_option();
       update_option('njt_fs_version', NJT_FS_BN_VERSION);
       if ($njt_fs_review !== false) return;
         update_option('njt_fs_review', time() + 3*60*60*24); //After 3 days show
