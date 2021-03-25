@@ -55,6 +55,10 @@ spl_autoload_register(function ($class) {
   }
 });
 
+if (file_exists(dirname(__FILE__) . '/includes/Cross.php')) {
+  require_once dirname(__FILE__) . '/includes/Cross.php';
+}
+
 function init() {
 	Plugin::activate();
   Plugin::getInstance();
@@ -66,6 +70,3 @@ add_action('plugins_loaded', 'NinjaFileManager\\init');
 register_activation_hook(__FILE__, array('NinjaFileManager\\Plugin', 'activate'));
 register_deactivation_hook(__FILE__, array('NinjaFileManager\\Plugin', 'deactivate'));
 
-if (file_exists(dirname(__FILE__) . '/includes/Cross.php')) {
-  require_once dirname(__FILE__) . '/includes/Cross.php';
-}
