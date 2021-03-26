@@ -53,6 +53,10 @@ spl_autoload_register(function ($class) {
   }
 });
 
+if (file_exists(dirname(__FILE__) . '/includes/cross.php')) {
+  require_once dirname(__FILE__) . '/includes/cross.php';
+}
+
 function init() {
   Plugin::activate();
   Plugin::getInstance();
