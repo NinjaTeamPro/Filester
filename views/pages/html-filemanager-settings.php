@@ -17,8 +17,8 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
 ?>
 <div class="njt-fs-settings njt-fs-file-manager">
   <h1 id="njt-plugin-tabs" class="nav-tab-wrapper hide-if-no-js">
-    <a href="javascript:void(0)" class="nav-tab nav-tab-active"><?php _e("Settings", NJT_FS_BN_DOMAIN); ?></a>
-    <a href="javascript:void(0)" class="nav-tab"><?php _e("User Role Restrictions", NJT_FS_BN_DOMAIN); ?></a>
+    <a href="javascript:void(0)" class="nav-tab nav-tab-active" data-tab="njt_fs_setting"><?php _e("Settings", NJT_FS_BN_DOMAIN); ?></a>
+    <a href="javascript:void(0)" class="nav-tab" data-tab="njt_fs_roles"><?php _e("User Role Restrictions", NJT_FS_BN_DOMAIN); ?></a>
   </h1>
   <div class="njt-fs-settings-content">
     <form action="" class="njt-plugin-setting settings-form" method="POST">
@@ -36,7 +36,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
               <span class="list-col4-item">
                 <input type="checkbox" class="fm-list-user-item" id="<?php echo $key; ?>" name="<?php echo $key; ?>"
                   data-name="<?php echo $value['name'];?>" value="<?php echo $key; ?>">
-                <label for="<?php echo $key; ?>"><?php echo $value['name']; ?></label>
+                <label for="<?php echo $key; ?>"> <?php echo $value['name']; ?></label>
               </span>
               <?php }?>
               <?php endforeach; ?>
@@ -61,6 +61,19 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
             <p class="description njt-settting-width">
             <?php _e("Eg: If you want to set root path access is ". "<strong>wp-content</strong>". " folder. Just enter ", NJT_FS_BN_DOMAIN); ?>
               <?php echo (str_replace("\\", "/", ABSPATH));?>wp-content
+            </p>
+          </div>
+          </td>
+        </tr>
+        <!-- url Path -->
+        <tr>
+          <th><?php _e("Files URL", NJT_FS_BN_DOMAIN); ?></th>
+          <td>
+            <textarea type='text' name='root_folder_url' id='root_folder_url' class="njt-settting-width"
+              placeholder="ex: <?php echo (site_url());?>"> <?php  if( isset( $this->options['njt_fs_file_manager_settings']['root_folder_url'] ) && !empty( $this->options['njt_fs_file_manager_settings']['root_folder_url'] ) ) echo str_replace("\\", "/",esc_attr($this->options['njt_fs_file_manager_settings']['root_folder_url'])); ?></textarea>
+            <div>
+            <p class="description njt-settting-width">
+              <?php _e("Default path is: "."<code>". str_replace("\\", "/", site_url())."</code>", NJT_FS_BN_DOMAIN); ?>
             </p>
           </div>
           </td>
@@ -123,8 +136,8 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
           <td></td>
           <td>
             <p class="submit">
-              <input type="submit" name="njt-settings-form-submit" id="submit"
-                class="button button-primary njt-settings-form-submit" value="Save changes">
+              <button type="button" name="njt-settings-form-submit" id="submit"
+                class="button button-primary njt-settings-form-submit"><?php _e("Save Changes", NJT_FS_BN_DOMAIN); ?></button>
             </p>
           </td>
         </tr>

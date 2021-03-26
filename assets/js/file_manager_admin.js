@@ -19,6 +19,10 @@ const njtFileManager = {
     return null;
   },
 
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  },
+
   //Setting tab
   activeTabSetting() {
     var pagenow = "njt-fs-filemanager-settings-tab";
@@ -26,6 +30,13 @@ const njtFileManager = {
       jQuery("#njt-plugin-tabs a").removeClass("nav-tab-active");
       jQuery(".njt-plugin-setting").hide();
       jQuery(this).addClass("nav-tab-active");
+      if (jQuery(this).data('tab') == 'njt_fs_roles') {
+        location.hash = "#user-role-restrictions";
+      } else {
+        var noHashURL = window.location.href.replace(/#.*$/, '');
+        window.history.replaceState('', document.title, noHashURL)
+      }
+
       // Show current pane
       jQuery(".njt-plugin-setting:eq(" + jQuery(this).index() + ")").show();
       njtFileManager.sunriseCreateCookie(pagenow + "_last_tab", jQuery(this).index(), 365);
@@ -142,6 +153,7 @@ const njtFileManager = {
         function (response) {
           const resRestrictionsHasApproved = response.data.disable_operations ? response.data.disable_operations.split(",") : []
           const resPrivateFolderAccess = response.data.private_folder_access ? response.data.private_folder_access : ''
+          const resPrivateURLFolderAccess = response.data.private_url_folder_access ? response.data.private_url_folder_access : ''
           const resHidePaths = response.data.hide_paths ? response.data.hide_paths.replace(/[,]+/g, ' | ') : '';
           const resLockFiles = response.data.lock_files ? response.data.lock_files.replace(/[,]+/g, ' | ') : '';
           const resCanUploadMime = response.data.can_upload_mime ? response.data.can_upload_mime : '';
@@ -151,6 +163,8 @@ const njtFileManager = {
           }
           // Set value for textarea[name='private_folder_access']
           jQuery('textarea#private_folder_access').val(resPrivateFolderAccess)
+          // Set value for textarea[name='private_url_folder_access']
+          jQuery('textarea#private_url_folder_access').val(resPrivateURLFolderAccess)
           // Set value for textarea[name='hide_paths']
           jQuery('textarea#hide_paths').val(resHidePaths)
           // Set value for textarea[name='lock_files']
@@ -160,44 +174,130 @@ const njtFileManager = {
         });
     });
   },
-
-  setValueUploadMime() {
-    jQuery('.njt-mime-type').on('click', function () {
-      let arrCanUploadMime = []
-      if (jQuery('textarea#can_upload_mime').val().trim().length > 0) {
-        arrCanUploadMime = jQuery('textarea#can_upload_mime').val().split(",")
-      }
-      const objMimeTypes = {
-        text: ['txt', 'htm', 'html', 'php', 'css', 'js', 'json', 'xml'],
-        images: ['png', 'jpe', 'jpeg', 'jpg', 'gif', 'bmp', 'ico', 'tiff', 'tif', 'svg', 'svgz'],
-        archives: ['zip', 'rar', 'exe', 'msi', 'cab', 'tar', 'gz', 'bz2', '7z'],
-        audio: ['mp3', 'mp4a', 'mpega', 'mpga', 'aac', 'm3u', 'mpa', 'wav', 'wma'],
-        video: ['flv', 'qt', 'mov', 'avi', 'mp4v', 'mpegv', 'mpg', 'swf', 'wmv', 'mpav'],
-        adobe: ['pdf', 'psd', 'ai', 'eps', 'ps'],
-        office: ['doc', 'rtf', 'xls', 'ppt', 'odt', 'ods', 'pptx', 'docx', 'xlsx', 'dotx', 'xltx', 'potx', 'ppsx', 'sldx']
-      }
-      if (jQuery(this).val() == 'clearall') {
-        arrCanUploadMime.length = 0
-      } else {
-        const mineChose = jQuery(this).val()
-        const valMimeTypes = objMimeTypes[mineChose]
-        arrMimeTypesConcat = arrCanUploadMime.concat(valMimeTypes)
-        arrCanUploadMime = arrMimeTypesConcat.filter((item, index) => arrMimeTypesConcat.indexOf(item) == index)
-      }
-
-      jQuery('textarea#can_upload_mime').val(arrCanUploadMime.toString())
-    })
-  },
   clickedCreatRootPath() {
     jQuery('.js-creat-root-path').on('click', function () {
       const valueRootPath = wpData.ABSPATH
       jQuery('textarea#private_folder_access').val(valueRootPath)
+    })
+  },
+
+  ajaxSaveSettings() {
+    jQuery('.njt-settings-form-submit').on('click', function () {
+      const arraylistUserAccess = [];
+      jQuery(this).addClass('njt-fs-updating-message');
+      jQuery('.fm-list-user-item').each(function () {
+        if (jQuery(this).is(":checked")) {
+          arraylistUserAccess.push(jQuery(this).val());
+        }
+      });
+      arraylistUserAccess.push('administrator')
+      jQuery("#list_user_alow_access").val(arraylistUserAccess)
+      const list_user_alow_access = jQuery("#list_user_alow_access").val()
+      const root_folder_path = jQuery("#root_folder_path").val()
+      const root_folder_url = jQuery("#root_folder_url").val()
+      const upload_max_size = jQuery("#upload_max_size").val()
+      const fm_locale = jQuery("#fm_locale").val()
+      const enable_htaccess = jQuery("#enable_htaccess").is(":checked")
+      const enable_trash = jQuery("#enable_trash").is(":checked")
+      const data = {
+        'nonce': wpData.nonce,
+        'action': 'njt_fs_save_setting',
+        'root_folder_path': root_folder_path,
+        'root_folder_url': root_folder_url,
+        'list_user_alow_access': list_user_alow_access,
+        'upload_max_size': upload_max_size,
+        'fm_locale': fm_locale,
+        'enable_htaccess': enable_htaccess,
+        'enable_trash': enable_trash
+
+      }
+      const toastr_opt = {
+        closeButton: true,
+        showDuration: 300,
+        hideDuration: 300,
+        hideMethod: "fadeOut",
+        positionClass: "toast-top-right njt-fs-toastr"
+      }
+      jQuery.post(
+        wpData.admin_ajax,
+        data,
+        function (response) {
+          const list_access = response.data.njt_fs_file_manager_settings.list_user_alow_access
+          const index = list_access.indexOf('administrator');
+          if (index > -1) {
+            list_access.splice(index, 1);
+          }
+
+          if (list_access.length > 0) {
+            jQuery('.njt-fs-list-user-restrictions').empty()
+            list_access.forEach((item) => {
+              jQuery('.njt-fs-list-user-restrictions').append(`<option value="${item}"> ${njtFileManager.capitalizeFirstLetter(item)} </option>`);
+            });
+            jQuery('.njt-text-error').hide()
+          } else {
+            jQuery('.njt-fs-list-user-restrictions').empty()
+            jQuery('.njt-fs-list-user-restrictions').append('<option selected="" disabled="" hidden="">Nothing to choose</option>');
+            jQuery('.njt-text-error').show()
+          }
+          jQuery('.njt-fs-list-user-restrictions').change()
+          if (response.success) {
+            jQuery('.njt-settings-form-submit').removeClass('njt-fs-updating-message');
+            toastr.success('Changes Saved', '', toastr_opt)
+          } else {
+            jQuery('.njt-settings-form-submit').removeClass('njt-fs-updating-message');
+            toastr.error('Please try again later', '', toastr_opt)
+          }
+        });
+    })
+  },
+  ajaxSaveSettingsRestrictions() {
+    jQuery('#njt-form-user-role-restrictionst').on('click', function () {
+      jQuery(this).addClass('njt-fs-updating-message');
+      const njt_fs_list_user_restrictions = jQuery(".njt-fs-list-user-restrictions").val()
+      const list_user_restrictions_alow_access = jQuery("#list_user_restrictions_alow_access").val()
+      const private_folder_access = jQuery("#private_folder_access").val()
+      const private_url_folder_access = jQuery("#private_url_folder_access").val()
+      const hide_paths = jQuery("#hide_paths").val()
+      const lock_files = jQuery("#lock_files").val()
+      const can_upload_mime = jQuery("#can_upload_mime").val()
+
+      const data = {
+        'nonce': wpData.nonce,
+        'action': 'njt_fs_save_setting_restrictions',
+        'njt_fs_list_user_restrictions': njt_fs_list_user_restrictions,
+        'list_user_restrictions_alow_access': list_user_restrictions_alow_access,
+        'private_folder_access': private_folder_access,
+        'private_url_folder_access': private_url_folder_access,
+        'hide_paths': hide_paths,
+        'lock_files': lock_files,
+        'can_upload_mime': can_upload_mime
+      }
+      const toastr_opt = {
+        closeButton: true,
+        showDuration: 300,
+        hideDuration: 200,
+        hideMethod: "fadeOut",
+        positionClass: "toast-top-right njt-fs-toastr"
+      }
+      jQuery.post(
+        wpData.admin_ajax,
+        data,
+        function (response) {
+          if (response.success) {
+            jQuery('#njt-form-user-role-restrictionst').removeClass('njt-fs-updating-message');
+            toastr.success('Changes Saved', '', toastr_opt)
+          } else {
+            jQuery('#njt-form-user-role-restrictionst').removeClass('njt-fs-updating-message');
+            toastr.error('Error! Please try again', '', toastr_opt)
+          }
+        });
     })
   }
 }
 
 jQuery(document).ready(function () {
   if (jQuery("div").hasClass("njt-fs-file-manager")) {
+
     //set select value
     njtFileManager.themeSelector();
     // Start- Setting for `Select User Roles to access`
@@ -212,10 +312,15 @@ jQuery(document).ready(function () {
     njtFileManager.restrictionsHasApproved();
     //Ajax change value
     njtFileManager.ajaxRoleRestrictions();
-    //Set value for textarea[name="can_upload_mime"]
-    njtFileManager.setValueUploadMime();
     //Creat root path default
     njtFileManager.clickedCreatRootPath();
     // End- Setting for `Select User Roles Restrictions to access`
+
+    //Ajax settings
+    njtFileManager.ajaxSaveSettings();
+    njtFileManager.ajaxSaveSettingsRestrictions();
+    if(jQuery(".elfinder-theme-ext") > 0) {
+      jQuery(".elfinder-theme-ext").remove()
+    }
   }
 });

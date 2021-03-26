@@ -79,7 +79,13 @@ if (count($arrRestrictions) > 0) {
             <?php _e("Please select a User Role at Setings tab to use this option.", NJT_FS_BN_DOMAIN); ?>
           </p>
           <?php
-            }
+            } else {
+          ?>
+          <p class="description njt-text-error njt-settting-width" style="display:none">
+            <?php _e("Please select a User Role at Setings tab to use this option.", NJT_FS_BN_DOMAIN); ?>
+          </p>
+          <?php
+            } 
           ?>
         </div>
       </td>
@@ -120,13 +126,31 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
+      <th><?php _e("Files URL for this User Role", NJT_FS_BN_DOMAIN); ?></th>
+      <td>
+        <div>
+          <textarea name="private_url_folder_access" id="private_url_folder_access" placeholder="ex: <?php echo (site_url());?>"
+            class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_url_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_url_folder_access'] : '');?></textarea>
+          <div>
+            <p class="description njt-settting-width">
+              <?php _e("Default path is: "."<code>". str_replace("\\", "/", site_url())."</code>", NJT_FS_BN_DOMAIN); ?>
+            </p>
+            <p class="description njt-settting-width">
+            <?php _e("Eg: If you want to set files url path access is ". "<strong>wp-content</strong>". " folder. Just enter ", NJT_FS_BN_DOMAIN); ?>
+              <?php echo (str_replace("\\", "/", site_url()));?>/wp-content
+            </p>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
       <th> <?php _e("Enter folder or file paths that you want to Hide", NJT_FS_BN_DOMAIN); ?></th>
       <td>
         <div>
           <textarea name="hide_paths" id="hide_paths"
             class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Multiple separated by vertical bar (|). Eg: themes/twentytwenty | themes/avada.", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Multiple separated by vertical bar (|). Eg: themes/twentytwenty | themes/avada", NJT_FS_BN_DOMAIN); ?>
           </p>
         </div>
       </td>
@@ -147,30 +171,10 @@ if (count($arrRestrictions) > 0) {
       <th><?php _e("Enter file extensions which user can be Uploaded", NJT_FS_BN_DOMAIN); ?></th>
       <td>
         <div>
-          <div>
-            <div class="njt-btn-group njt-settting-width">
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="text"><?php _e("text", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="office"><?php _e("office", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="images"><?php _e("images", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="video"><?php _e("video", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="audio"><?php _e("audio", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="archives"><?php _e("archives", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="adobe"><?php _e("adobe", NJT_FS_BN_DOMAIN); ?></button>
-              <button type="button" class="njt-mime-type njt-fs-button"
-                value="clearall"><?php _e("clear all", NJT_FS_BN_DOMAIN); ?></button>
-            </div>
-          </div>
           <textarea name="can_upload_mime" id="can_upload_mime"
             class="njt-settting-width"><?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array());?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Multiple separated by comma. If left empty, this means user can't upload any files.", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Multiple separated by comma. If left empty, this means user can't upload any files. Eg: .php, .png, .css", NJT_FS_BN_DOMAIN); ?>
           </p>
         </div>
       </td>
@@ -181,8 +185,8 @@ if (count($arrRestrictions) > 0) {
       <td></td>
       <td>
         <p class="submit">
-          <input type="submit" name="njt-form-user-role-restrictionst" id="njt-form-user-role-restrictionst"
-            class="button button-primary" value="Save Changes">
+          <button type="button" name="njt-form-user-role-restrictionst" id="njt-form-user-role-restrictionst"
+            class="button button-primary"><?php _e("Save Changes", NJT_FS_BN_DOMAIN); ?></button>
         </p>
       </td>
     </tr>
