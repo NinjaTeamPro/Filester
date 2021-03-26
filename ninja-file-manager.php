@@ -53,6 +53,7 @@ spl_autoload_register(function ($class) {
   }
 });
 
+// Add crossale for filebird
 if (file_exists(dirname(__FILE__) . '/includes/cross.php')) {
   require_once dirname(__FILE__) . '/includes/cross.php';
 }
