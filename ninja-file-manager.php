@@ -3,7 +3,7 @@
  * Plugin Name: Filester - File Manager Pro
  * Plugin URI: https://ninjateam.org/filester
  * Description: Made to help you focus on WordPress file management and avoid being distracted.
- * Version: 1.2
+ * Version: 1.7.3
  * Author: Ninja Team
  * Author URI: https://ninjateam.org
  * Text Domain: filester

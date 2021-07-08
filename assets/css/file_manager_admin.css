@@ -4,6 +4,9 @@
   margin: 0;
   line-height: 1.3;
 }
+.elfinder-dialog-edit {
+  z-index: 9999 !important;
+}
 .njt-fs-mr0 {
   margin: 0 !important;
 }

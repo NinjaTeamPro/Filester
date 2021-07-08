@@ -51,6 +51,14 @@ jQuery(document).ready(function() {
         .fail(function() { elfinderInstance.exec('open');});
       }
     },
+    // disable quicklook
+    // bootCallback : function(fm) {
+    //     fm.bind('init', function() {
+    //         fm._commands.quicklook.getstate = function() {
+    //             return -1;
+    //         }
+    //     });
+    // },
     getFileCallback : function(files, fm) {
       return false;
     }, 
