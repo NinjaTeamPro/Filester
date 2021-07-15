@@ -136,7 +136,7 @@ if ( !class_exists('NjtCross') ) {
                         </a>
                     </div>
                     </div>
-                    <img class="njt-ads-img" src="<?php echo NJT_FS_BN_PLUGIN_URL . '/assets/img/FB_Wireframe.png' ?>" alt="filebird">
+                    <img class="njt-ads-img" src="<?php echo NJT_FS_BN_PLUGIN_URL . '/assets/img/filebird.png' ?>" alt="filebird">
                 </div>
             </div>
             <style>

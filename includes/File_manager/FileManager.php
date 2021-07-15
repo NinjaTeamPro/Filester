@@ -36,6 +36,15 @@ class FileManager
         $user = wp_get_current_user();
         $this->userRole = $user && $user->roles && $user->roles[0] ? $user->roles[0] : '';
 
+        if ( empty($this->userRole) && isset($user->roles)) {
+			$role = '';
+			foreach( $user->roles as $key => $value) {
+				$role = $value;
+			}
+	
+			$this->userRole = $role;
+		}
+        
         // Loading Options
         // Options
 		$this->options = get_option('njt_fs_settings');
