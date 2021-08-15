@@ -1,6 +1,6 @@
 (function ($) {
 	(function (editors, elFinder) {
-		fm_menu_icon_base_url = '../wp-content/plugins/' + wpData.PLUGIN_DIR + '/includes/File_manager/lib/';
+		fm_menu_icon_base_url = '';
 		if (typeof define === 'function' && define.amd) {
 			define(['elfinder'], editors);
 		} else if (elFinder) {
