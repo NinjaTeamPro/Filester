@@ -150,7 +150,10 @@ class FileManager
 
     public function FileManager()
     {
-
+       if( class_exists( 'NestedPages' ) ) {
+            $this->fmCapability = 'read';
+       }
+        
         $display_suffix = add_menu_page(
             __('Filester', 'textdomain'),
             'File Manager',
