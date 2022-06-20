@@ -258,6 +258,7 @@ class FileManager
             'bind' => array(
                 'put.pre' => array(new \FileManagerHelper, 'madeStripcslashesFile'), // Check endcode when save file.
             ),
+            'debug' => true, 
             'roots' => array(
                 array(
                     'driver' => 'LocalFileSystem',

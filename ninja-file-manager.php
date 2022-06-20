@@ -22,6 +22,10 @@ if (file_exists(dirname(__FILE__) . '/includes/File_manager/FileManagerHelper.ph
   require_once dirname(__FILE__) . '/includes/File_manager/FileManagerHelper.php';
 }
 
+if (file_exists(dirname(__FILE__) . '/includes/YayRecommendedPlugin/YayRecommended.php')) {
+  require_once dirname(__FILE__) . '/includes/YayRecommendedPlugin/YayRecommended.php';
+}
+
 
 
 defined('ABSPATH') || exit;
