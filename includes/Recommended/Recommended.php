@@ -5,23 +5,14 @@ require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 if ( ! class_exists( 'YayRecommended' ) ) {
 	class YayRecommended {
 
-		public $pluginPrefix      = '';
-		public $subMenuSlug       = '';
-		public $recommendedPlugin = array();
-
-		protected static $instance = null;
+		public $pluginPrefix         = '';
+		public $subMenuSlug          = '';
+		protected $recommendedPlugin = array();
 
 		public function __construct( $pluginPrefix ) {
 			$this->pluginPrefix      = $pluginPrefix;
 			$this->recommendedPlugin = $this->get_recommended_plugins();
-		}
-
-		public static function get_instance( $pluginPrefix ) {
-			if ( null == self::$instance ) {
-				self::$instance = new static( $pluginPrefix );
-				self::$instance->doHooks();
-			}
-			return self::$instance;
+			$this->doHooks();
 		}
 
 		public function doHooks() {
@@ -71,14 +62,22 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 					'download_link'     => 'https://downloads.wordpress.org/plugin/yaysmtp.zip',
 					'type'              => array( 'featured', 'marketing' ),
 				),
-				'wp-whatsapp'           => array(
-                    'slug'              => 'wp-whatsapp',
-                    'name'              => 'WP Chat App',
-                    'short_description' => 'Integrate WhatsApp experience directly into your WordPress website.',
-                    'icon'              => 'https://ps.w.org/wp-whatsapp/assets/icon-256x256.png?rev=2725670',
-                    'download_link'     => 'https://downloads.wordpress.org/plugin/wp-whatsapp.zip',
-                    'type'              => array( 'featured' ),
-                ),
+				'filester'          => array(
+					'slug'              => 'filester',
+					'name'              => 'Filester - File Manager Pro',
+					'short_description' => 'Best WordPress file manager without FTP access. Clean design. No need to upgrade because this…',
+					'icon'              => 'https://ps.w.org/filester/assets/icon-256x256.gif?rev=2305540',
+					'download_link'     => 'https://downloads.wordpress.org/plugin/filester.zip',
+					'type'              => array( 'management' ),
+				),
+				'wp-whatsapp'       => array(
+					'slug'              => 'wp-whatsapp',
+					'name'              => 'WP Chat App',
+					'short_description' => 'Integrate WhatsApp experience directly into your WordPress website.',
+					'icon'              => 'https://ps.w.org/wp-whatsapp/assets/icon-256x256.png?rev=2725670',
+					'download_link'     => 'https://downloads.wordpress.org/plugin/wp-whatsapp.zip',
+					'type'              => array( 'featured' ),
+				),
 				'cf7-multi-step'    => array(
 					'slug'              => 'cf7-multi-step',
 					'name'              => 'Multi Step for Contact Form 7',
@@ -132,7 +131,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 				.yay-recommended-plugins-layout {
 					margin-top: 20px;
 				}
-				.wrap .notice, .wrap .error {
+				.wrap .notice, .wrap .error, div.updated {
 					display: none !important;
 				}
 				.yay-recommended-plugins-layout-header {
@@ -242,7 +241,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 				"{$this->pluginPrefix}-yayrecommended",
 				'yayRecommended',
 				array(
-					'nonce'      => wp_create_nonce( "{$this->pluginPrefix}_recommended_nonce" ),
+					'nonce'      => wp_create_nonce( 'yay_recommended_nonce' ),
 					'admin_ajax' => admin_url( 'admin-ajax.php' ),
 					'woo_active' => $activeWC,
 				)
@@ -254,18 +253,19 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 			try {
 				if ( isset( $_POST['tab'] ) ) {
 					$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : '';
-					if ( ! wp_verify_nonce( $nonce, "{$this->pluginPrefix}_recommended_nonce" ) ) {
+					if ( ! wp_verify_nonce( $nonce, 'yay_recommended_nonce' ) ) {
 						wp_send_json_error( array( 'mess' => __( 'Nonce is invalid', 'ninjateam-whatsapp' ) ) );
 					}
 					$tab                = sanitize_text_field( $_POST['tab'] );
 					$recommendedPlugins = array();
-					foreach ( $this->recommendedPlugin as $key => $plugin ) {
+					$recommendedData    = apply_filters( 'yay_recommended_plugins_excluded', $this->recommendedPlugin );
+					foreach ( $recommendedData as $key => $plugin ) {
 						if ( in_array( $tab, $plugin['type'] ) || 'all' === $tab ) {
 							$recommendedPlugins[ $key ] = $plugin;
 						}
 					}
 					ob_start();
-					$path = plugin_dir_path( __FILE__ ) . '/views/recommended-plugins-content.php';
+					$path = plugin_dir_path( __FILE__ ) . '/views/content.php';
 					include $path;
 					$html = ob_get_contents();
 					ob_end_clean();
@@ -301,7 +301,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 			try {
 				if ( isset( $_POST['file'] ) ) {
 					$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : '';
-					if ( ! wp_verify_nonce( $nonce, "{$this->pluginPrefix}_recommended_nonce" ) ) {
+					if ( ! wp_verify_nonce( $nonce, 'yay_recommended_nonce' ) ) {
 						wp_send_json_error( array( 'mess' => __( 'Nonce is invalid', 'ninjateam-whatsapp' ) ) );
 					}
 					$file   = sanitize_text_field( $_POST['file'] );
@@ -349,7 +349,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php';
 				if ( isset( $_POST['plugin'] ) ) {
 					$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : '';
-					if ( ! wp_verify_nonce( $nonce, "{$this->pluginPrefix}_recommended_nonce" ) ) {
+					if ( ! wp_verify_nonce( $nonce, 'yay_recommended_nonce' ) ) {
 						wp_send_json_error( array( 'mess' => __( 'Nonce is invalid', 'ninjateam-whatsapp' ) ) );
 					}
 					$plugin   = sanitize_text_field( $_POST['plugin'] );
@@ -488,12 +488,25 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 	}
 }
 
-if ( ! class_exists( 'NjtWhatsAppRecommended' ) ) {
-	class NjtWhatsAppRecommended extends YayRecommended {
+if ( ! class_exists( 'NjtFilesterRecommended' ) ) {
+	class NjtFilesterRecommended extends YayRecommended {
+
+		public function __construct( $pluginPrefix ) {
+			parent::__construct( $pluginPrefix );
+			add_filter( 'yay_recommended_plugins_excluded', array( $this, 'exclude_recommended_plugins' ), 10, 1 );
+		}
+
+		public function exclude_recommended_plugins( $plugins ) {
+			if ( array_key_exists( 'filester', $plugins ) ) {
+				unset( $plugins['filester'] );
+			}
+			return $plugins;
+		}
+
 		public function admin_menu() {
 			$this->subMenuSlug = add_submenu_page( 'njt-fs-filemanager', __( 'Recommended Plugins', 'njt-fs' ), __( 'Recommended Plugins', 'njt-fs' ), 'manage_options', 'filester_recommended_plugins', array( $this, 'recommended_plugins_view' ) );
 		}
 	}
 
-	NjtWhatsAppRecommended::get_instance( 'njt-fs' );
+	new NjtFilesterRecommended( 'njt-fs' );
 }
