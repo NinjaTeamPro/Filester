@@ -28,9 +28,8 @@ foreach ( (array) $recommendedPlugins as $recommendedPlugin ) {
 
 		// Remove any HTML from the description.
 		$description = wp_strip_all_tags( $recommendedPlugin['short_description'] );
-		$version     = wp_kses( $recommendedPlugin['version'], $pluginsAllowedTags );
 
-		$name = wp_strip_all_tags( $pluginTitle . ' ' . $version );
+		$name = wp_strip_all_tags( $pluginTitle );
 
 		$downloadLink = isset( $recommendedPlugin['download_link'] ) ? $recommendedPlugin['download_link'] : null;
 
