@@ -1162,7 +1162,7 @@ div.elfinder-cwd-wrapper-list .ui-icon-grip-dotted-vertical {
   opacity: 0.8;
 }
 .elfinder-navbar-dir {
-  color: #e6e6e6;
+  color: #000000;
   cursor: pointer;
   -webkit-border-radius: 2px;
   border-radius: 2px;
@@ -1199,7 +1199,7 @@ div.elfinder-cwd-wrapper-list .ui-icon-grip-dotted-vertical {
   background: #0e1827;
 }
 .elfinder-cwd-file {
-  color: #ddd;
+  color: #020202;
 }
 .elfinder-cwd-file.ui-state-hover,
 .elfinder-cwd-file.ui-selected.ui-state-hover {
