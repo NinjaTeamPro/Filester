@@ -19,6 +19,7 @@ class FileManagerHelper{
 			'.js' => 'text/javascript',
 			'.json' => 'application/json',
 			'.xml' => 'text/xml',
+			'.ics' => 'text/calendar',
 
 			//font
 			'.woff' => 'font/woff,application/font-woff,application/x-font-opentype,application/x-font-truetype,application/vnd.ms-fontobject',
