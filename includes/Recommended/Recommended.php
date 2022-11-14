@@ -5,9 +5,9 @@ require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 if ( ! class_exists( 'YayRecommended' ) ) {
 	class YayRecommended {
 
-		public $pluginPrefix         = '';
-		public $subMenuSlug          = '';
-		protected $recommendedPlugin = array();
+		public $pluginPrefix      = '';
+		public $subMenuSlug       = '';
+		public $recommendedPlugin = array();
 
 		public function __construct( $pluginPrefix ) {
 			$this->pluginPrefix      = $pluginPrefix;
@@ -57,6 +57,33 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 					'type'              => array( 'featured', 'woocommerce' ),
 					'version'           => 0,
 				),
+				'yayswatches'       => array(
+					'slug'              => 'yayswatches',
+					'name'              => 'YaySwatches – Variation Swatches for WooCommerce',
+					'short_description' => 'YaySwatches allows you to show variation selectors as color swatches, image swatches, radio buttons, buttons,…',
+					'icon'              => 'https://ps.w.org/yayswatches/assets/icon-256x256.png?rev=2757155',
+					'download_link'     => 'https://downloads.wordpress.org/plugin/yayswatches.zip',
+					'type'              => array( 'woocommerce' ),
+					'version'           => 0,
+				),
+				'yayextra'          => array(
+					'slug'              => 'yayextra',
+					'name'              => 'YayExtra – WooCommerce Extra Product Options',
+					'short_description' => 'YayExtra is a WooCommerce plugin to allow you to create extra product options and assign…',
+					'icon'              => 'https://ps.w.org/yayextra/assets/icon-256x256.png?rev=2776349',
+					'download_link'     => 'https://downloads.wordpress.org/plugin/yayextra.zip',
+					'type'              => array( 'woocommerce' ),
+					'version'           => 0,
+				),
+				'yaypricing'        => array(
+					'slug'              => 'yaypricing',
+					'name'              => 'YayPricing – WooCommerce Dynamic Pricing & Discounts',
+					'short_description' => 'Offer automatic pricing and discounts to design a powerful marketing strategy for your WooCommerce store.',
+					'icon'              => 'https://yaycommerce.com/wp-content/uploads/2022/03/YayPricing.png',
+					'download_link'     => 'https://yaycommerce.com/yaypricing-woocommerce-dynamic-pricing-and-discounts/',
+					'type'              => array( 'woocommerce' ),
+					'version'           => 0,
+				),
 				'yaysmtp'           => array(
 					'slug'              => 'yaysmtp',
 					'name'              => 'YaySMTP - Simple WP SMTP Mail',
@@ -66,15 +93,6 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 					'type'              => array( 'featured', 'marketing' ),
 					'version'           => 0,
 				),
-				'filester'          => array(
-					'slug'              => 'filester',
-					'name'              => 'Filester - File Manager Pro',
-					'short_description' => 'Best WordPress file manager without FTP access. Clean design. No need to upgrade because this…',
-					'icon'              => 'https://ps.w.org/filester/assets/icon-256x256.gif?rev=2305540',
-					'download_link'     => 'https://downloads.wordpress.org/plugin/filester.zip',
-					'type'              => array( 'management' ),
-					'version'           => 0,
-				),
 				'wp-whatsapp'       => array(
 					'slug'              => 'wp-whatsapp',
 					'name'              => 'WP Chat App',
@@ -82,6 +100,15 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 					'icon'              => 'https://ps.w.org/wp-whatsapp/assets/icon-256x256.png?rev=2725670',
 					'download_link'     => 'https://downloads.wordpress.org/plugin/wp-whatsapp.zip',
 					'type'              => array( 'featured' ),
+					'version'           => 0,
+				),
+				'filester'          => array(
+					'slug'              => 'filester',
+					'name'              => 'Filester - File Manager Pro',
+					'short_description' => 'Best WordPress file manager without FTP access. Clean design. No need to upgrade because this…',
+					'icon'              => 'https://ps.w.org/filester/assets/icon-256x256.gif?rev=2305540',
+					'download_link'     => 'https://downloads.wordpress.org/plugin/filester.zip',
+					'type'              => array( 'management' ),
 					'version'           => 0,
 				),
 				'cf7-multi-step'    => array(
@@ -125,7 +152,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 		}
 
 		public function admin_menu() {
-			$this->subMenuSlug = add_submenu_page( 'nta_whatsapp', __( 'Recommended Plugins', 'ninjateam-whatsapp' ), __( 'Recommended Plugins', 'ninjateam-whatsapp' ), 'manage_options', 'nta_whatsapp_recommended_plugins', array( $this, 'recommended_plugins_view' ) );
+			$this->subMenuSlug = add_submenu_page( 'nta_whatsapp', __( 'Recommended Plugins', 'filebird' ), __( 'Recommended Plugins', 'filebird' ), 'manage_options', 'nta_whatsapp_recommended_plugins', array( $this, 'recommended_plugins_view' ) );
 		}
 
 		public function recommended_plugins_view() {
@@ -141,7 +168,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 				.yay-recommended-plugins-layout {
 					margin-top: 20px;
 				}
-				.wrap .notice, .wrap .error, div.updated {
+				.wrap .notice, .wrap .error {
 					display: none !important;
 				}
 				.yay-recommended-plugins-layout-header {
@@ -215,7 +242,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 				<div class="yay-recommended-plugins-layout">
 					<div class="yay-recommended-plugins-layout-header">
 						<div class="wp-filter yay-recommended-plugins-header">
-							<h2 class="yay-recommended-plugins-header-title"><?php esc_attr_e( 'Recommended Plugins', 'ninjateam-whatsapp' ); ?></h2>
+							<h2 class="yay-recommended-plugins-header-title"><?php esc_attr_e( 'Recommended Plugins', 'filebird' ); ?></h2>
 							<ul class="filter-links">
 								<?php
 								 echo wp_kses_post( $featuredTab );
@@ -264,7 +291,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 				if ( isset( $_POST['tab'] ) ) {
 					$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : '';
 					if ( ! wp_verify_nonce( $nonce, 'yay_recommended_nonce' ) ) {
-						wp_send_json_error( array( 'mess' => __( 'Nonce is invalid', 'ninjateam-whatsapp' ) ) );
+						wp_send_json_error( array( 'mess' => __( 'Nonce is invalid', 'filebird' ) ) );
 					}
 					$tab                = sanitize_text_field( $_POST['tab'] );
 					$recommendedPlugins = array();
@@ -281,7 +308,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 					ob_end_clean();
 					wp_send_json_success(
 						array(
-							'mess' => __( 'Get data success', 'ninjateam-whatsapp' ),
+							'mess' => __( 'Get data success', 'filebird' ),
 							'html' => $html,
 						)
 					);
@@ -289,7 +316,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 			} catch ( \Exception $ex ) {
 				wp_send_json_error(
 					array(
-						'mess' => __( 'Error exception.', 'ninjateam-whatsapp' ),
+						'mess' => __( 'Error exception.', 'filebird' ),
 						array(
 							'error' => $ex,
 						),
@@ -298,7 +325,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 			} catch ( \Error $ex ) {
 				wp_send_json_error(
 					array(
-						'mess' => __( 'Error.', 'ninjateam-whatsapp' ),
+						'mess' => __( 'Error.', 'filebird' ),
 						array(
 							'error' => $ex,
 						),
@@ -312,7 +339,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 				if ( isset( $_POST['file'] ) ) {
 					$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : '';
 					if ( ! wp_verify_nonce( $nonce, 'yay_recommended_nonce' ) ) {
-						wp_send_json_error( array( 'mess' => __( 'Nonce is invalid', 'ninjateam-whatsapp' ) ) );
+						wp_send_json_error( array( 'mess' => __( 'Nonce is invalid', 'filebird' ) ) );
 					}
 					$file   = sanitize_text_field( $_POST['file'] );
 					$result = activate_plugin( $file );
@@ -326,14 +353,14 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 					}
 					wp_send_json_success(
 						array(
-							'mess' => __( 'Activate success', 'ninjateam-whatsapp' ),
+							'mess' => __( 'Activate success', 'filebird' ),
 						)
 					);
 				}
 			} catch ( \Exception $ex ) {
 				wp_send_json_error(
 					array(
-						'mess' => __( 'Error exception.', 'ninjateam-whatsapp' ),
+						'mess' => __( 'Error exception.', 'filebird' ),
 						array(
 							'error' => $ex,
 						),
@@ -342,7 +369,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 			} catch ( \Error $ex ) {
 				wp_send_json_error(
 					array(
-						'mess' => __( 'Error.', 'ninjateam-whatsapp' ),
+						'mess' => __( 'Error.', 'filebird' ),
 						array(
 							'error' => $ex,
 						),
@@ -360,7 +387,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 				if ( isset( $_POST['plugin'] ) ) {
 					$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : '';
 					if ( ! wp_verify_nonce( $nonce, 'yay_recommended_nonce' ) ) {
-						wp_send_json_error( array( 'mess' => __( 'Nonce is invalid', 'ninjateam-whatsapp' ) ) );
+						wp_send_json_error( array( 'mess' => __( 'Nonce is invalid', 'filebird' ) ) );
 					}
 					$plugin   = sanitize_text_field( $_POST['plugin'] );
 					$type     = isset( $_POST['type'] ) ? sanitize_text_field( $_POST['type'] ) : 'install';
@@ -409,7 +436,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 							} else {
 								wp_send_json_success(
 									array(
-										'mess' => __( 'Install success', 'ninjateam-whatsapp' ),
+										'mess' => __( 'Install success', 'filebird' ),
 									)
 								);
 							}
@@ -433,7 +460,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 							activate_plugin( $plugin );
 							wp_send_json_success(
 								array(
-									'mess'   => __( 'Update success', 'ninjateam-whatsapp' ),
+									'mess'   => __( 'Update success', 'filebird' ),
 									'active' => $is_active,
 								)
 							);
@@ -443,7 +470,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 			} catch ( \Exception $ex ) {
 				wp_send_json_error(
 					array(
-						'mess' => __( 'Error exception.', 'ninjateam-whatsapp' ),
+						'mess' => __( 'Error exception.', 'filebird' ),
 						array(
 							'error' => $ex,
 						),
@@ -452,7 +479,7 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 			} catch ( \Error $ex ) {
 				wp_send_json_error(
 					array(
-						'mess' => __( 'Error.', 'ninjateam-whatsapp' ),
+						'mess' => __( 'Error.', 'filebird' ),
 						array(
 							'error' => $ex,
 						),
@@ -483,6 +510,15 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 			}
 			if ( 'yaysmtp' === $pluginDetail['slug'] ) {
 				$existProVer = array_key_exists( 'yaysmtp-pro/yay-smtp.php', $allPlugin ) === true ? 'yaysmtp-pro/yay-smtp.php' : false;
+			}
+			if ( 'yayswatches' === $pluginDetail['slug'] ) {
+				$existProVer = array_key_exists( 'yayswatches-pro/yay-swatches.php', $allPlugin ) === true ? 'yayswatches-pro/yay-swatches.php' : false;
+			}
+			if ( 'yayextra' === $pluginDetail['slug'] ) {
+				$existProVer = array_key_exists( 'yayextra-pro/yayextra.php', $allPlugin ) === true ? 'yayextra-pro/yayextra.php' : false;
+			}
+			if ( 'yaypricing' === $pluginDetail['slug'] ) {
+				$existProVer = array_key_exists( 'yaypricing-pro/yaypricing.php', $allPlugin ) === true ? 'yaypricing-pro/yaypricing.php' : false;
 			}
 			if ( 'cf7-multi-step' === $pluginDetail['slug'] ) {
 				$existProVer = array_key_exists( 'contact-form-7-multi-step-pro/contact-form-7-multi-step.php', $allPlugin ) === true ? 'contact-form-7-multi-step-pro/contact-form-7-multi-step.php' : false;
