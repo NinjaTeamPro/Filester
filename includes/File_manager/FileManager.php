@@ -34,7 +34,7 @@ class FileManager
     {
         //get user role
         $user = wp_get_current_user();
-        $this->userRole = $user && $user->roles && $user->roles[0] ? $user->roles[0] : '';
+        $this->userRole = $user && $user->roles && isset($user->roles[0]) ? $user->roles[0] : '';
 
         if ( empty($this->userRole) && isset($user->roles)) {
 			$role = '';
