@@ -92,16 +92,89 @@ Yes, Filester is totally free and full-fledged with premium features. You won't 
 
 == Changelog ==
 
-= 1.2 =
+1.7.6
+Jun 27, 2022 – Version 1.7.6
+– Added: Recommend plugins
+
+1.7.5
+Jun 20, 2022 – Version 1.7.5
+– Added: Recommend plugins
+
+1.7.4
+Dec 02, 2021 – Version 1.7.4
+– Fixed: conflict with plugin Nested Pages
+
+1.7.3
+Jul 08, 2021 – Version 1.7.3
+– Fixed: User Role Restrictions
+– Fixed: Image notification
+
+1.7.2
+Mar 25, 2021 – Version 1.7.2
+– Fixed: Small bug – Sorry you guys about that. And thanks for reporting.
+
+1.7.1
+Mar 25, 2021 – Version 1.7.1
+– Fixed: Small bug
+
+1.7
+Mar 25, 2021 – Version 1.7
+– Improved: UI
+– Fixed: Small bug
+
+1.6
+Mar 15, 2021 – Version 1.6.1
+– Fixed: Small bug
+
+1.6
+Feb 3, 2021 – Version 1.6
+– Added: Mime type logic for user roles
+– Added: URL field
+– Fixed: Images and pdf preview
+– Fixed: Some small bugs
+
+1.5.2
+Jan 11, 2021 – Version 1.5.2
+– Added: Add mime type for upload .xlsb and .xlsm files
+– Fixed: Work with WP old version
+– Fixed: Upload CSV file
+
+1.5.1
+Dec 17, 2020 – Version 1.5.1
+– Updated: jQuery UI latest version
+
+1.5
+Dec 10, 2020 – Version 1.5
+* Updated: ElFinder latest version
+* Improved: Compatible with WordPress 5.6
+
+1.4.1
+Aug 7, 2020 – Version 1.4.1
+* Fixed: Can not display in menu WordPress multisite
+* Fixed: Windows 10 theme not working in Linux server
+
+1.4
+Jul 2, 2020 – Version 1.4
+* Improved: Double click to open or preview file
+* Fixed: Some small bugs
+
+1.3
+Jun 24, 2020 – Version 1.3
+* Improved: Style for icon
+* Fixed: Select languages
+* Fixed: Private CSS/JS
+* Fixed: Some small bugs
+
+1.2
 Jun 16, 2020 – Version 1.2
 * Fixed: Trash issue
 * Fixed: Some small bugs
 
-= 1.1 =
+1.1
 May 29, 2020 – Version 1.1
 * Fixed: Some small bugs
 * Improved: UI
 
-= 1.0 =
+1.0
 May 8, 2020 – Version 1.0
 * Version 1.0 Initial Release
