@@ -19,4 +19,4 @@ Need to report a security vulnerability? Visit https://ninjateam.org/
 - Created by Mike from NinjaTeam
 
 ### Note fix
-- Use elFinderSession in version 2.1.46 to fix bug can not download muti file
+- Use elFinderSession in version 2.1.46 to fix bug can not download multiple files
