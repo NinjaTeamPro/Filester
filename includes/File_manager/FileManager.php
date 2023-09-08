@@ -248,7 +248,7 @@ class FileManager
 
     public function fsConnector()
     {
-        if( isset( $_POST ) && !empty( $_POST ) && ! wp_verify_nonce( $_POST['nonce'] ,'file-manager-security-token') ) wp_die();
+        check_ajax_referer( 'file-manager-security-token', 'nonce' );
         $uploadMaxSize = isset($this->options['njt_fs_file_manager_settings']['upload_max_size']) && !empty($this->options['njt_fs_file_manager_settings']['upload_max_size']) ? $this->options['njt_fs_file_manager_settings']['upload_max_size'] : 0;
 
         $opts = array(
