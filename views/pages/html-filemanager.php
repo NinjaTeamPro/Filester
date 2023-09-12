@@ -22,7 +22,7 @@ $lang = !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? $
         <option value="Material-Light"><?php _e("Material Light", NJT_FS_BN_DOMAIN); ?></option>
         <option value="windows-10"><?php _e("Windows 10", NJT_FS_BN_DOMAIN); ?></option>
       </select>
-      <input type="hidden" name="selected-theme" value="<?php echo ($selectedTheme) ?>">
+      <input type="hidden" name="selected-theme" value="<?php echo esc_attr($selectedTheme) ?>">
 
     </div>
   </div>

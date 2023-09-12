@@ -79,7 +79,9 @@ const njtFileManager = {
           arraylistUserAccess.push(jQuery(this).val());
         }
       });
-      arraylistUserAccess.push('administrator')
+      if (!wpData.is_multisite) {
+        arraylistUserAccess.push('administrator')
+      }
       jQuery("#list_user_alow_access").val(arraylistUserAccess)
     })
   },
@@ -87,9 +89,14 @@ const njtFileManager = {
   userHasApproved() {
     const arrayUserHasApproved = jQuery('#list_user_has_approved').val() ? jQuery('#list_user_has_approved').val().split(",") : []
     for (itemUserHasApproved of arrayUserHasApproved) {
-      if (itemUserHasApproved != 'administrator') {
+      if (!wpData.is_multisite) {
+        if (itemUserHasApproved != 'administrator') {
+          jQuery('input[name = ' + itemUserHasApproved + ']').prop('checked', true);
+        }
+      } else {
         jQuery('input[name = ' + itemUserHasApproved + ']').prop('checked', true);
       }
+     
     }
   },
 
@@ -190,7 +197,9 @@ const njtFileManager = {
           arraylistUserAccess.push(jQuery(this).val());
         }
       });
-      arraylistUserAccess.push('administrator')
+      if (!wpData.is_multisite) {
+        arraylistUserAccess.push('administrator')
+      }
       jQuery("#list_user_alow_access").val(arraylistUserAccess)
       const list_user_alow_access = jQuery("#list_user_alow_access").val()
       const root_folder_path = jQuery("#root_folder_path").val()

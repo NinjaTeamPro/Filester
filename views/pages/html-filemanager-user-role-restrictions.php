@@ -57,15 +57,27 @@ if (count($arrRestrictions) > 0) {
         <div>
           <select class="njt-fs-list-user-restrictions njt-settting-width-select" name="njt-fs-list-user-restrictions">
             <?php
-              if ($listUserApproved && count($listUserApproved) != 1 && $listUserApproved[0] != 'administrator') {
+              if ($listUserApproved && count($listUserApproved) != 1) {
               foreach ( $wp_roles->roles as $key=>$value ):
-                if ($key != 'administrator' && in_array($key,$listUserApproved) ) {?>
-            <option value="<?php echo $key; ?>"
-              <?php echo(!empty($firstKeyRestrictions) && $firstKeyRestrictions == $key ) ? 'selected="selected"' : '';?>>
-              <?php echo $value['name']; ?>
-            </option>
-            <?php 
+                if (is_multisite()) {
+                  if (in_array($key,$listUserApproved) ) {?>
+                    <option value="<?php echo $key; ?>"
+                      <?php echo(!empty($firstKeyRestrictions) && $firstKeyRestrictions == $key ) ? 'selected="selected"' : '';?>>
+                      <?php echo $value['name']; ?>
+                    </option>
+                    <?php 
+                        }
                 }
+                if (!is_multisite()) {
+                  if ($key !== 'administrator' && in_array($key,$listUserApproved) ) {?>
+                    <option value="<?php echo $key; ?>"
+                      <?php echo(!empty($firstKeyRestrictions) && $firstKeyRestrictions == $key ) ? 'selected="selected"' : '';?>>
+                      <?php echo $value['name']; ?>
+                    </option>
+                    <?php 
+                        }
+                }
+                
               endforeach;}
               else {
              ?>

@@ -135,15 +135,23 @@ class FileManager
     {
         if($this->userRole) {
             $allowed_roles = !empty($this->options['njt_fs_file_manager_settings']['list_user_alow_access']) ? $this->options['njt_fs_file_manager_settings']['list_user_alow_access'] : array();
-            if( in_array($this->userRole,$allowed_roles) || $this->userRole == 'administrator') {
+            if( in_array($this->userRole,$allowed_roles)) {
+                if (is_multisite() && $this->userRole == 'administrator') {
+                    $this->fmCapability = 'activate_plugins';
+                }
                 $this->fmCapability = $this->userRole;
                 return true;
             }
         }
-        if (is_super_admin()) {
+        if (is_multisite() && is_super_admin()) {
+            $this->fmCapability = 'create_sites';
+            return true;
+        } 
+
+        if (!is_multisite() && is_super_admin()) {
             $this->fmCapability = 'administrator';
             return true;
-        }
+        } 
         $this->fmCapability = 'read';
         return false;
     }
@@ -163,15 +171,26 @@ class FileManager
             $icon,
             9
         );
+        if (is_multisite()) {
+            $settings_suffix = add_submenu_page (
+                'njt-fs-filemanager',
+                'Settings',
+                'Settings', 
+                'create_sites', 
+                'filester-settings',
+                array($this, 'fsSettingsPage') );
+        }
         
-        $settings_suffix = add_submenu_page (
-          'njt-fs-filemanager',
-          'Settings',
-          'Settings', 
-          'manage_options', 
-          'filester-settings',
-          array($this, 'fsSettingsPage') );
-
+        if (!is_multisite()) {
+            $settings_suffix = add_submenu_page (
+                'njt-fs-filemanager',
+                'Settings',
+                'Settings', 
+                'manage_options', 
+                'filester-settings',
+                array($this, 'fsSettingsPage') );
+        }
+       
         $this->hook_suffix = array($display_suffix, $settings_suffix);
     }
 
@@ -238,7 +257,8 @@ class FileManager
                 'PLUGIN_URL' => NJT_FS_BN_PLUGIN_URL .'includes/File_manager/lib/',
                 'PLUGIN_PATH' => NJT_FS_BN_PLUGIN_PATH.'includes/File_manager/lib/',
                 'PLUGIN_DIR'=> NJT_FS_BN_PLUGIN_DIR,
-                'ABSPATH'=> str_replace("\\", "/", ABSPATH)
+                'ABSPATH'=> str_replace("\\", "/", ABSPATH),
+                'is_multisite' => is_multisite()
 
             ));
         }
@@ -365,6 +385,51 @@ class FileManager
         }
 
         //Enter file extensions which can be uploaded
+        $flag = false;
+
+       
+       if (is_multisite()) {
+        if( !current_user_can('create_sites') && empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])) {
+            $opts['roots'][0]['uploadDeny'] = array('all');
+            $opts['roots'][0]['uploadAllow'] = array('');
+        } else if ( !current_user_can('create_sites') && !empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])) {
+            $opts['roots'][0]['uploadDeny'] = array('all');
+            $opts['roots'][0]['uploadAllow'] = array();
+            $arrCanUploadMime = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'];
+            $mimeTypes = new \FileManagerHelper();
+            $arrMimeTypes = $mimeTypes->getArrMimeTypes();
+            foreach ($arrMimeTypes as $key => $value){
+                if(in_array($key,$arrCanUploadMime)) {
+                    $explodeValue = explode(',',$value);
+                    foreach($explodeValue as $item) {
+                        array_push($opts['roots'][0]['uploadAllow'], $item );
+                    }
+                }
+          
+            };
+            foreach ($arrCanUploadMime as $value){
+                if(strpos($value,"x-conference") !== false
+                   || strpos($value,"video") !== false
+                   || strpos($value,"text") !== false
+                   || strpos($value,"model") !== false
+                   || strpos($value,"message") !== false
+                   || strpos($value,"image") !== false
+                   || strpos($value,"font") !== false
+                   || strpos($value,"chemical") !== false
+                   || strpos($value,"audio") !== false
+                   || strpos($value,"application") !== false
+                   ) {
+                    array_push($opts['roots'][0]['uploadAllow'], $value );
+                }
+            }
+
+        } else {
+            $opts['roots'][0]['uploadDeny'] = array();
+            $opts['roots'][0]['uploadAllow'] = array('all');
+        }
+       }
+       
+       if (!is_multisite()) {
         if($this->userRole !== 'administrator' && empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])) {
             $opts['roots'][0]['uploadDeny'] = array('all');
             $opts['roots'][0]['uploadAllow'] = array('');
@@ -403,6 +468,10 @@ class FileManager
             $opts['roots'][0]['uploadDeny'] = array();
             $opts['roots'][0]['uploadAllow'] = array('all');
         }
+       }
+
+       
+
         //End --setting User Role Restrictions
 
         $connector = new \elFinderConnector(new \elFinder($opts));
