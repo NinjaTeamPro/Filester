@@ -37,20 +37,20 @@ $lang = !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? $
 jQuery(document).ready(function() {
   jQuery('#njt-fs-file-manager').elfinder({
     url: ajaxurl,
-    handlers : {
-      dblclick : function(event, elfinderInstance) {
-        event.preventDefault();
-        elfinderInstance.exec('getfile')
-        .done(function() { 
-          try {
-            elfinderInstance.exec('edit'); 
-          } catch (e) {
-            elfinderInstance.exec('quicklook'); 
-          }
-        })
-        .fail(function() { elfinderInstance.exec('open');});
-      }
-    },
+    // handlers : {
+    //   dblclick : function(event, elfinderInstance) {
+    //     event.preventDefault();
+    //     elfinderInstance.exec('getfile')
+    //     .done(function() { 
+    //       try {
+    //         elfinderInstance.exec('edit'); 
+    //       } catch (e) {
+    //         elfinderInstance.exec('quicklook'); 
+    //       }
+    //     })
+    //     .fail(function() { elfinderInstance.exec('open');});
+    //   }
+    // },
     // disable quicklook
     // bootCallback : function(fm) {
     //     fm.bind('init', function() {
@@ -59,60 +59,60 @@ jQuery(document).ready(function() {
     //         }
     //     });
     // },
-    getFileCallback : function(files, fm) {
-      return false;
-    }, 
-    contextmenu: {
-      // current directory file menu
-      files: ['getfile', '|', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload',
-        'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit',
-        'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod',
-        'netunmount'
-      ],
-      // navbarfolder menu
-      navbar: ['open', 'opennew', 'download', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate',
-        '|', 'rm', 'empty', 'hide', '|', 'rename', '|', 'archive', '|', 'places', 'info', 'chmod',
-        'netunmount'
-      ],
-      // current directory menu
-      cwd: ['undo', 'redo', '|', 'back', 'up', 'reload', '|', 'upload', 'mkdir', 'mkfile', 'paste', '|',
-        'empty', 'hide', '|', 'view', 'sort', 'selectall', 'colwidth', '|', 'places', 'info', 'chmod',
-        'netunmount',
-        '|', 'fullscreen', '|'
-      ],
-    },
-    uiOptions: {
-      // toolbar configuration
-      toolbar: [
-        ['home', 'back', 'forward', 'up', 'reload'],
-        ['netmount'],
-        ['mkdir', 'mkfile', 'upload'],
-        ['open', 'download', 'getfile'],
-        ['undo', 'redo'],
-        ['copy', 'cut', 'paste', 'rm', 'empty'],
-        ['duplicate', 'rename', 'edit', 'resize', 'chmod'],
-        ['selectall', 'selectnone', 'selectinvert'],
-        ['quicklook', 'info'],
-        ['extract', 'archive'],
-        ['search'],
-        ['view', 'sort'],
-        ['help'],
-        ['fullscreen']
-      ],
-      toolbarExtra: {
-        // show Preference button into contextmenu of the toolbar (true / false)
-        preferenceInContextmenu: false
-      }
-    },
-    ui: ['toolbar', 'tree', 'path', 'stat'],
+    // getFileCallback : function(files, fm) {
+    //   return false;
+    // }, 
+    // contextmenu: {
+    //   // current directory file menu
+    //   files: ['getfile', '|', 'open', 'opennew', 'download', 'opendir', 'quicklook', 'email', '|', 'upload',
+    //     'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', 'empty', 'hide', '|', 'rename', 'edit',
+    //     'resize', '|', 'archive', 'extract', '|', 'selectall', 'selectinvert', '|', 'places', 'info', 'chmod',
+    //     'netunmount'
+    //   ],
+    //   // navbarfolder menu
+    //   navbar: ['open', 'opennew', 'download', '|', 'upload', 'mkdir', '|', 'copy', 'cut', 'paste', 'duplicate',
+    //     '|', 'rm', 'empty', 'hide', '|', 'rename', '|', 'archive', '|', 'places', 'info', 'chmod',
+    //     'netunmount'
+    //   ],
+    //   // current directory menu
+    //   cwd: ['undo', 'redo', '|', 'back', 'up', 'reload', '|', 'upload', 'mkdir', 'mkfile', 'paste', '|',
+    //     'empty', 'hide', '|', 'view', 'sort', 'selectall', 'colwidth', '|', 'places', 'info', 'chmod',
+    //     'netunmount',
+    //     '|', 'fullscreen', '|'
+    //   ],
+    // },
+    // uiOptions: {
+    //   // toolbar configuration
+    //   toolbar: [
+    //     ['home', 'back', 'forward', 'up', 'reload'],
+    //     ['netmount'],
+    //     ['mkdir', 'mkfile', 'upload'],
+    //     ['open', 'download', 'getfile'],
+    //     ['undo', 'redo'],
+    //     ['copy', 'cut', 'paste', 'rm', 'empty'],
+    //     ['duplicate', 'rename', 'edit', 'resize', 'chmod'],
+    //     ['selectall', 'selectnone', 'selectinvert'],
+    //     ['quicklook', 'info'],
+    //     ['extract', 'archive'],
+    //     ['search'],
+    //     ['view', 'sort'],
+    //     ['help'],
+    //     ['fullscreen']
+    //   ],
+    //   toolbarExtra: {
+    //     // show Preference button into contextmenu of the toolbar (true / false)
+    //     preferenceInContextmenu: false
+    //   }
+    // },
+    //ui: ['toolbar', 'tree', 'path', 'stat'],
     customData: {
       action: 'fs_connector',
       nonce: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'
     },
     lang: '<?php echo ($lang)?>',
-    requestType: 'post',
-    width: 'auto',
-    height: '600',
+    // requestType: 'post',
+    // width: 'auto',
+    // height: '600',
   });
 });
 </script>
