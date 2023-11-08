@@ -1,3 +1,6 @@
+.toplevel_page_njt-fs-filemanager #wpwrap{
+  z-index: 20;
+}
 .njt-fs-wrap .wp-heading-inline{
   font-size: 23px;
   font-weight: 400;
