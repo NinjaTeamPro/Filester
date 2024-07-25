@@ -567,9 +567,13 @@ class FileManager
         if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-fs-file-manager-admin')) wp_die();
         check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
 
+        if (!current_user_can('manage_options')) {
+            wp_die();
+        }
+
         if(! $_POST['njt_fs_list_user_restrictions']) wp_die();
 
-        $njt_fs_list_user_restrictions = $_POST['njt_fs_list_user_restrictions'];
+        $njt_fs_list_user_restrictions = sanitize_text_field($_POST['njt_fs_list_user_restrictions']);
         $list_user_restrictions_alow_access = filter_var($_POST['list_user_restrictions_alow_access'], FILTER_SANITIZE_STRING) ? explode(',', $_POST['list_user_restrictions_alow_access']) : array();
         $private_folder_access = filter_var($_POST['private_folder_access'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['private_folder_access'])) : '';
         $private_url_folder_access = filter_var($_POST['private_url_folder_access'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['private_url_folder_access'])) : '';
