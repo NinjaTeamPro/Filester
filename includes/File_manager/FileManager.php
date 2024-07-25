@@ -542,6 +542,10 @@ class FileManager
         if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-fs-file-manager-admin')) wp_die();
         check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
 
+        if (!current_user_can('manage_options')) {
+            wp_die();
+        }
+
         $root_folder_path =  filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['root_folder_path'])) : '';
         $root_folder_url =  filter_var($_POST['root_folder_url'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['root_folder_url'])) : site_url();
         $list_user_alow_access = filter_var($_POST['list_user_alow_access'], FILTER_SANITIZE_STRING) ? explode(',',$_POST['list_user_alow_access']) : array();
