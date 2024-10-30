@@ -247,6 +247,7 @@ class FileManager
             if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
                 $locale = $this->options['njt_fs_file_manager_settings']['fm_locale'];
                 if( !empty($locale) &&  $locale != 'en' ) {
+                    $locale = sanitize_file_name($locale);
                     wp_enqueue_script( 'njt_fs_fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
                 }
             }
@@ -284,8 +285,6 @@ class FileManager
                     'trashHash'     => '', // default is empty, when not enable trash
                     'uploadMaxSize' =>  $uploadMaxSize .'M',
                     'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
-                    'uploadDeny'    => array(), 
-                    'uploadAllow'   => array('all'),
                     'uploadOrder'   => array('deny', 'allow'),
                     'disabled' => array(''),
                     'acceptedName' => 'validName',
@@ -293,6 +292,12 @@ class FileManager
                 ),
             ),
         );
+
+        if (current_user_can('manage_options')) {
+            $opts['roots'][0]['uploadDeny'] = array('htaccess');
+            $opts['roots'][0]['uploadAllow'] = array('all');
+        }
+
         // .htaccess
         if(isset($this->options['njt_fs_file_manager_settings']['enable_htaccess']) && ($this->options['njt_fs_file_manager_settings']['enable_htaccess'] == '1')) {
             $attributes = array(
@@ -313,7 +318,7 @@ class FileManager
                 'path'          => NJT_FS_BN_PLUGIN_PATH.'includes/File_manager/lib/files/.trash/',
                 'tmbURL'        => site_url() . '/includes/File_manager/lib/files/.trash/.tmb',
                 'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
-                'uploadDeny'    => array(), 
+                'uploadDeny'    => array('htaccess'), 
                 'uploadAllow'   => array('all'),
                 'uploadOrder'   => array('deny', 'allow'),
                 'acceptedName' => 'validName',
