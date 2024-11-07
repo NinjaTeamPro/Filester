@@ -110,7 +110,7 @@ jQuery(document).ready(function() {
       nonce: '<?php echo wp_create_nonce( "file-manager-security-token" ); ?>'
     },
     lang: '<?php echo ($lang)?>',
-    requestType: 'post',
+    requestType: 'get',
     width: 'auto',
     height: '600',
   });
