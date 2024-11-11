@@ -251,7 +251,7 @@ class FileManager
                     wp_enqueue_script( 'njt_fs_fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
                 }
             }
-            
+
             wp_localize_script('njt_fs_elFinder', 'wpData', array(
                 'admin_ajax' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce("njt-fs-file-manager-admin"),
@@ -259,8 +259,9 @@ class FileManager
                 'PLUGIN_PATH' => NJT_FS_BN_PLUGIN_PATH.'includes/File_manager/lib/',
                 'PLUGIN_DIR'=> NJT_FS_BN_PLUGIN_DIR,
                 'ABSPATH'=> str_replace("\\", "/", ABSPATH),
-                'is_multisite' => is_multisite()
-
+                'is_multisite' => is_multisite(),
+                'lang' => !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? $this->options['njt_fs_file_manager_settings']['fm_locale'] : '',
+                'nonce_connector' => wp_create_nonce('file-manager-security-token'),
             ));
         }
     }
