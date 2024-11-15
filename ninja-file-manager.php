@@ -26,6 +26,10 @@ if (file_exists(dirname(__FILE__) . '/includes/Recommended/Recommended.php')) {
   require_once dirname(__FILE__) . '/includes/Recommended/Recommended.php';
 }
 
+if (file_exists(dirname(__FILE__) . '/includes/functions.php')) {
+  require_once dirname(__FILE__) . '/includes/functions.php';
+}
+
 
 
 defined('ABSPATH') || exit;
