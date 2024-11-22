@@ -260,7 +260,7 @@ class FileManager
                 'PLUGIN_DIR'=> NJT_FS_BN_PLUGIN_DIR,
                 'ABSPATH'=> str_replace("\\", "/", ABSPATH),
                 'is_multisite' => is_multisite(),
-                'lang' => !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? $this->options['njt_fs_file_manager_settings']['fm_locale'] : '',
+                'lang' => !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? sanitize_file_name($this->options['njt_fs_file_manager_settings']['fm_locale']) : '',
                 'nonce_connector' => wp_create_nonce('file-manager-security-token'),
             ));
         }
