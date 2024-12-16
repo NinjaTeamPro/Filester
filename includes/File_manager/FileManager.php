@@ -288,16 +288,11 @@ class FileManager
                     'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
                     'uploadOrder'   => array('deny', 'allow'),
                     'disabled' => array(''),
-                    'acceptedName' => 'validName',
+                    //'acceptedName' => 'validName',
                     'attributes' => array() // default is empty
                 ),
             ),
         );
-
-        if (current_user_can('manage_options')) {
-            $opts['roots'][0]['uploadDeny'] = array('htaccess');
-            $opts['roots'][0]['uploadAllow'] = array('all');
-        }
 
         // .htaccess
         if(isset($this->options['njt_fs_file_manager_settings']['enable_htaccess']) && ($this->options['njt_fs_file_manager_settings']['enable_htaccess'] == '1')) {
