@@ -1,0 +1,10 @@
+.vscode
+.DS_Store
+.git/
+.gitignore
+.distignore
+release.sh
+/release
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+README.md
