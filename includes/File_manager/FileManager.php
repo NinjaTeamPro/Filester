@@ -287,9 +287,17 @@ class FileManager
                     'uploadMaxSize' =>  $uploadMaxSize .'M',
                     'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
                     'uploadOrder'   => array('deny', 'allow'),
-                    'disabled' => array(''),
+                    'uploadDeny'    => array('htaccess'),
                     //'acceptedName' => 'validName',
-                    'attributes' => array() // default is empty
+                    'attributes' => array(
+                        array(
+                            'pattern' => '/.htaccess/',
+                            'read' => true,
+                            'write' => false,
+                            'hidden' => false,
+                            'locked' => true
+                        )
+                    ) // default is empty
                 ),
             ),
         );
@@ -298,10 +306,10 @@ class FileManager
         if(isset($this->options['njt_fs_file_manager_settings']['enable_htaccess']) && ($this->options['njt_fs_file_manager_settings']['enable_htaccess'] == '1')) {
             $attributes = array(
                 'pattern' => '/.htaccess/',
-                'read' => false,
+                'read' => true,
                 'write' => false,
                 'hidden' => true,
-                'locked' => false
+                'locked' => true
             );
             array_push($opts['roots'][0]['attributes'], $attributes);
         }
@@ -317,7 +325,7 @@ class FileManager
                 'uploadDeny'    => array('htaccess'), 
                 'uploadAllow'   => array('all'),
                 'uploadOrder'   => array('deny', 'allow'),
-                'acceptedName' => 'validName',
+               // 'acceptedName' => 'validName',
                 'attributes' => array(
                     array(
                         'pattern' => '/.tmb/',
