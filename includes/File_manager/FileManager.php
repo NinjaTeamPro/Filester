@@ -452,7 +452,10 @@ class FileManager
                 if(in_array($key,$arrCanUploadMime)) {
                     $explodeValue = explode(',',$value);
                     foreach($explodeValue as $item) {
-                        array_push($opts['roots'][0]['uploadAllow'], $item );
+                        $listFileCanNotUpload = $mimeTypes->listFileCanNotUpload();
+                        if(!in_array($item, $listFileCanNotUpload)) {
+                            array_push($opts['roots'][0]['uploadAllow'], $item );
+                        }
                     }
                 }
           
@@ -592,7 +595,14 @@ class FileManager
         $private_url_folder_access = filter_var($_POST['private_url_folder_access'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['private_url_folder_access'])) : '';
         $hide_paths = filter_var($_POST['hide_paths'], FILTER_SANITIZE_STRING) ? explode('|', preg_replace('/\s+/', '', $_POST['hide_paths'])) : array();
         $lock_files =  filter_var($_POST['lock_files'], FILTER_SANITIZE_STRING) ? explode('|', preg_replace('/\s+/', '', $_POST['lock_files'])) : array();
+
         $can_upload_mime = filter_var($_POST['can_upload_mime'], FILTER_SANITIZE_STRING) ? explode(',', preg_replace('/\s+/', '', $_POST['can_upload_mime'])) : array();
+
+        $can_upload_mime = array_filter($can_upload_mime, function($item) {
+            $helper = new \FileManagerHelper();
+            $listFileCanNotUpload = $helper->listFileCanNotUpload();
+            return !in_array($item, $listFileCanNotUpload);
+        });
 
         //save options
         $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['list_user_restrictions_alow_access'] = $list_user_restrictions_alow_access;
