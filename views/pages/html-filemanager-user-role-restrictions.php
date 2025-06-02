@@ -52,7 +52,7 @@ if (count($arrRestrictions) > 0) {
     value='<?php echo wp_create_nonce('njt-fs-user-restrictions-security-token'); ?>'>
   <table class="form-table">
     <tr>
-      <th><?php _e("If User Role is", NJT_FS_BN_DOMAIN); ?></th>
+      <th><?php _e("If User Role is", 'filester'); ?></th>
       <td>
         <div>
           <select class="njt-fs-list-user-restrictions njt-settting-width-select" name="njt-fs-list-user-restrictions">
@@ -81,20 +81,20 @@ if (count($arrRestrictions) > 0) {
               endforeach;}
               else {
              ?>
-            <option selected disabled hidden><?php _e("Nothing to choose", NJT_FS_BN_DOMAIN); ?></option>
+            <option selected disabled hidden><?php _e("Nothing to choose", 'filester'); ?></option>
             <?php }?>
           </select>
           <?php 
             if(empty($listUserApproved) || $listUserApproved && count($listUserApproved) == 1 && $listUserApproved[0] == 'administrator') {
               ?>
           <p class="description njt-text-error njt-settting-width">
-            <?php _e("Please select a User Role at Setings tab to use this option.", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Please select a User Role at Setings tab to use this option.", 'filester'); ?>
           </p>
           <?php
             } else {
           ?>
           <p class="description njt-text-error njt-settting-width" style="display:none">
-            <?php _e("Please select a User Role at Setings tab to use this option.", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Please select a User Role at Setings tab to use this option.", 'filester'); ?>
           </p>
           <?php
             } 
@@ -103,7 +103,7 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("Disable command", NJT_FS_BN_DOMAIN); ?></th>
+      <th><?php _e("Disable command", 'filester'); ?></th>
       <td>
         <div style="line-height: 2" class="njt-settting-width njt-fs-list-col4">
           <?php include_once $viewListOperations; ?>
@@ -116,21 +116,21 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("Root Path for this User Role", NJT_FS_BN_DOMAIN); ?></th>
+      <th><?php _e("Root Path for this User Role", 'filester'); ?></th>
       <td>
         <div>
           <div class="njt-settting-width">
             <button type="button"
-              class="njt-fs-button js-creat-root-path"><?php _e("Insert Root Path", NJT_FS_BN_DOMAIN); ?></button>
+              class="njt-fs-button js-creat-root-path"><?php _e("Insert Root Path", 'filester'); ?></button>
           </div>
           <textarea name="private_folder_access" id="private_folder_access" placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH)."wp-content");?>"
             class="njt-settting-width"><?php echo esc_textarea(!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
           <div>
             <p class="description njt-settting-width">
-              <?php _e("Default path is: "."<code>". str_replace("\\", "/", ABSPATH)."</code>", NJT_FS_BN_DOMAIN); ?>
+              <?php _e("Default path is: "."<code>". str_replace("\\", "/", ABSPATH)."</code>", 'filester'); ?>
             </p>
             <p class="description njt-settting-width">
-            <?php _e("Eg: If you want to set root path access is ". "<strong>wp-content</strong>". " folder. Just enter ", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Eg: If you want to set root path access is ". "<strong>wp-content</strong>". " folder. Just enter ", 'filester'); ?>
               <?php echo (str_replace("\\", "/", ABSPATH));?>wp-content
             </p>
           </div>
@@ -138,17 +138,17 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th><?php _e("Files URL for this User Role", NJT_FS_BN_DOMAIN); ?></th>
+      <th><?php _e("Files URL for this User Role", 'filester'); ?></th>
       <td>
         <div>
           <textarea name="private_url_folder_access" id="private_url_folder_access" placeholder="ex: <?php echo (site_url());?>"
             class="njt-settting-width"><?php echo esc_textarea(!empty($arrRestrictions[$firstKeyRestrictions]['private_url_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_url_folder_access'] : '');?></textarea>
           <div>
             <p class="description njt-settting-width">
-              <?php _e("Default path is: "."<code>". str_replace("\\", "/", site_url())."</code>", NJT_FS_BN_DOMAIN); ?>
+              <?php _e("Default path is: "."<code>". str_replace("\\", "/", site_url())."</code>", 'filester'); ?>
             </p>
             <p class="description njt-settting-width">
-            <?php _e("Eg: If you want to set files url path access is ". "<strong>wp-content</strong>". " folder. Just enter ", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Eg: If you want to set files url path access is ". "<strong>wp-content</strong>". " folder. Just enter ", 'filester'); ?>
               <?php echo (str_replace("\\", "/", site_url()));?>/wp-content
             </p>
           </div>
@@ -156,39 +156,39 @@ if (count($arrRestrictions) > 0) {
       </td>
     </tr>
     <tr>
-      <th> <?php _e("Enter folder or file paths that you want to Hide", NJT_FS_BN_DOMAIN); ?></th>
+      <th> <?php _e("Enter folder or file paths that you want to Hide", 'filester'); ?></th>
       <td>
         <div>
           <textarea name="hide_paths" id="hide_paths"
             class="njt-settting-width"><?php echo esc_textarea(implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array()));?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Multiple separated by vertical bar (|). Eg: themes/twentytwenty | themes/avada", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Multiple separated by vertical bar (|). Eg: themes/twentytwenty | themes/avada", 'filester'); ?>
           </p>
         </div>
       </td>
     </tr>
     <tr>
-      <th><?php _e("Enter file extensions which you want to Lock", NJT_FS_BN_DOMAIN); ?></th>
+      <th><?php _e("Enter file extensions which you want to Lock", 'filester'); ?></th>
       <td>
         <div>
           <textarea name="lock_files" id="lock_files"
             class="njt-settting-width"><?php echo esc_textarea(implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array()));?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Multiple separated by vertical bar (|). Eg: .php | .png | .css", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Multiple separated by vertical bar (|). Eg: .php | .png | .css", 'filester'); ?>
           </p>
         </div>
       </td>
     </tr>
     <tr>
-      <th><?php _e("Enter file extensions which user can be Uploaded", NJT_FS_BN_DOMAIN); ?></th>
+      <th><?php _e("Enter file extensions which user can be Uploaded", 'filester'); ?></th>
       <td>
         <div>
           <textarea name="can_upload_mime" id="can_upload_mime"
             class="njt-settting-width"><?php echo esc_textarea(implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array()));?></textarea>
           <p class="description njt-settting-width">
-            <?php _e("Multiple separated by comma. If left empty, this means user can't upload any files. Eg: .jpg, .png, .csv", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Multiple separated by comma. If left empty, this means user can't upload any files. Eg: .jpg, .png, .csv", 'filester'); ?>
             <br>
-            <?php _e("Note: For security reasons, non-admin users cannot upload files with the following extensions: .php, .htaccess, or mime types: text/x-php, text/php, text/plain", NJT_FS_BN_DOMAIN); ?>
+            <?php _e("Note: For security reasons, non-admin users cannot upload files with the following extensions: .php, .htaccess, or mime types: text/x-php, text/php, text/plain", 'filester'); ?>
           </p>
         </div>
       </td>
@@ -200,7 +200,7 @@ if (count($arrRestrictions) > 0) {
       <td>
         <p class="submit">
           <button type="button" name="njt-form-user-role-restrictionst" id="njt-form-user-role-restrictionst"
-            class="button button-primary"><?php _e("Save Changes", NJT_FS_BN_DOMAIN); ?></button>
+            class="button button-primary"><?php _e("Save Changes", 'filester'); ?></button>
         </p>
       </td>
     </tr>
