@@ -9,7 +9,7 @@ if (isset($_POST) && !empty($_POST) && !empty($_POST['njt-form-user-role-restric
   }
   if(!empty($_POST['njt-fs-list-user-restrictions'])) {
 
-    $userRoleRestrictedSubmited = filter_var($_POST['njt-fs-list-user-restrictions'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['njt-fs-list-user-restrictions']) : '';
+    $userRoleRestrictedSubmited = !empty($_POST['njt-fs-list-user-restrictions']) ? sanitize_text_field($_POST['njt-fs-list-user-restrictions']) : '';
     
     if (empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'])) {
       $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'] = array();
@@ -17,24 +17,24 @@ if (isset($_POST) && !empty($_POST) && !empty($_POST['njt-form-user-role-restric
 
     //Save data list User Restrictions alow access
     $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fs-list-user-restrictions']]['list_user_restrictions_alow_access'] = 
-      filter_var($_POST['list_user_restrictions_alow_access'], FILTER_SANITIZE_STRING) ?
-      explode(',', $_POST['list_user_restrictions_alow_access']) : array();
+      !empty($_POST['list_user_restrictions_alow_access']) ?
+      explode(',', sanitize_text_field($_POST['list_user_restrictions_alow_access'])) : array();
     //Seperate or private folder access
     $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fs-list-user-restrictions']]['private_folder_access'] =
-      filter_var($_POST['private_folder_access'], FILTER_SANITIZE_STRING) ?
-      str_replace("\\\\", "/", trim($_POST['private_folder_access'])) : '';
+      !empty($_POST['private_folder_access']) ?
+      str_replace("\\\\", "/", trim(sanitize_text_field($_POST['private_folder_access']))) : '';
     //Save data Enter Folder or File Paths That You want to Hide
     $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fs-list-user-restrictions']]['hide_paths'] = 
-      filter_var($_POST['hide_paths'], FILTER_SANITIZE_STRING) ?
-      explode('|', preg_replace('/\s+/', '', $_POST['hide_paths'])) : array();
+      !empty($_POST['hide_paths']) ?
+      explode('|', preg_replace('/\s+/', '', sanitize_text_field($_POST['hide_paths']))) : array();
     //Save data Enter file extensions which you want to Lock
     $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fs-list-user-restrictions']]['lock_files'] =
-      filter_var($_POST['lock_files'], FILTER_SANITIZE_STRING) ?
-      explode('|', preg_replace('/\s+/', '', $_POST['lock_files'])) : array();
+      !empty($_POST['lock_files']) ?
+      explode('|', preg_replace('/\s+/', '', sanitize_text_field($_POST['lock_files']))) : array();
     //Enter file extensions which can be uploaded
     $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$_POST['njt-fs-list-user-restrictions']]['can_upload_mime'] =
-      filter_var($_POST['can_upload_mime'], FILTER_SANITIZE_STRING) ?
-      explode(',', preg_replace('/\s+/', '', $_POST['can_upload_mime'])) : array();
+      !empty($_POST['can_upload_mime']) ?
+      explode(',', preg_replace('/\s+/', '', sanitize_text_field($_POST['can_upload_mime']))) : array();
   }
 }
 
@@ -63,7 +63,7 @@ if (count($arrRestrictions) > 0) {
                   if (in_array($key,$listUserApproved) ) {?>
                     <option value="<?php echo $key; ?>"
                       <?php echo(!empty($firstKeyRestrictions) && $firstKeyRestrictions == $key ) ? 'selected="selected"' : '';?>>
-                      <?php echo $value['name']; ?>
+                      <?php echo esc_html($value['name']); ?>
                     </option>
                     <?php 
                         }
@@ -72,7 +72,7 @@ if (count($arrRestrictions) > 0) {
                   if ($key !== 'administrator' && in_array($key,$listUserApproved) ) {?>
                     <option value="<?php echo $key; ?>"
                       <?php echo(!empty($firstKeyRestrictions) && $firstKeyRestrictions == $key ) ? 'selected="selected"' : '';?>>
-                      <?php echo $value['name']; ?>
+                      <?php echo esc_html($value['name']); ?>
                     </option>
                     <?php 
                         }
@@ -111,7 +111,7 @@ if (count($arrRestrictions) > 0) {
           <input type="hidden" name="list_user_restrictions_alow_access" id="list_user_restrictions_alow_access">
           <!-- Data saved after submit -->
           <input type="hidden" name="list_restrictions_has_approved" id="list_restrictions_has_approved"
-            value="<?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['list_user_restrictions_alow_access']) ? $arrRestrictions[$firstKeyRestrictions]['list_user_restrictions_alow_access'] : array());?>">
+            value="<?php echo esc_attr(implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['list_user_restrictions_alow_access']) ? $arrRestrictions[$firstKeyRestrictions]['list_user_restrictions_alow_access'] : array()));?>">
         </div>
       </td>
     </tr>
@@ -124,7 +124,7 @@ if (count($arrRestrictions) > 0) {
               class="njt-fs-button js-creat-root-path"><?php _e("Insert Root Path", NJT_FS_BN_DOMAIN); ?></button>
           </div>
           <textarea name="private_folder_access" id="private_folder_access" placeholder="ex: <?php echo (str_replace("\\", "/", ABSPATH)."wp-content");?>"
-            class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
+            class="njt-settting-width"><?php echo esc_textarea(!empty($arrRestrictions[$firstKeyRestrictions]['private_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_folder_access'] : '');?></textarea>
           <div>
             <p class="description njt-settting-width">
               <?php _e("Default path is: "."<code>". str_replace("\\", "/", ABSPATH)."</code>", NJT_FS_BN_DOMAIN); ?>
@@ -142,7 +142,7 @@ if (count($arrRestrictions) > 0) {
       <td>
         <div>
           <textarea name="private_url_folder_access" id="private_url_folder_access" placeholder="ex: <?php echo (site_url());?>"
-            class="njt-settting-width"><?php echo (!empty($arrRestrictions[$firstKeyRestrictions]['private_url_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_url_folder_access'] : '');?></textarea>
+            class="njt-settting-width"><?php echo esc_textarea(!empty($arrRestrictions[$firstKeyRestrictions]['private_url_folder_access']) ? $arrRestrictions[$firstKeyRestrictions]['private_url_folder_access'] : '');?></textarea>
           <div>
             <p class="description njt-settting-width">
               <?php _e("Default path is: "."<code>". str_replace("\\", "/", site_url())."</code>", NJT_FS_BN_DOMAIN); ?>
@@ -160,7 +160,7 @@ if (count($arrRestrictions) > 0) {
       <td>
         <div>
           <textarea name="hide_paths" id="hide_paths"
-            class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array());?></textarea>
+            class="njt-settting-width"><?php echo esc_textarea(implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['hide_paths']) ? $arrRestrictions[$firstKeyRestrictions]['hide_paths'] : array()));?></textarea>
           <p class="description njt-settting-width">
             <?php _e("Multiple separated by vertical bar (|). Eg: themes/twentytwenty | themes/avada", NJT_FS_BN_DOMAIN); ?>
           </p>
@@ -172,7 +172,7 @@ if (count($arrRestrictions) > 0) {
       <td>
         <div>
           <textarea name="lock_files" id="lock_files"
-            class="njt-settting-width"><?php echo implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array());?></textarea>
+            class="njt-settting-width"><?php echo esc_textarea(implode(" | ", !empty($arrRestrictions[$firstKeyRestrictions]['lock_files']) ? $arrRestrictions[$firstKeyRestrictions]['lock_files'] : array()));?></textarea>
           <p class="description njt-settting-width">
             <?php _e("Multiple separated by vertical bar (|). Eg: .php | .png | .css", NJT_FS_BN_DOMAIN); ?>
           </p>
@@ -184,7 +184,7 @@ if (count($arrRestrictions) > 0) {
       <td>
         <div>
           <textarea name="can_upload_mime" id="can_upload_mime"
-            class="njt-settting-width"><?php echo implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array());?></textarea>
+            class="njt-settting-width"><?php echo esc_textarea(implode(",", !empty($arrRestrictions[$firstKeyRestrictions]['can_upload_mime']) ? $arrRestrictions[$firstKeyRestrictions]['can_upload_mime'] : array()));?></textarea>
           <p class="description njt-settting-width">
             <?php _e("Multiple separated by comma. If left empty, this means user can't upload any files. Eg: .jpg, .png, .csv", NJT_FS_BN_DOMAIN); ?>
             <br>

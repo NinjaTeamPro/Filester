@@ -6,12 +6,12 @@ global $wp_roles;
 if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-submit'])){
   if( ! wp_verify_nonce( $_POST['njt-fs-settings-security-token'] ,'njt-fs-settings-security-token')) wp_die();
 
-  $this->options['njt_fs_file_manager_settings']['root_folder_path']  = filter_var($_POST['root_folder_path'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['root_folder_path'])) : '';
+  $this->options['njt_fs_file_manager_settings']['root_folder_path']  = !empty($_POST['root_folder_path']) ? str_replace("\\\\", "/", trim(sanitize_text_field($_POST['root_folder_path']))) : '';
   $this->options['njt_fs_file_manager_settings']['enable_htaccess'] =  isset($_POST['enable_htaccess']) ? sanitize_text_field($_POST['enable_htaccess']) : 0;
   $this->options['njt_fs_file_manager_settings']['enable_trash'] =  isset($_POST['enable_trash']) ? sanitize_text_field($_POST['enable_trash']) : 0;
-  $this->options['njt_fs_file_manager_settings']['upload_max_size'] =  filter_var($_POST['upload_max_size'], FILTER_SANITIZE_STRING) ? sanitize_text_field(trim($_POST['upload_max_size'])) : 0;
-  $this->options['njt_fs_file_manager_settings']['fm_locale'] = filter_var($_POST['fm_locale'], FILTER_SANITIZE_STRING) ? sanitize_text_field($_POST['fm_locale']) : 'en';
-  $this->options['njt_fs_file_manager_settings']['list_user_alow_access'] = filter_var($_POST['list_user_alow_access'], FILTER_SANITIZE_STRING) ? explode(',',$_POST['list_user_alow_access']) : array();
+  $this->options['njt_fs_file_manager_settings']['upload_max_size'] =  !empty($_POST['upload_max_size']) ? sanitize_text_field(trim($_POST['upload_max_size'])) : 0;
+  $this->options['njt_fs_file_manager_settings']['fm_locale'] = !empty($_POST['fm_locale']) ? sanitize_text_field($_POST['fm_locale']) : 'en';
+  $this->options['njt_fs_file_manager_settings']['list_user_alow_access'] = !empty($_POST['list_user_alow_access']) ? explode(',', sanitize_text_field($_POST['list_user_alow_access'])) : array();
 }
 
 ?>
@@ -35,8 +35,8 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
                 <?php if (is_multisite() && is_super_admin()) {?>
               <span class="list-col4-item">
                 <input type="checkbox" class="fm-list-user-item" id="<?php echo $key; ?>" name="<?php echo $key; ?>"
-                  data-name="<?php echo $value['name'];?>" value="<?php echo $key; ?>">
-                <label for="<?php echo $key; ?>"> <?php echo $value['name']; ?></label>
+                  data-name="<?php echo esc_attr($value['name']);?>" value="<?php echo $key; ?>">
+                <label for="<?php echo $key; ?>"> <?php echo esc_html($value['name']); ?></label>
               </span>
               <?php } else {
                 if ($key != 'administrator') {
@@ -44,8 +44,8 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
                 
               <span class="list-col4-item">
                 <input type="checkbox" class="fm-list-user-item" id="<?php echo $key; ?>" name="<?php echo $key; ?>"
-                  data-name="<?php echo $value['name'];?>" value="<?php echo $key; ?>">
-                <label for="<?php echo $key; ?>"> <?php echo $value['name']; ?></label>
+                  data-name="<?php echo esc_attr($value['name']);?>" value="<?php echo $key; ?>">
+                <label for="<?php echo $key; ?>"> <?php echo esc_html($value['name']); ?></label>
               </span>
               <?php  }}?>
               <?php endforeach; ?>
@@ -53,7 +53,7 @@ if( isset( $_POST ) && !empty( $_POST ) && !empty($_POST['njt-settings-form-subm
               <input type="hidden" name="list_user_alow_access" id="list_user_alow_access">
               <!-- Data saved after submit -->
               <input type="hidden" name="list_user_has_approved" id="list_user_has_approved"
-                value="<?php echo implode(",", !empty($this->options['njt_fs_file_manager_settings']['list_user_alow_access']) ? $this->options['njt_fs_file_manager_settings']['list_user_alow_access'] : array());?>">
+                value="<?php echo esc_attr(implode(",", !empty($this->options['njt_fs_file_manager_settings']['list_user_alow_access']) ? $this->options['njt_fs_file_manager_settings']['list_user_alow_access'] : array()));?>">
             </div>
           </td>
         </tr>
