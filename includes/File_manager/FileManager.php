@@ -467,7 +467,7 @@ class FileManager
 
         // Sensitive files protection
         if(isset($this->options['njt_fs_file_manager_settings']['enable_sensitive_protection']) && ($this->options['njt_fs_file_manager_settings']['enable_sensitive_protection'] == '1')) {
-            $sensitive_files = array(
+            $sensitive_files = apply_filters('njt_fs_sensitive_files', array(
                 '.htaccess',
                 'wp-config.php', 
                 '.env',
@@ -475,7 +475,7 @@ class FileManager
                 'readme.html',
                 'license.txt',
                 'xmlrpc.php'
-            );
+            ));
 
             foreach ($sensitive_files as $file) {
                 $attributes = array(
