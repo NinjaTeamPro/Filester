@@ -637,18 +637,8 @@ class FileManager
     }
 
     public function canAccessSensitiveFiles() {
-        
         // Filter hook for developers
-        if (apply_filters('filester_allow_sensitive_access', false)) {
-            return true;
-        }
-        
-        // Only administrators and super admins
-        if (is_multisite() && is_super_admin()) {
-            return true;
-        }
-        
-        if (!is_multisite() && current_user_can('manage_options')) {
+        if (apply_filters('njt_fs_allow_sensitive_access', false)) {
             return true;
         }
         
@@ -657,16 +647,7 @@ class FileManager
 
     public function canEditSensitiveFiles() {
         // Filter hook for developers
-        if (apply_filters('filester_allow_sensitive_edit', false)) {
-            return true;
-        }
-        
-        // Only super administrators can edit
-        if (is_multisite() && is_super_admin()) {
-            return true;
-        }
-        
-        if (!is_multisite() && current_user_can('manage_options')) {
+        if (apply_filters('njt_fs_allow_sensitive_edit', false)) {
             return true;
         }
         
