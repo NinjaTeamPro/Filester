@@ -3336,7 +3336,7 @@ abstract class elFinderVolumeDriver
                 $path = $this->convEncIn($path, true);
             }
             $path = str_replace('%2F', '/', rawurlencode($path));
-            return $this->URL . $path;
+            return $this->_buildFileUrl($path);
         } else {
             $ret = false;
             if (!empty($file['url']) && $file['url'] != 1) {
@@ -4731,8 +4731,11 @@ abstract class elFinderVolumeDriver
 
             }
             if (!isset($stat['url']) && $this->URL && $this->encoding) {
-                $_path = str_replace($this->separator, '/', substr($path, strlen($this->root) + 1));
-                $stat['url'] = rtrim($this->URL, '/') . '/' . str_replace('%2F', '/', rawurlencode((substr(PHP_OS, 0, 3) === 'WIN') ? $_path : $this->convEncIn($_path, true)));
+                $_path = $this->_getRelativePath($path);
+                $_path = str_replace($this->separator, '/', $_path);
+                $_path = (substr(PHP_OS, 0, 3) === 'WIN') ? $_path : $this->convEncIn($_path, true);
+                $_path = str_replace('%2F', '/', rawurlencode($_path));
+                $stat['url'] = $this->_buildFileUrl($_path);
             }
         } else {
             if ($isDir) {
@@ -5205,13 +5208,14 @@ abstract class elFinderVolumeDriver
             if ((!$mimes || $stat['mime'] !== 'directory') && $this->$matchMethod($name, $q, $p) !== false) {
                 $stat['path'] = $this->path($stat['hash']);
                 if ($this->URL && !isset($stat['url'])) {
-                    $path = str_replace($this->separator, '/', substr($p, strlen($this->root) + 1));
+                    $_path = $this->_getRelativePath($p);
+                    $path = str_replace($this->separator, '/', $_path);
                     if ($this->encoding) {
                         $path = str_replace('%2F', '/', rawurlencode($this->convEncIn($path, true)));
                     } else {
                         $path = str_replace('%2F', '/', rawurlencode($path));
                     }
-                    $stat['url'] = $this->URL . $path;
+                    $stat['url'] = $this->_buildFileUrl($path);
                 }
 
                 $result[] = $stat;
@@ -7641,6 +7645,73 @@ abstract class elFinderVolumeDriver
      * @author Alexey Sukhotin
      **/
     abstract protected function _archive($dir, $files, $name, $arc);
+
+    /**
+     * Get relative path from root path
+     * Helper method to correctly calculate relative path regardless of trailing separator
+     *
+     * @param  string $path Full file path
+     * @return string Relative path from root
+     * @author Filester Fix
+     **/
+    protected function _getRelativePath($path)
+    {
+        // Normalize root path - remove trailing separators
+        $root = rtrim($this->root, $this->separator . '/');
+        $rootLen = strlen($root);
+        
+        // Normalize file path
+        $normalizedPath = str_replace($this->separator, '/', $path);
+        $normalizedRoot = str_replace($this->separator, '/', $root);
+        
+        // Check if path starts with root (case-sensitive)
+        if (strpos($normalizedPath, $normalizedRoot) === 0) {
+            $relative = substr($normalizedPath, $rootLen);
+            // Remove leading separator
+            $relative = ltrim($relative, '/');
+            return $relative;
+        }
+        
+        // Fallback: try to calculate using original method
+        // Handle case where root ends with separator
+        $rootWithSep = rtrim($this->root, $this->separator . '/') . $this->separator;
+        if (strpos($path, $rootWithSep) === 0) {
+            $relative = substr($path, strlen($rootWithSep));
+            return str_replace($this->separator, '/', $relative);
+        }
+        
+        // Last fallback: old method
+        if (strlen($path) > strlen($this->root)) {
+            $relative = substr($path, strlen($this->root));
+            $relative = ltrim($relative, $this->separator . '/');
+            return str_replace($this->separator, '/', $relative);
+        }
+        
+        return '';
+    }
+
+    /**
+     * Build file URL from base URL and relative path
+     * Helper method to ensure correct URL construction with proper separator
+     *
+     * @param  string $path Relative file path (already encoded if needed)
+     * @return string Complete file URL
+     * @author Filester Fix
+     **/
+    protected function _buildFileUrl($path)
+    {
+        if (empty($this->URL)) {
+            return '';
+        }
+        
+        // Remove trailing slash from base URL
+        $baseUrl = rtrim($this->URL, '/');
+        
+        // Ensure path starts with /
+        $path = '/' . ltrim($path, '/');
+        
+        return $baseUrl . $path;
+    }
 
     /**
      * Detect available archivers
