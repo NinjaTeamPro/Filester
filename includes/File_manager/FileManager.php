@@ -274,6 +274,37 @@ class FileManager
         check_ajax_referer( 'file-manager-security-token', 'nonce' );
         $uploadMaxSize = isset($this->options['njt_fs_file_manager_settings']['upload_max_size']) && !empty($this->options['njt_fs_file_manager_settings']['upload_max_size']) ? $this->options['njt_fs_file_manager_settings']['upload_max_size'] : 0;
 
+        // Get and validate root folder path
+        $root_folder_path = isset($this->options['njt_fs_file_manager_settings']['root_folder_path']) && !empty($this->options['njt_fs_file_manager_settings']['root_folder_path']) 
+            ? $this->options['njt_fs_file_manager_settings']['root_folder_path'] 
+            : ABSPATH;
+        
+        // Get and validate root folder URL
+        $root_folder_url = isset($this->options['njt_fs_file_manager_settings']['root_folder_url']) && !empty($this->options['njt_fs_file_manager_settings']['root_folder_url']) 
+            ? $this->options['njt_fs_file_manager_settings']['root_folder_url'] 
+            : site_url();
+        
+        // Validate path exists and is readable - auto-fix if invalid
+        $path_needs_update = false;
+        if (!empty($root_folder_path) && (!is_dir($root_folder_path) || !is_readable($root_folder_path))) {
+            // Path is invalid, fallback to ABSPATH
+            $root_folder_path = ABSPATH;
+            $path_needs_update = true;
+        }
+        
+        // Validate URL - auto-update to current site_url() if path was invalid
+        // This ensures URL matches the new server/domain
+        if ($path_needs_update) {
+            $root_folder_url = site_url();
+        }
+        
+        // Auto-update saved settings if path/URL was invalid
+        if ($path_needs_update) {
+            $this->options['njt_fs_file_manager_settings']['root_folder_path'] = $root_folder_path;
+            $this->options['njt_fs_file_manager_settings']['root_folder_url'] = $root_folder_url;
+            update_option('njt_fs_settings', $this->options);
+        }
+
         $opts = array(
             'bind' => array(
                 'put.pre' => array(new \FileManagerHelper, 'madeStripcslashesFile'), // Check endcode when save file.
@@ -282,8 +313,8 @@ class FileManager
             'roots' => array(
                 array(
                     'driver' => 'LocalFileSystem',
-                    'path' => isset($this->options['njt_fs_file_manager_settings']['root_folder_path']) && !empty($this->options['njt_fs_file_manager_settings']['root_folder_path']) ? $this->options['njt_fs_file_manager_settings']['root_folder_path'] : ABSPATH,
-                    'URL' => isset($this->options['njt_fs_file_manager_settings']['root_folder_url']) && !empty($this->options['njt_fs_file_manager_settings']['root_folder_url']) ? $this->options['njt_fs_file_manager_settings']['root_folder_url'] : site_url(),
+                    'path' => $root_folder_path,
+                    'URL' => $root_folder_url,
                     'tmpPath' => NJT_FS_BN_PLUGIN_PATH . 'includes/File_manager/lib/files/.tmp/',
                     'trashHash'     => '', // default is empty, when not enable trash
                     'uploadMaxSize' =>  $uploadMaxSize .'M',
@@ -340,13 +371,21 @@ class FileManager
             $opts['roots'][0]['disabled'] = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['list_user_restrictions_alow_access'];
         }
         //Creat root path for user
+        $private_path_valid = false;
         if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'])){
-            $opts['roots'][0]['path'] = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'] .'/';
+            $private_path = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'] .'/';
+            // Validate private folder path exists and is readable
+            if (is_dir($private_path) && is_readable($private_path)) {
+                $opts['roots'][0]['path'] = $private_path;
+                $private_path_valid = true;
+            }
+            // If invalid, keep using default root path (already validated above)
         }
 
          //Creat url root path for user
-         if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_url_folder_access'])){
-            $opts['roots'][0]['URL'] = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_url_folder_access'] .'/';
+         if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_url_folder_access']) && $private_path_valid){
+            $private_url = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_url_folder_access'] .'/';
+            $opts['roots'][0]['URL'] = $private_url;
         }
 
         //Folder or File Paths That You want to Hide
