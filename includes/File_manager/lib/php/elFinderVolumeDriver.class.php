@@ -2485,6 +2485,15 @@ abstract class elFinderVolumeDriver
         }
 
         if (!$this->allowPutMime($mime) || ($mimeByName && !$this->allowPutMime($mimeByName))) {
+             // Log upload blocked event for debugging purposes
+             error_log(
+                'elFinder upload blocked. '
+                . 'mime=' . $mime
+                . ', mimeByName=' . $mimeByName
+                . ', uploadAllow=' . json_encode($this->uploadAllow)
+                . ', uploadDeny=' . json_encode($this->uploadDeny)
+            );
+
             return $this->setError(elFinder::ERROR_UPLOAD_FILE_MIME, '(' . $mime . ')');
         }
 
@@ -3331,7 +3340,7 @@ abstract class elFinderVolumeDriver
             }
         }
         if (empty($file['url']) && $this->URL) {
-            $path = str_replace($this->separator, '/', substr($this->decode($hash), strlen(trim($this->root, '/' . $this->separator))));
+            $path = str_replace($this->separator, '/', substr($this->decode($hash), strlen(rtrim($this->root, '/' . $this->separator)) + 1));
             if ($this->encoding) {
                 $path = $this->convEncIn($path, true);
             }
