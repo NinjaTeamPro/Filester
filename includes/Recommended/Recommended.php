@@ -294,15 +294,15 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 						wp_send_json_error( array( 'mess' => __( 'Nonce is invalid', 'filebird' ) ) );
 					}
 					$tab                 = sanitize_text_field( $_POST['tab'] );
-					$recommended_plugins = array();
+					$recommendedPlugins = array();
 					$recommended_data    = apply_filters( 'yay_recommended_plugins_excluded', $this->recommended_plugin );
 					foreach ( $recommended_data as $key => $plugin ) {
 						if ( in_array( $tab, $plugin['type'] ) || 'all' === $tab ) {
-							$recommended_plugins[ $key ] = $plugin;
+							$recommendedPlugins[ $key ] = $plugin;
 						}
 					}
 					ob_start();
-					$path = plugin_dir_path( __FILE__ ) . '/views/content.php';
+					$path = plugin_dir_path( __FILE__ ) . 'views/content.php';
 					include $path;
 					$html = ob_get_contents();
 					ob_end_clean();
