@@ -5490,6 +5490,17 @@ abstract class elFinderVolumeDriver
             return $this->setError(elFinder::ERROR_LOCKED, $this->path($stat['hash']));
         }
 
+        // Symlink to a directory is reported as mime "directory"; unlink the link only (Filester/elFinder fix).
+        $localPath = $this->convEncIn($path);
+        if (is_link($localPath)) {
+            if ($this->convEncOut(!$this->_unlink($localPath))) {
+                return $this->setError(elFinder::ERROR_RM, $this->path($stat['hash']));
+            }
+            $this->clearstatcache();
+            $this->removed[] = $stat;
+            return true;
+        }
+
         if ($stat['mime'] == 'directory' && empty($stat['thash'])) {
             $ret = $this->delTree($this->convEncIn($path));
             $this->convEncOut();
@@ -7140,6 +7151,11 @@ abstract class elFinderVolumeDriver
      */
     protected static function localRmdirRecursive($dir)
     {
+        // Unlink symlink only; BSD/macOS `rm -rf` on a symlink can delete the target tree (Filester fix).
+        if (is_link($dir)) {
+            return unlink($dir);
+        }
+
         // try system command
         if (is_callable('exec')) {
             $o = '';

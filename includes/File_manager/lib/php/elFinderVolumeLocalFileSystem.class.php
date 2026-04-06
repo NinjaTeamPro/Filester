@@ -1027,7 +1027,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver
      **/
     protected function _unlink($path)
     {
-        return is_file($path) && unlink($path);
+        return (is_link($path) || is_file($path)) && unlink($path);
     }
 
     /**
