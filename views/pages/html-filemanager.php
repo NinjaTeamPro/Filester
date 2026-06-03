@@ -9,7 +9,11 @@ $lang = !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? $
     </div>
     <div class="select-theme-content">
       <?php    
-      $selectedTheme = get_option('njt_fs_selector_themes') && get_option('njt_fs_selector_themes')[$this->userRole]['themesValue'] ? get_option('njt_fs_selector_themes')[$this->userRole]['themesValue'] : null;
+      $selectorThemes = get_option('njt_fs_selector_themes', array());
+      if (!is_array($selectorThemes)) {
+          $selectorThemes = array();
+      }
+      $selectedTheme = isset($selectorThemes[$this->userRole]['themesValue']) ? $selectorThemes[$this->userRole]['themesValue'] : null;
     ?>
       <div class="njt-fs-wrap njt-fs-mr0">
         <h3 class="wp-heading-inline select-theme-title"><?php _e("Select theme:", 'filester'); ?></h3>

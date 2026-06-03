@@ -210,9 +210,12 @@ class FileManager
     public function enqueueAdminScripts($suffix)
     {
         if (in_array($suffix, $this->hook_suffix)) {
-            $selectorThemes = get_option('njt_fs_selector_themes');
+            $selectorThemes = get_option('njt_fs_selector_themes', array());
+            if (!is_array($selectorThemes)) {
+                $selectorThemes = array();
+            }
             if (empty($selectorThemes[$this->userRole])) {
-                $selectorThemes[$this->userRole]['themesValue'] = 'Default';
+                $selectorThemes[$this->userRole] = array('themesValue' => 'Default');
                 update_option('njt_fs_selector_themes', $selectorThemes);
             }
         
@@ -554,17 +557,20 @@ class FileManager
         check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
         
         $themesValue = sanitize_text_field ($_POST['themesValue']);
-        $selectorThemes = get_option('njt_fs_selector_themes');
+        $selectorThemes = get_option('njt_fs_selector_themes', array());
+        if (!is_array($selectorThemes)) {
+            $selectorThemes = array();
+        }
         if (empty($selectorThemes[$this->userRole])) {
-            $selectorThemes[$this->userRole]['themesValue'] = 'Default';
+            $selectorThemes[$this->userRole] = array('themesValue' => 'Default');
             update_option('njt_fs_selector_themes', $selectorThemes);
         }
-       
+
         if ($selectorThemes[$this->userRole]['themesValue'] != $themesValue) {
             $selectorThemes[$this->userRole]['themesValue'] = $themesValue;
             update_option('njt_fs_selector_themes', $selectorThemes);
         }
-        $selected_themes = get_option('njt_fs_selector_themes');
+        $selected_themes = $selectorThemes;
         $linkThemes = plugins_url('/lib/themes/' . $selected_themes[$this->userRole]['themesValue'] . '/css/theme.css', __FILE__);
         wp_send_json_success($linkThemes);
         wp_die();

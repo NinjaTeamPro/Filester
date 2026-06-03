@@ -6194,7 +6194,8 @@ abstract class elFinderVolumeDriver
                 if ($bgcolor === 'transparent') {
                     $bgcolor = 'rgba(255, 255, 255, 0.0)';
                 }
-                $cmd = sprintf('%s -size %dx%d "xc:%s" png:- | convert%s%s%s png:-  %s -geometry +%d+%d -compose over -composite%s %s', ELFINDER_CONVERT_PATH, $width, $height, $bgcolor, $coalesce, $jpgQuality, $interlace, $quotedPath, $x, $y, $deconstruct, $quotedDstPath);
+                $xcArg = escapeshellarg('xc:' . $bgcolor);
+                $cmd = sprintf('%s -size %dx%d %s png:- | convert%s%s%s png:-  %s -geometry +%d+%d -compose over -composite%s %s', ELFINDER_CONVERT_PATH, $width, $height, $xcArg, $coalesce, $jpgQuality, $interlace, $quotedPath, $x, $y, $deconstruct, $quotedDstPath);
 
                 $result = false;
                 if ($this->procExec($cmd) === 0) {
@@ -6334,7 +6335,8 @@ abstract class elFinderVolumeDriver
                 if ($s[2] === IMAGETYPE_GIF || $s[2] === IMAGETYPE_PNG) {
                     $bgcolor = 'rgba(255, 255, 255, 0.0)';
                 }
-                $cmd = sprintf('%s%s%s%s -background "%s" -rotate %d%s -- %s %s', ELFINDER_CONVERT_PATH, $coalesce, $jpgQuality, $interlace, $bgcolor, $degree, $deconstruct, $quotedPath, $quotedDstPath);
+                $bgArg = escapeshellarg($bgcolor);
+                $cmd = sprintf('%s%s%s%s -background %s -rotate %d%s -- %s %s', ELFINDER_CONVERT_PATH, $coalesce, $jpgQuality, $interlace, $bgArg, $degree, $deconstruct, $quotedPath, $quotedDstPath);
 
                 $result = false;
                 if ($this->procExec($cmd) === 0) {
