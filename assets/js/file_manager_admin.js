@@ -380,6 +380,8 @@ const njtFileManager = {
         action: 'fs_connector',
         nonce: wpData.nonce_connector,
       },
+      // Upload the whole file in one request (avoids IIS 400 on chunked multipart uploads).
+      uploadMaxChunkSize: '1048576000000',
       lang: wpData.lang,
       requestType: 'get',
       width: 'auto',
