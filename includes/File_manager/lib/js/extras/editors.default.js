@@ -462,8 +462,7 @@
 				if (typeof quality !== 'undefined') {
 					this.fm.storage('jpgQuality', quality);
 				}
-				if (hash) {
-					file = this.fm.file(hash);
+				if (hash && (file = this.fm.file(hash))) {
 					$base.data('mime', file.mime);
 				}
 			}
@@ -675,7 +674,9 @@
 				}
 				if (hash) {
 					file = this.fm.file(hash);
-					$base.data('mime', file.mime);
+					if (file) {
+						$base.data('mime', file.mime);
+					}
 				} else {
 					$base.removeData('mime');
 				}
@@ -859,7 +860,7 @@
 
 				// load script then init
 				if (typeof Pixo === 'undefined') {
-					fm.loadScript(['https://pixoeditor.com:8443/editor/scripts/bridge.m.js'], function() {
+					fm.loadScript(['https://pixoeditor.com/editor/scripts/bridge.m.js'], function() {
 						init(launch);
 					}, {loadType: 'tag'});
 				} else {

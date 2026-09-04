@@ -92,6 +92,10 @@ Yes, Filester is totally free and full-fledged with premium features. You won't 
 
 == Changelog ==
 
+2.1.3
+Sep 03, 2026 – Version 2.1.3
+– Security: Fixed a cross-site scripting issue in the bundled elFinder file browser. The window-message (CORS) handler validated the sender's origin with a prefix comparison instead of an exact match, so a page served from a look-alike origin that is a leading string prefix of the site address could inject script into a logged-in administrator's session. The origin check now requires an exact match (backport of the elFinder 2.1.70 fix). Reported by Mutantgun via WPScan.
+
 1.7.6
 Jun 27, 2022 – Version 1.7.6
 – Added: Recommend plugins

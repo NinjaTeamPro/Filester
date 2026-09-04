@@ -273,7 +273,7 @@ abstract class elFinderVolumeDriver
         // mime.types file path (for mimeDetect==internal)
         'mimefile' => '',
         // Static extension/MIME of general server side scripts to security issues
-        'staticMineMap' => array(
+        'staticMimeMap' => array(
             'php:*' => 'text/x-php',
             'pht:*' => 'text/x-php',
             'php3:*' => 'text/x-php',
@@ -317,8 +317,9 @@ abstract class elFinderVolumeDriver
             'oga:application/ogg' => 'audio/ogg',
             'ogv:application/ogg' => 'video/ogg',
             'zip:application/x-zip' => 'application/zip',
-            'm3u8:text/plain' => 'application/x-mpegURL',
+            'm3u8:text/plain' => 'application/x-mpegurl',
             'mpd:text/plain' => 'application/dash+xml',
+            'mpd:text/xml' => 'application/dash+xml',
             'mpd:application/xml' => 'application/dash+xml',
             '*:application/x-dosexec' => 'application/x-executable',
             'doc:application/vnd.ms-office' => 'application/msword',
@@ -611,6 +612,7 @@ abstract class elFinderVolumeDriver
         // applications
         'exe' => 'application/x-executable',
         'jar' => 'application/x-jar',
+        'rpm' => 'application/x-rpm',
         // archives
         'gz' => 'application/x-gzip',
         'tgz' => 'application/x-gzip',
@@ -628,7 +630,7 @@ abstract class elFinderVolumeDriver
         'c' => 'text/x-csrc',
         'h' => 'text/x-chdr',
         'cpp' => 'text/x-c++src',
-        'hh' => 'text/x-c++hdr',
+        'hpp' => 'text/x-c++hdr',
         'md' => 'text/x-markdown',
         'markdown' => 'text/x-markdown',
         'yml' => 'text/x-yaml',
@@ -643,10 +645,10 @@ abstract class elFinderVolumeDriver
         'dv' => 'video/x-dv',
         'wm' => 'video/x-ms-wmv',
         'ogm' => 'video/ogg',
-        'm2ts' => 'video/MP2T',
-        'mts' => 'video/MP2T',
-        'ts' => 'video/MP2T',
-        'm3u8' => 'application/x-mpegURL',
+        'm2ts' => 'video/mp2t',
+        'mts' => 'video/mp2t',
+        'ts' => 'video/mp2t',
+        'm3u8' => 'application/x-mpegurl',
         'mpd' => 'application/dash+xml'
     );
 
@@ -947,8 +949,11 @@ abstract class elFinderVolumeDriver
         if (!is_array($this->options['mimeMap'])) {
             $this->options['mimeMap'] = array();
         }
-        if (is_array($this->options['staticMineMap']) && $this->options['staticMineMap']) {
-            $this->options['mimeMap'] = array_merge($this->options['mimeMap'], $this->options['staticMineMap']);
+        if (empty($this->options['staticMimeMap']) && is_array($this->options['staticMineMap']) && $this->options['staticMineMap']) {
+            $this->options['staticMimeMap'] = $this->options['staticMineMap'];
+        }
+        if (is_array($this->options['staticMimeMap']) && $this->options['staticMimeMap']) {
+            $this->options['mimeMap'] = array_merge($this->options['mimeMap'], $this->options['staticMimeMap']);
         }
         if (is_array($this->options['additionalMimeMap']) && $this->options['additionalMimeMap']) {
             $this->options['mimeMap'] = array_merge($this->options['mimeMap'], $this->options['additionalMimeMap']);
@@ -6194,8 +6199,22 @@ abstract class elFinderVolumeDriver
                 if ($bgcolor === 'transparent') {
                     $bgcolor = 'rgba(255, 255, 255, 0.0)';
                 }
-                $xcArg = escapeshellarg('xc:' . $bgcolor);
-                $cmd = sprintf('%s -size %dx%d %s png:- | convert%s%s%s png:-  %s -geometry +%d+%d -compose over -composite%s %s', ELFINDER_CONVERT_PATH, $width, $height, $xcArg, $coalesce, $jpgQuality, $interlace, $quotedPath, $x, $y, $deconstruct, $quotedDstPath);
+                $bgArg = escapeshellarg('xc:' . $bgcolor);
+                $cmd = sprintf(
+                    '%s -size %dx%d %s png:- | convert%s%s%s png:- %s -geometry +%d+%d -compose over -composite%s %s',
+                    ELFINDER_CONVERT_PATH,
+                    $width,
+                    $height,
+                    $bgArg,
+                    $coalesce,
+                    $jpgQuality,
+                    $interlace,
+                    $quotedPath,
+                    $x,
+                    $y,
+                    $deconstruct,
+                    $quotedDstPath
+                );
 
                 $result = false;
                 if ($this->procExec($cmd) === 0) {
@@ -6336,7 +6355,18 @@ abstract class elFinderVolumeDriver
                     $bgcolor = 'rgba(255, 255, 255, 0.0)';
                 }
                 $bgArg = escapeshellarg($bgcolor);
-                $cmd = sprintf('%s%s%s%s -background %s -rotate %d%s -- %s %s', ELFINDER_CONVERT_PATH, $coalesce, $jpgQuality, $interlace, $bgArg, $degree, $deconstruct, $quotedPath, $quotedDstPath);
+                $cmd = sprintf(
+                    '%s%s%s%s -background %s -rotate %d%s -- %s %s',
+                    ELFINDER_CONVERT_PATH,
+                    $coalesce,
+                    $jpgQuality,
+                    $interlace,
+                    $bgArg,
+                    $degree,
+                    $deconstruct,
+                    $quotedPath,
+                    $quotedDstPath
+                );
 
                 $result = false;
                 if ($this->procExec($cmd) === 0) {
@@ -7101,11 +7131,19 @@ abstract class elFinderVolumeDriver
                     }
                 }
             } else {
-                if ($chkMime && ($mimeByName = elFinderVolumeDriver::mimetypeInternalDetect($name)) && !$this->allowPutMime($mimeByName)) {
-                    self::localRmdirRecursive($p);
-                    $res['mimes'][] = $p;
-                    $res['rmNames'][] = $utf8Name;
-                    continue;
+                if ($chkMime) {
+                    $mimeByName = $this->mimeTypeNormalize(
+                        elFinderVolumeDriver::mimetypeInternalDetect($name),
+                        $name,
+                        pathinfo($name, PATHINFO_EXTENSION)
+                    );
+
+                    if ($mimeByName && !$this->allowPutMime($mimeByName)) {
+                        self::localRmdirRecursive($p);
+                        $res['mimes'][] = $p;
+                        $res['rmNames'][] = $utf8Name;
+                        continue;
+                    }
                 }
                 $res['totalSize'] += (int)sprintf('%u', filesize($p));
             }
@@ -7686,11 +7724,11 @@ abstract class elFinderVolumeDriver
         // Normalize root path - remove trailing separators
         $root = rtrim($this->root, $this->separator . '/');
         $rootLen = strlen($root);
-        
+
         // Normalize file path
         $normalizedPath = str_replace($this->separator, '/', $path);
         $normalizedRoot = str_replace($this->separator, '/', $root);
-        
+
         // Check if path starts with root (case-sensitive)
         if (strpos($normalizedPath, $normalizedRoot) === 0) {
             $relative = substr($normalizedPath, $rootLen);
@@ -7698,7 +7736,7 @@ abstract class elFinderVolumeDriver
             $relative = ltrim($relative, '/');
             return $relative;
         }
-        
+
         // Fallback: try to calculate using original method
         // Handle case where root ends with separator
         $rootWithSep = rtrim($this->root, $this->separator . '/') . $this->separator;
@@ -7706,14 +7744,14 @@ abstract class elFinderVolumeDriver
             $relative = substr($path, strlen($rootWithSep));
             return str_replace($this->separator, '/', $relative);
         }
-        
+
         // Last fallback: old method
         if (strlen($path) > strlen($this->root)) {
             $relative = substr($path, strlen($this->root));
             $relative = ltrim($relative, $this->separator . '/');
             return str_replace($this->separator, '/', $relative);
         }
-        
+
         return '';
     }
 
@@ -7730,13 +7768,13 @@ abstract class elFinderVolumeDriver
         if (empty($this->URL)) {
             return '';
         }
-        
+
         // Remove trailing slash from base URL
         $baseUrl = rtrim($this->URL, '/');
-        
+
         // Ensure path starts with /
         $path = '/' . ltrim($path, '/');
-        
+
         return $baseUrl . $path;
     }
 
