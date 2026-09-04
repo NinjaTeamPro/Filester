@@ -369,7 +369,20 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver
     protected function _joinPath($dir, $name)
     {
         $dir = rtrim($dir, DIRECTORY_SEPARATOR);
-        $path = realpath($dir . DIRECTORY_SEPARATOR . $name);
+
+        // Canonicalise the PARENT directory only, never the leaf component (Filester fix).
+        // realpath() on the whole path follows a leaf symlink to its target, which makes
+        // decode() return the target path and defeats the is_link() guards in remove() /
+        // localRmdirRecursive() — deleting a directory symlink would then wipe the target
+        // tree. Resolving only the parent keeps the leaf link intact for is_link() checks
+        // while still normalising `..` and symlinked ancestors in the directory portion.
+        $leaf = basename($name);
+        $subDir = (strlen($leaf) < strlen($name)) ? substr($name, 0, -strlen($leaf) - 1) : '';
+        $realDir = realpath($subDir !== '' ? $dir . DIRECTORY_SEPARATOR . $subDir : $dir);
+        $path = ($realDir !== false && strpos($realDir, $this->root) === 0)
+            ? $realDir . DIRECTORY_SEPARATOR . $leaf
+            : false;
+
         // realpath() returns FALSE if the file does not exist
         if ($path === false || strpos($path, $this->root) !== 0) {
             if (DIRECTORY_SEPARATOR !== '/') {
@@ -385,7 +398,7 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver
             }
             $path = $dir . DIRECTORY_SEPARATOR . $name;
         }
-        return $path; 
+        return $path;
     }
 
     /**
