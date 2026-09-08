@@ -165,6 +165,21 @@ if ( ! class_exists( 'YayRecommended' ) ) {
 			}
 			?>
 			<style>
+				.yay-recommended-plugins-layout #the-list{
+					display: grid !important;
+					grid-template-columns: repeat(
+						auto-fit,
+						minmax(min(500px, 100%), 1fr)
+					) !important;
+					gap: 12px !important;
+				}
+
+				.yay-recommended-plugins-layout .plugin-card {
+					width: 100% !important;  
+				}
+				.yay-recommended-plugins-layout .plugin-card .column-updated {
+					width: fit-content !important;
+				}
 				.yay-recommended-plugins-layout {
 					margin-top: 20px;
 				}
