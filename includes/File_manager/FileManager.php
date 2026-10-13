@@ -546,6 +546,8 @@ class FileManager
 
         //End --setting User Role Restrictions
 
+        require_once __DIR__ . '/WpSession.php';
+        $opts['session'] = new WpSession();
         $connector = new \elFinderConnector(new \elFinder($opts));
         $connector->run();
         wp_die();
