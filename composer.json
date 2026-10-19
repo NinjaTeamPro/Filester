@@ -1,0 +1,23 @@
+{
+    "name": "yaycommerce/filester",
+    "type": "wordpress-plugin",
+    "require": {
+        "yaycommerce/admin-shell": "^2.8"
+    },
+    "repositories": {
+        "admin-shell": {
+            "type": "vcs",
+            "url": "https://github.com/YayCommerce/yaycommerce-plugin-admin-shell.git"
+        }
+    },
+    "require-dev": {
+        "humbug/php-scoper": "^0.18.7",
+        "thecodingmachine/safe": "^2.5"
+    },
+    "autoload": {
+        "classmap": [
+            "vendor-prefixed/src",
+            "FilesterPluginAdapter.php"
+        ]
+    }
+}

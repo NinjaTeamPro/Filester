@@ -12,3 +12,10 @@ README.md
 CLAUDE.md
 includes/File_manager/lib/files/.tmp/*
 includes/File_manager/lib/files/.trash/*
+composer.json
+composer.lock
+scoper.inc.php
+# Ship only Composer's autoloader; release.sh regenerates it without dev deps
++ /vendor/autoload.php
++ /vendor/composer/
+- /vendor/*

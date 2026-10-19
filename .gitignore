@@ -1,3 +1,6 @@
 *.DS_Store
 /release
 .vscode/launch.json
+vendor/
+vendor-prefixed/
+*.zip

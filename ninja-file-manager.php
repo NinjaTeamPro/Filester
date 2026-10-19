@@ -3,7 +3,7 @@
  * Plugin Name: Filester - File Manager Pro
  * Plugin URI: https://ninjateam.org/filester
  * Description: Made to help you focus on WordPress file management and avoid being distracted.
- * Version: 2.1.4.2
+ * Version: 2.1.4.3
  * Author: Ninja Team
  * Author URI: https://ninjateam.org
  * Text Domain: filester
@@ -22,10 +22,6 @@ if (file_exists(dirname(__FILE__) . '/includes/File_manager/FileManagerHelper.ph
   require_once dirname(__FILE__) . '/includes/File_manager/FileManagerHelper.php';
 }
 
-if (file_exists(dirname(__FILE__) . '/includes/Recommended/Recommended.php')) {
-  require_once dirname(__FILE__) . '/includes/Recommended/Recommended.php';
-}
-
 if (file_exists(dirname(__FILE__) . '/includes/functions.php')) {
   require_once dirname(__FILE__) . '/includes/functions.php';
 }
@@ -35,7 +31,7 @@ if (file_exists(dirname(__FILE__) . '/includes/functions.php')) {
 defined('ABSPATH') || exit;
 
 define('NJT_FS_BN_PREFIX', 'njt-fs');
-define('NJT_FS_BN_VERSION', '2.1.4.2');
+define('NJT_FS_BN_VERSION', '2.1.4.3');
 define('NJT_FS_BN_DOMAIN', 'filester');
 
 define('NJT_FS_BN_PLUGIN_DIR', basename(__DIR__));
@@ -62,6 +58,13 @@ spl_autoload_register(function ($class) {
     require $file;
   }
 });
+
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/FilesterPluginAdapter.php';
+
+add_action('plugins_loaded', function () {
+  (new \FilesterPluginAdapter())->init();
+}, 5);
 
 // Add crossale for filebird
 if (file_exists(dirname(__FILE__) . '/includes/cross.php')) {
