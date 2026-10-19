@@ -379,12 +379,15 @@ class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver
         $leaf = basename($name);
         $subDir = (strlen($leaf) < strlen($name)) ? substr($name, 0, -strlen($leaf) - 1) : '';
         $realDir = realpath($subDir !== '' ? $dir . DIRECTORY_SEPARATOR . $subDir : $dir);
-        $path = ($realDir !== false && strpos($realDir, $this->root) === 0)
+        // Boundary-aware containment (Filester fix): a bare strpos() prefix test lets a sibling
+        // such as "/var/www/html-other" pass for root "/var/www/html".
+        $rootDS = rtrim($this->root, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $path = ($realDir !== false && strpos($realDir . DIRECTORY_SEPARATOR, $rootDS) === 0)
             ? $realDir . DIRECTORY_SEPARATOR . $leaf
             : false;
 
         // realpath() returns FALSE if the file does not exist
-        if ($path === false || strpos($path, $this->root) !== 0) {
+        if ($path === false) {
             if (DIRECTORY_SEPARATOR !== '/') {
                 $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
                 $name = str_replace('/', DIRECTORY_SEPARATOR, $name);

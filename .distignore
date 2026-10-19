@@ -8,3 +8,7 @@ release.sh
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 README.md
+.claude
+CLAUDE.md
+includes/File_manager/lib/files/.tmp/*
+includes/File_manager/lib/files/.trash/*

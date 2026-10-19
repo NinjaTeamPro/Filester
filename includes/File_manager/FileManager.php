@@ -430,7 +430,7 @@ class FileManager
         } else if ( !current_user_can('create_sites') && !empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])) {
             $opts['roots'][0]['uploadDeny'] = array('all');
             $opts['roots'][0]['uploadAllow'] = array();
-            $arrCanUploadMime = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'];
+            $arrCanUploadMime = array_diff($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'], (new \FileManagerHelper())->listFileCanNotUpload());
             $mimeTypes = new \FileManagerHelper();
             $arrMimeTypes = $mimeTypes->getArrMimeTypes();
             foreach ($arrMimeTypes as $key => $value){
@@ -471,7 +471,7 @@ class FileManager
         } else if ( $this->userRole !== 'administrator' && !empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'])) {
             $opts['roots'][0]['uploadDeny'] = array('all');
             $opts['roots'][0]['uploadAllow'] = array();
-            $arrCanUploadMime = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'];
+            $arrCanUploadMime = array_diff($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['can_upload_mime'], (new \FileManagerHelper())->listFileCanNotUpload());
             $mimeTypes = new \FileManagerHelper();
             $arrMimeTypes = $mimeTypes->getArrMimeTypes();
             foreach ($arrMimeTypes as $key => $value){
@@ -542,6 +542,12 @@ class FileManager
                 'locked' => true
             );
             array_push($opts['roots'][0]['attributes'], $attributes);
+        }
+
+        // Multisite: non-network admins can never create/rename/upload executable PHP files, whatever the MIME rules.
+        // Like elFinder's default, also reject path separators / NUL so a name can't traverse out of its directory.
+        if (is_multisite() && !is_super_admin()) {
+            $opts['roots'][0]['acceptedName'] = '/^(?!\.)(?!.*\.(php\d*|phtml|pht|phps|phar)(\.|$))[^\/\\\\\x00]+$/i';
         }
 
         //End --setting User Role Restrictions
@@ -619,7 +625,7 @@ class FileManager
         if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-fs-file-manager-admin')) wp_die();
         check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
 
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can(is_multisite() ? 'create_sites' : 'manage_options')) {
             wp_die();
         }
 
@@ -650,7 +656,7 @@ class FileManager
         if( ! wp_verify_nonce( $_POST['nonce'] ,'njt-fs-file-manager-admin')) wp_die();
         check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
 
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can(is_multisite() ? 'create_sites' : 'manage_options')) {
             wp_die();
         }
 
@@ -665,11 +671,7 @@ class FileManager
 
         $can_upload_mime = !empty($_POST['can_upload_mime']) ? explode(',', preg_replace('/\s+/', '', sanitize_text_field($_POST['can_upload_mime']))) : array();
 
-        $can_upload_mime = array_filter($can_upload_mime, function($item) {
-            $helper = new \FileManagerHelper();
-            $listFileCanNotUpload = $helper->listFileCanNotUpload();
-            return !in_array($item, $listFileCanNotUpload);
-        });
+        $can_upload_mime = array_values(array_diff($can_upload_mime, (new \FileManagerHelper())->listFileCanNotUpload()));
 
         //save options
         $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['list_user_restrictions_alow_access'] = $list_user_restrictions_alow_access;

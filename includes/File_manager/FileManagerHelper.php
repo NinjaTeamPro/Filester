@@ -114,7 +114,7 @@ class FileManagerHelper{
 
 	public function listFileCanNotUpload()
 	{
-		$list = array('.php', '.php3', '.php4', '.phar', '.phtml', '.htaccess', '.txt', 'text/plain', 'text/x-php', 'text/php', 'text/html', 'text/javascript');
+		$list = array('.php', '.php3', '.php4', '.phar', '.phtml', '.htaccess', '.txt', 'text/plain', 'text/x-php', 'text/php', 'text/html', 'text/javascript', 'text', 'application');
 		return apply_filters('njt_fs_list_file_can_not_upload', $list);
 	}
 }
