@@ -259,8 +259,18 @@
   transition: color .1s ease-in;
 }
 
+.button.njt-fs-updating-message {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 .button.njt-fs-updating-message:after {
-  margin: 4px 0px 0px 10px;
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
 }
 
 .button.njt-fs-updating-message:after {
@@ -274,10 +284,9 @@
 
 .button.njt-fs-updating-message:after{
   display: inline-block;
-  font: normal 20px/1 dashicons;
+  font: normal 16px/1 dashicons;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  vertical-align: top;
 }
 
 .njt-fs-toastr {
